@@ -104,6 +104,201 @@
           
           
             
+              <a class="post-title-link" href="/2015/04/13/test-1/">
+                test
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2015-04-13
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/ajax/">
+                #ajax
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/04/13/2013-05-30-ajax1/">
+                未命名
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2015-04-13
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <hr>
+<p>layout: post<br>title: “AJAX之GET与POST”<br>date: 2013-05-30 19:47<br>comments: true<br>categories: JS<br>tags: [ajax]  </p>
+<hr>
+<h2 id="写在前面">写在前面</h2><p>ajax就是使用异步的方式从服务器获取数据或者向服务器写入数据的技术。它使用户无需刷新整个页面就能从服务器获取数据，并且在发送请求后用户不用傻等还能继续其他操作。    </p>
+<p>之前一直用jQuery封装AJAX的各种接口，用的特顺手，后来为了系统学习特意买了本《Head First Ajax》，看了大概5章实在有些受不了了，这本书节奏太慢，感觉是针对完全的js小白。于是，转看《js高级程序设计》了，这本书讲的Ajax相关知识算是比较广的。这部分在练习的时候需要和后台结合才能较深理解Ajax工作机制，在练习过程中遇到了一些问题：后台无法获取参数数据、XHR全局变量问题、readystatechange事件中event对象的问题。详细感悟如下。  </p>
+<h2 id="XHR对象">XHR对象</h2><p>XMLHttpRequest对象是ajax的核心，js就是通过XHR对象向服务器发送异步请求并处理响应的。<br><strong>XHR对象的主要属性和事件</strong>  </p>
+<ul>
+<li>responseText  </li>
+<li>responseXML  </li>
+<li>readystate    <ul>
+<li>0（未初始化），XHR对象已建立，但未初始化（即未调用open方法）</li>
+<li>1（初始化），已初始化，但还未发送数据（即未调用send方法）</li>
+<li>2（发送数据），已发送数据，响应和http头未知</li>
+<li>3（数据接收中），已接收部分数据，响应和http头不全</li>
+<li>4（完成），数据接收完毕。</li>
+</ul>
+</li>
+<li>status  <ul>
+<li>1xx 信息提示  </li>
+<li>2xx 成功</li>
+<li>3xx 重定向</li>
+<li>4xx 客户端错误</li>
+<li>5xx 服务器错误</li>
+</ul>
+</li>
+</ul>
+<p><strong>创建XHR对象（跨浏览器兼容）</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">//创建XHR对象 </span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">createXHR</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> XHR;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">           XHR= <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">       &#125; <span class="keyword">catch</span> (IE) &#123;</span><br><span class="line">          <span class="keyword">try</span>&#123;</span><br><span class="line">             XHR=<span class="keyword">new</span> ActiveXObject(Msxml.XMLHTTP);</span><br><span class="line">         &#125; <span class="keyword">catch</span> (otherIE) &#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                XHR = <span class="keyword">new</span> ActiveXObject(Microsoft.XMLHTTP);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span>(faild)&#123;</span><br><span class="line">                XHR=<span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> XHR;</span><br><span class="line">    &#125;  </span><br><span class="line">``` </span><br><span class="line">## get </span><br><span class="line">	  </span><br><span class="line">在有些书上写AJAX示例时，会把创建的XHR对象定义为全局变量，这样做一般是为了在`readystatechange`事件中能访问到该XHR对象。全局变量必然是不推荐的，我试图通过常规的事件绑定做法通过event对象获取当前活动对象target来访问到XHR，如代码一所示，测试发现，代码一在IE以外的浏览器是正常的，在IE下始终无法获取到target。原因是IE浏览器没有为readystatechange事件实现事件对象，为了跨浏览器兼容，建议大家还是直接访问XHR对象本事。    </span><br><span class="line"></span><br><span class="line">为了避免全局变量，可以使用匿名函数立即执行的办法，如代码二，记得将handler的声明放进匿名函数，不然根据作用域链可知还是无法在handler中获取到XHR对象。  </span><br><span class="line">  </span><br><span class="line">代码一  </span><br><span class="line">```javascript</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">hehe</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> request = creatXHR();</span><br><span class="line">        <span class="keyword">if</span> (request == <span class="literal">null</span>) &#123;</span><br><span class="line">            alert(无法创建XHR对象);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      		request.onreadystatechange = handler;</span><br><span class="line">            request.open(<span class="string">"GET"</span>, <span class="string">"./getInfo?encodeURIComponent(name1)=encodeURIComponent(value1)&amp;encodeURIComponent(name2)=encodeURIComponent(value2)"</span>, <span class="literal">true</span>);</span><br><span class="line">            request.send(<span class="literal">null</span>);            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">handler</span><span class="params">(event)</span> </span>&#123;</span><br><span class="line">        event = event ? event : <span class="built_in">window</span>.event;</span><br><span class="line">        <span class="keyword">var</span> target = event.srcElement || event.target;</span><br><span class="line">        <span class="keyword">if</span> (target.readyState == <span class="number">4</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (target.status &gt;= <span class="number">200</span> &amp;&amp; target.status &lt;= <span class="number">300</span> || target.status == <span class="number">304</span>) &#123;</span><br><span class="line">                alert(target.responseText);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">```  </span><br><span class="line">代码二</span><br><span class="line">```javascript</span><br><span class="line">	(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">var</span> request=createXHR();</span><br><span class="line">		<span class="keyword">if</span>(request==<span class="literal">null</span>)&#123;</span><br><span class="line">			alert(<span class="string">"无法创建XHR对象。"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			request.onreadystatechange=handler;</span><br><span class="line">			request.open(<span class="string">"GET"</span>,<span class="string">"./getInfo?encodeURIComponent(name1)=encodeURIComponent(value1)&amp;encodeURIComponent(name2)=encodeURIComponent(value2)"</span>,<span class="literal">true</span>);</span><br><span class="line">			request.send(<span class="literal">null</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">handler</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(request.readyState==<span class="number">4</span>)&#123;</span><br><span class="line">				<span class="keyword">if</span>(request.status&gt;=<span class="number">200</span>&amp;&amp;request.status&lt;<span class="number">300</span>||request.status==<span class="number">304</span>)&#123;</span><br><span class="line">					alert(request.responseText);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;  </span><br><span class="line">    &#125;)();</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用get方式需要注意的：">使用get方式需要注意的：</h3><p>参数需要编码：<br>在使用get请求时最常发生的一个错误就是参数格式有问题。每个参数的名值对都要进行encodeURIComponent编码，且所有名值对用’&amp;’分隔。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">//为url添加一个名值对  </span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">addURLPara</span><span class="params">(url,name,value)</span></span>&#123;</span><br><span class="line">		url+=url.indexOf(<span class="string">"?"</span>)==-<span class="number">1</span>?<span class="string">"?"</span>:<span class="string">"&amp;"</span>;</span><br><span class="line">		url+=<span class="built_in">encodeURIComponent</span>(name)+<span class="string">"="</span>+<span class="built_in">encodeURIComponent</span>(value);</span><br><span class="line">		<span class="keyword">return</span> url;</span><br><span class="line">	&#125;  </span><br><span class="line">```	  </span><br><span class="line">## post </span><br><span class="line">```javascript	  </span><br><span class="line">	(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">var</span> request=<span class="keyword">new</span> createXHR();</span><br><span class="line">		request.onreadystatechange=handler;</span><br><span class="line">		request.open(<span class="string">"POST"</span>,<span class="string">"./getInfo"</span>,<span class="literal">true</span>);</span><br><span class="line">		request.setRequestHeader(<span class="string">"Content-Type"</span>,<span class="string">"application/x-www-form-urlencoded"</span>);</span><br><span class="line">		request.send(<span class="string">"name1=value1&amp;name2=value2&amp;name3=value3"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//回调函数  </span></span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">handler</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(request.readyState==<span class="number">4</span>)&#123;</span><br><span class="line">				<span class="keyword">if</span>(request.status&gt;=<span class="number">200</span>&amp;&amp;request.status&lt;<span class="number">300</span>||request.status==<span class="number">304</span>)&#123;</span><br><span class="line">					alert(request.resposeText);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;  </span><br><span class="line">	&#125;)();  </span><br><span class="line">```			 </span><br><span class="line">  </span><br><span class="line">### 使用post需要注意</span><br><span class="line">在使用post方式时，若直接通过send传入名值对传入参数，则服务器不能正常解析,这是由于使用post方式时传送的数据可以是多种类型的，服务器接收到数据后不知道以哪种数据类型进行解码。因此需要为请求指定头部信息`Content-Type`。使用get方式时不需要指定数据类型，这是由于get的数据是加在url里的，只能是文本格式。    </span><br><span class="line"></span><br><span class="line">- 解决方式一：设置请求头部信息    </span><br><span class="line">在调用open()之后，调用send()之前设置头部信息：  </span><br><span class="line">`request.setRequestHeader(<span class="string">"Content-Type"</span>,<span class="string">"application/x-www-form-urlencoded"</span>);`  </span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">- 解决方式二：  XHR2级 使用FormData对象（IE9之前版本不支持）  </span><br><span class="line">FormData对象可以序列化表单，也可以创建与表单格式相同的数据  </span><br><span class="line">	- 方式一（创建与表单格式相同的数据）  </span><br><span class="line">	  </span><br><span class="line">```javascript </span><br><span class="line">			<span class="keyword">var</span> paras=<span class="keyword">new</span> FormData();</span><br><span class="line">			paras.append(<span class="string">"name1"</span>,<span class="string">"value1"</span>);</span><br><span class="line">			paras.append(<span class="string">"name2"</span>,<span class="string">"value2"</span>);  </span><br><span class="line">			request.send(paras);</span><br></pre></td></tr></table></figure></p>
+<pre><code><span class="bullet">- </span>方式二（序列化表单）  
+</code></pre><pre><code class="javascript"><span class="keyword">var</span> paras=<span class="keyword">new</span> FormData(<span class="built_in">document</span>.forms[<span class="number">0</span>]);
+request.send(paras);
+</code></pre>
+<h3 id="get与post的比较">get与post的比较</h3><ul>
+<li><p>用途<br>GET通常向服务器请求查询数据；无论GET多少次都不会改变服务器资源；<br>POST通常向服务器发送需要处理的数据；会改变服务器资源。  </p>
+</li>
+<li><p>参数数据发送过程<br>GET通过open()向服务器发送查询字符串，查询字符串就是url的一部分，且一般需要进行encodeURIComponent编码;<br>POST通过send()向服务器发送参数，参数跟着http消息发送。  </p>
+</li>
+<li><p>服务器获取参数数据的方式<br>使用GET时，由于参数时url的一部分所以只能是文本类型，服务器默认按照文本数据的方式解析；<br>在使用POST时，不只能发送纯文本，还能发送很多其他类型的数据，因此必须明确告诉服务器发送的是什么类型数据，这样服务器才能正确解码。需要设置XHR对象的请求头部信息”Content-Type”为”application/x-www-form-urlencoded”<br>测试了下，在C#下GET时服务器通过<code>Request.Params[&quot;name&quot;]</code>才能正确获取参数name的值；POST时服务器通过<code>Request.Form[&quot;name&quot;]</code>才能正确获取参数name的值。</p>
+</li>
+<li><p>数据量<br>GET 传送数据量较小，有长度限制。这是由于GET是将数据添加到URL中，而浏览器将URL的最大长度限制在2k；<br>POST 传送数据量是不受限的。  </p>
+</li>
+<li><p>安全性<br>POST要比GET安全，这是 由于：  </p>
+<pre><code>-<span class="ruby"> <span class="constant">GET</span>的数据都是添加进<span class="constant">URL</span>,对所有人可见；<span class="constant">POST</span>的传送的数据是不可见的；  
+</span>-<span class="ruby"> <span class="constant">GET</span>的数据能够被缓存，记录在历史记录里；<span class="constant">POST</span>的数据不能被缓存，不会留在浏览记录里。</span>
+</code></pre></li>
+<li><p>效率<br>POST比GET更加耗资源，效率较低，POST发送数据是分open()和send()两步进行的。  </p>
+</li>
+</ul>
+<h2 id="ajax的原理和机制">ajax的原理和机制</h2><p>   从上述可以总结出使用AJAX发送一次请求的步骤： </p>
+<ul>
+<li>首先创建XHR对象（要考虑到浏览器的兼容性）；  </li>
+<li>给该XHR对象绑定readystatechange事件；  </li>
+<li>调用open方法，选择使用get还是post方式发送请求；</li>
+<li>若选择get方式则将查询字符串写入url中（注意，参数需要编码）；</li>
+<li>若选择post方式则使用send方法发送参数；  </li>
+<li>在readystatechange事件处理程序中，判断请求对象的readystate和status属性，以便响应成功后进行处理。  </li>
+<li>收到服务器的响应后，响应的数据会自动填充XHR对象的属性：  <ul>
+<li>responseText,存放返回的文本，无论响应的内容是什么类型其内容都会保存在这个属性中  </li>
+<li>responseXML，如果响应的内容类型是”text/xml”或”application/xml”，这个属性存放返回的包含响应数据的XML DOM文档；如果不是xml类型，该属性为null  </li>
+<li>status，响应的http状态  </li>
+<li>statusText,响应的http状态说明  </li>
+</ul>
+</li>
+<li>js可以根据上述值做出处理。</li>
+</ul>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/03/22/test2/">
                 test2
               </a>
@@ -285,129 +480,6 @@
 
 
   
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2013/05/30/2013-05-30-ajax1/">
-                AJAX之GET与POST
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-05-30
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="写在前面">写在前面</h2><p>ajax就是使用异步的方式从服务器获取数据或者向服务器写入数据的技术。它使用户无需刷新整个页面就能从服务器获取数据，并且在发送请求后用户不用傻等还能继续其他操作。    </p>
-<p>之前一直用jQuery封装AJAX的各种接口，用的特顺手，后来为了系统学习特意买了本《Head First Ajax》，看了大概5章实在有些受不了了，这本书节奏太慢，感觉是针对完全的js小白。于是，转看《js高级程序设计》了，这本书讲的Ajax相关知识算是比较广的。这部分在练习的时候需要和后台结合才能较深理解Ajax工作机制，在练习过程中遇到了一些问题：后台无法获取参数数据、XHR全局变量问题、readystatechange事件中event对象的问题。详细感悟如下。  </p>
-<h2 id="XHR对象">XHR对象</h2><p>XMLHttpRequest对象是ajax的核心，js就是通过XHR对象向服务器发送异步请求并处理响应的。<br><strong>XHR对象的主要属性和事件</strong>  </p>
-<ul>
-<li>responseText  </li>
-<li>responseXML  </li>
-<li>readystate    <ul>
-<li>0（未初始化），XHR对象已建立，但未初始化（即未调用open方法）</li>
-<li>1（初始化），已初始化，但还未发送数据（即未调用send方法）</li>
-<li>2（发送数据），已发送数据，响应和http头未知</li>
-<li>3（数据接收中），已接收部分数据，响应和http头不全</li>
-<li>4（完成），数据接收完毕。</li>
-</ul>
-</li>
-<li>status  <ul>
-<li>1xx 信息提示  </li>
-<li>2xx 成功</li>
-<li>3xx 重定向</li>
-<li>4xx 客户端错误</li>
-<li>5xx 服务器错误</li>
-</ul>
-</li>
-</ul>
-<p><strong>创建XHR对象（跨浏览器兼容）</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">//创建XHR对象 </span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">createXHR</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> XHR;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">           XHR= <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">       &#125; <span class="keyword">catch</span> (IE) &#123;</span><br><span class="line">          <span class="keyword">try</span>&#123;</span><br><span class="line">             XHR=<span class="keyword">new</span> ActiveXObject(Msxml.XMLHTTP);</span><br><span class="line">         &#125; <span class="keyword">catch</span> (otherIE) &#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                XHR = <span class="keyword">new</span> ActiveXObject(Microsoft.XMLHTTP);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span>(faild)&#123;</span><br><span class="line">                XHR=<span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> XHR;</span><br><span class="line">    &#125;  </span><br><span class="line">``` </span><br><span class="line">## get </span><br><span class="line">	  </span><br><span class="line">在有些书上写AJAX示例时，会把创建的XHR对象定义为全局变量，这样做一般是为了在`readystatechange`事件中能访问到该XHR对象。全局变量必然是不推荐的，我试图通过常规的事件绑定做法通过event对象获取当前活动对象target来访问到XHR，如代码一所示，测试发现，代码一在IE以外的浏览器是正常的，在IE下始终无法获取到target。原因是IE浏览器没有为readystatechange事件实现事件对象，为了跨浏览器兼容，建议大家还是直接访问XHR对象本事。    </span><br><span class="line"></span><br><span class="line">为了避免全局变量，可以使用匿名函数立即执行的办法，如代码二，记得将handler的声明放进匿名函数，不然根据作用域链可知还是无法在handler中获取到XHR对象。  </span><br><span class="line">  </span><br><span class="line">代码一  </span><br><span class="line">```javascript</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">hehe</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> request = creatXHR();</span><br><span class="line">        <span class="keyword">if</span> (request == <span class="literal">null</span>) &#123;</span><br><span class="line">            alert(无法创建XHR对象);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      		request.onreadystatechange = handler;</span><br><span class="line">            request.open(<span class="string">"GET"</span>, <span class="string">"./getInfo?encodeURIComponent(name1)=encodeURIComponent(value1)&amp;encodeURIComponent(name2)=encodeURIComponent(value2)"</span>, <span class="literal">true</span>);</span><br><span class="line">            request.send(<span class="literal">null</span>);            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">handler</span><span class="params">(event)</span> </span>&#123;</span><br><span class="line">        event = event ? event : <span class="built_in">window</span>.event;</span><br><span class="line">        <span class="keyword">var</span> target = event.srcElement || event.target;</span><br><span class="line">        <span class="keyword">if</span> (target.readyState == <span class="number">4</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (target.status &gt;= <span class="number">200</span> &amp;&amp; target.status &lt;= <span class="number">300</span> || target.status == <span class="number">304</span>) &#123;</span><br><span class="line">                alert(target.responseText);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">```  </span><br><span class="line">代码二</span><br><span class="line">```javascript</span><br><span class="line">	(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">var</span> request=createXHR();</span><br><span class="line">		<span class="keyword">if</span>(request==<span class="literal">null</span>)&#123;</span><br><span class="line">			alert(<span class="string">"无法创建XHR对象。"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			request.onreadystatechange=handler;</span><br><span class="line">			request.open(<span class="string">"GET"</span>,<span class="string">"./getInfo?encodeURIComponent(name1)=encodeURIComponent(value1)&amp;encodeURIComponent(name2)=encodeURIComponent(value2)"</span>,<span class="literal">true</span>);</span><br><span class="line">			request.send(<span class="literal">null</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">handler</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(request.readyState==<span class="number">4</span>)&#123;</span><br><span class="line">				<span class="keyword">if</span>(request.status&gt;=<span class="number">200</span>&amp;&amp;request.status&lt;<span class="number">300</span>||request.status==<span class="number">304</span>)&#123;</span><br><span class="line">					alert(request.responseText);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;  </span><br><span class="line">    &#125;)();</span><br></pre></td></tr></table></figure></p>
-<h3 id="使用get方式需要注意的：">使用get方式需要注意的：</h3><p>参数需要编码：<br>在使用get请求时最常发生的一个错误就是参数格式有问题。每个参数的名值对都要进行encodeURIComponent编码，且所有名值对用’&amp;’分隔。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">//为url添加一个名值对  </span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">addURLPara</span><span class="params">(url,name,value)</span></span>&#123;</span><br><span class="line">		url+=url.indexOf(<span class="string">"?"</span>)==-<span class="number">1</span>?<span class="string">"?"</span>:<span class="string">"&amp;"</span>;</span><br><span class="line">		url+=<span class="built_in">encodeURIComponent</span>(name)+<span class="string">"="</span>+<span class="built_in">encodeURIComponent</span>(value);</span><br><span class="line">		<span class="keyword">return</span> url;</span><br><span class="line">	&#125;  </span><br><span class="line">```	  </span><br><span class="line">## post </span><br><span class="line">```javascript	  </span><br><span class="line">	(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">var</span> request=<span class="keyword">new</span> createXHR();</span><br><span class="line">		request.onreadystatechange=handler;</span><br><span class="line">		request.open(<span class="string">"POST"</span>,<span class="string">"./getInfo"</span>,<span class="literal">true</span>);</span><br><span class="line">		request.setRequestHeader(<span class="string">"Content-Type"</span>,<span class="string">"application/x-www-form-urlencoded"</span>);</span><br><span class="line">		request.send(<span class="string">"name1=value1&amp;name2=value2&amp;name3=value3"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//回调函数  </span></span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">handler</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(request.readyState==<span class="number">4</span>)&#123;</span><br><span class="line">				<span class="keyword">if</span>(request.status&gt;=<span class="number">200</span>&amp;&amp;request.status&lt;<span class="number">300</span>||request.status==<span class="number">304</span>)&#123;</span><br><span class="line">					alert(request.resposeText);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;  </span><br><span class="line">	&#125;)();  </span><br><span class="line">```			 </span><br><span class="line">  </span><br><span class="line">### 使用post需要注意</span><br><span class="line">在使用post方式时，若直接通过send传入名值对传入参数，则服务器不能正常解析,这是由于使用post方式时传送的数据可以是多种类型的，服务器接收到数据后不知道以哪种数据类型进行解码。因此需要为请求指定头部信息`Content-Type`。使用get方式时不需要指定数据类型，这是由于get的数据是加在url里的，只能是文本格式。    </span><br><span class="line"></span><br><span class="line">- 解决方式一：设置请求头部信息    </span><br><span class="line">在调用open()之后，调用send()之前设置头部信息：  </span><br><span class="line">`request.setRequestHeader(<span class="string">"Content-Type"</span>,<span class="string">"application/x-www-form-urlencoded"</span>);`  </span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">- 解决方式二：  XHR2级 使用FormData对象（IE9之前版本不支持）  </span><br><span class="line">FormData对象可以序列化表单，也可以创建与表单格式相同的数据  </span><br><span class="line">	- 方式一（创建与表单格式相同的数据）  </span><br><span class="line">	  </span><br><span class="line">```javascript </span><br><span class="line">			<span class="keyword">var</span> paras=<span class="keyword">new</span> FormData();</span><br><span class="line">			paras.append(<span class="string">"name1"</span>,<span class="string">"value1"</span>);</span><br><span class="line">			paras.append(<span class="string">"name2"</span>,<span class="string">"value2"</span>);  </span><br><span class="line">			request.send(paras);</span><br></pre></td></tr></table></figure></p>
-<pre><code><span class="bullet">- </span>方式二（序列化表单）  
-</code></pre><pre><code class="javascript"><span class="keyword">var</span> paras=<span class="keyword">new</span> FormData(<span class="built_in">document</span>.forms[<span class="number">0</span>]);
-request.send(paras);
-</code></pre>
-<h3 id="get与post的比较">get与post的比较</h3><ul>
-<li><p>用途<br>GET通常向服务器请求查询数据；无论GET多少次都不会改变服务器资源；<br>POST通常向服务器发送需要处理的数据；会改变服务器资源。  </p>
-</li>
-<li><p>参数数据发送过程<br>GET通过open()向服务器发送查询字符串，查询字符串就是url的一部分，且一般需要进行encodeURIComponent编码;<br>POST通过send()向服务器发送参数，参数跟着http消息发送。  </p>
-</li>
-<li><p>服务器获取参数数据的方式<br>使用GET时，由于参数时url的一部分所以只能是文本类型，服务器默认按照文本数据的方式解析；<br>在使用POST时，不只能发送纯文本，还能发送很多其他类型的数据，因此必须明确告诉服务器发送的是什么类型数据，这样服务器才能正确解码。需要设置XHR对象的请求头部信息”Content-Type”为”application/x-www-form-urlencoded”<br>测试了下，在C#下GET时服务器通过<code>Request.Params[&quot;name&quot;]</code>才能正确获取参数name的值；POST时服务器通过<code>Request.Form[&quot;name&quot;]</code>才能正确获取参数name的值。</p>
-</li>
-<li><p>数据量<br>GET 传送数据量较小，有长度限制。这是由于GET是将数据添加到URL中，而浏览器将URL的最大长度限制在2k；<br>POST 传送数据量是不受限的。  </p>
-</li>
-<li><p>安全性<br>POST要比GET安全，这是 由于：  </p>
-<pre><code>-<span class="ruby"> <span class="constant">GET</span>的数据都是添加进<span class="constant">URL</span>,对所有人可见；<span class="constant">POST</span>的传送的数据是不可见的；  
-</span>-<span class="ruby"> <span class="constant">GET</span>的数据能够被缓存，记录在历史记录里；<span class="constant">POST</span>的数据不能被缓存，不会留在浏览记录里。</span>
-</code></pre></li>
-<li><p>效率<br>POST比GET更加耗资源，效率较低，POST发送数据是分open()和send()两步进行的。  </p>
-</li>
-</ul>
-<h2 id="ajax的原理和机制">ajax的原理和机制</h2><p>   从上述可以总结出使用AJAX发送一次请求的步骤： </p>
-<ul>
-<li>首先创建XHR对象（要考虑到浏览器的兼容性）；  </li>
-<li>给该XHR对象绑定readystatechange事件；  </li>
-<li>调用open方法，选择使用get还是post方式发送请求；</li>
-<li>若选择get方式则将查询字符串写入url中（注意，参数需要编码）；</li>
-<li>若选择post方式则使用send方法发送参数；  </li>
-<li>在readystatechange事件处理程序中，判断请求对象的readystate和status属性，以便响应成功后进行处理。  </li>
-<li>收到服务器的响应后，响应的数据会自动填充XHR对象的属性：  <ul>
-<li>responseText,存放返回的文本，无论响应的内容是什么类型其内容都会保存在这个属性中  </li>
-<li>responseXML，如果响应的内容类型是”text/xml”或”application/xml”，这个属性存放返回的包含响应数据的XML DOM文档；如果不是xml类型，该属性为null  </li>
-<li>status，响应的http状态  </li>
-<li>statusText,响应的http状态说明  </li>
-</ul>
-</li>
-<li>js可以根据上述值做出处理。</li>
-</ul>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
 
           </div>
 
@@ -436,11 +508,11 @@ request.send(paras);
       <p class="site-description motion-element"></p>
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">
-            <span class="site-state-item-count">0</span>
+            <span class="site-state-item-count">1</span>
             <span class="site-state-item-name">标签</span>
         </div>
         <div class="site-state-item site-state-pages">
