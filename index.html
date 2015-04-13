@@ -104,8 +104,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/04/13/test-1/">
-                test
+              <a class="post-title-link" href="/2015/04/13/2013-09-16-layout-box/">
+                未命名
               </a>
             
           
@@ -132,7 +132,16 @@
 
         
           
-            
+            <hr>
+<p>layout: post<br>title: “CSS盒模型（box model）”<br>date: 2013-08-06 22:44<br>comments: true</p>
+<h2 id="categories:_CSS">categories: CSS</h2><h2 id="CSS盒模型（box_model）">CSS盒模型（box model）</h2><p>CSS盒子模型就是指对于页面上的每一个元素（无论是块级元素还是行内元素）都被看做一个矩形框，由元素内容、内边距、边框、外边距组成。盒子决定了该元素在页面中的占位。值得一提的是标准盒子模型与混杂盒子模型是有差别的。<br>标准盒子模型的实际占位：<code>width+padding*2+border*2+margin*2</code><br>混杂盒子模型的实际占位：<code>width+margin*2</code><br><img src="/images/cssbox1.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br><img src="/images/cssbox2.PNG" alt="参数为DOM对象时jQuery对象内部结构">  </p>
+<p><strong>如何解决混杂盒子模型带来的不便：</strong><br>我们可以避免混杂模式的触发。通过文档类型声明DOCTYPE，可以选择是触发混杂模式还是标准模式。通过设置文档类型声明，可以告诉浏览器使用哪种文档类型定义DTD，以及选择哪种HTML和网页呈现的方式。当页面以混杂模式呈现时，其行为是不可预知的，所以要尽量避免混杂模式的触发。混杂模式通常是为了模拟老版的浏览器使其仍能够正常运行。    </p>
+<p><strong>注：</strong>在CSS2中背景应用于内容和内边距组成部分；而在CSS2.1中背景已经延伸到了边框（这也是CSS标准规定的）<br><img src="/images/bg1.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>在CSS3中这个是可设的。  </p>
+<h3 id="内边距">内边距</h3><p>内边距的值可以是百分比，是相对与其父元素的宽度width来计算的，不管是垂直内边距或水平内边距都是根据父元素的width计算的。   </p>
+<h3 id="边框">边框</h3><p>需要注意的是，如果你希望有边框就一定要记得设置样式<code>border-style</code>，因为默认是none，即便设置了边框宽度和颜色也不会显示的。    </p>
+<p>若没有设置边框颜色，那么边框颜色默认为元素文本的颜色，若当前元素无文本那么边框颜色就是其父元素的文本颜色。</p>
+<h3 id="外边距">外边距</h3><p>和内边距一样，给外边距设置值为百分比时，是相对于其父元素的宽度width来计算的。<br>对于行内元素来讲，垂直的外边距不会产生效果。  </p>
+
           
         
       </div>
@@ -140,14 +149,6 @@
 
     
       <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/ajax/">
-                #ajax
-              </a>
-            
-          </div>
         
 
         
@@ -202,7 +203,10 @@
         
           
             <hr>
-<p>layout: post<br>title: “AJAX之GET与POST”<br>date: 2013-05-30 19:47<br>comments: true<br>categories: JS<br>tags: [ajax]  </p>
+<p>layout: post<br>title: “AJAX之GET与POST”<br>date: 2013-05-30 19:47<br>comments: true<br>categories: JS<br>tags:   </p>
+<ul>
+<li>“ajax”  </li>
+</ul>
 <hr>
 <h2 id="写在前面">写在前面</h2><p>ajax就是使用异步的方式从服务器获取数据或者向服务器写入数据的技术。它使用户无需刷新整个页面就能从服务器获取数据，并且在发送请求后用户不用傻等还能继续其他操作。    </p>
 <p>之前一直用jQuery封装AJAX的各种接口，用的特顺手，后来为了系统学习特意买了本《Head First Ajax》，看了大概5章实在有些受不了了，这本书节奏太慢，感觉是针对完全的js小白。于是，转看《js高级程序设计》了，这本书讲的Ajax相关知识算是比较广的。这部分在练习的时候需要和后台结合才能较深理解Ajax工作机制，在练习过程中遇到了一些问题：后台无法获取参数数据、XHR全局变量问题、readystatechange事件中event对象的问题。详细感悟如下。  </p>
@@ -299,128 +303,6 @@ request.send(paras);
           
           
             
-              <a class="post-title-link" href="/2015/03/22/test2/">
-                test2
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2015-03-22
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/03/20/test/">
-                test
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2015-03-20
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
               <a class="post-title-link" href="/2015/03/20/hello-world/">
                 Hello World
               </a>
@@ -480,9 +362,666 @@ request.send(paras);
 
 
   
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/10/31/2013-10-31-fe/">
+                我与前端
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-10-31
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><p>我的找工作就这么结束了吧，下面也不准备找了，不想再做选择。做个简单回顾吧：  </p>
+<ul>
+<li>9.17 阿里技术面  </li>
+<li>10.09 顽石互动面试  </li>
+<li>10.11 阿里hr面  </li>
+<li>10.12 航天系统科学与工程技术研究院笔试+面试   </li>
+<li>10.15 欧朋面试 </li>
+<li>10.19 美团面试  </li>
+<li>10.20 百度面试    </li>
+<li>10.21 网易面试（有事没去）</li>
+<li>10.22 搜狗面试  </li>
+<li>10.24 中船重工725所面试  </li>
+</ul>
+<p>我觉得找工作前分析下自己喜欢什么适合什么，有侧重地找（请忽略那两个研究所，我已深深后悔）。简历有的放矢地投，我一共投了26份简历（互联网20+银行2+运营商4），当然还有一些双选会的研究所（跑过3场，一场航天，一场中船，一场电信）。  </p>
+<p>写这篇博客，缘由是不少师弟师妹在论坛上私信我说想要学前端，我想说的是无论现在你想要学什么都可以开始了~！到明年找工作还有快一年时间，找到自己想学的想做的有针对性地加强学习和练习，明年求职季会顺利不少。  </p>
+<p>我也是才接触前端17个月（2012-5-1写下第一行前端代码），我清楚自己还差得远，今天主要是写自己怎么入行的一些经历罢了。  </p>
+<h2 id="我的前端经历">我的前端经历</h2><h3 id="1">1</h3><p>接触前端仅仅是因为导师公司立了个新项目，项目经理就让我去负责前端，因为我之前做后台一直没做出成绩，他就觉得那就把你放在简单的前端开发上吧~这是我的一个转折，我爱这个转折~！   </p>
+<p>我属于比较较真的人，做什么就一定要逼自己做的特别好，所以研一做后台开发的时候简直要把自己逼死了~！所以我感激这个转折！  </p>
+<p>最初接受做前端时，记得很清楚有同学劝我说你为什么要做那个，就是天天改界面一点前途都没有，到时候你连工作都找不到！我想说大家对前端的误解很深，也奉劝因为觉得前端简单就过来淌水的同学好好想一想。  </p>
+<h3 id="2">2</h3><p>先列下书单：  </p>
+<ul>
+<li>《JavaScript高级程序设计》第三版  </li>
+<li>《JavaScript DOM编程艺术》第二版  </li>
+<li>《JavaScript语言精粹》修订版    </li>
+<li>《编写高质量代码-web前端开发修炼之道》  </li>
+<li>《精通CSS》  </li>
+<li>《锋利的jQuery》第二版  </li>
+<li>《Head First Ajax》</li>
+<li>《数据可视化实战》  </li>
+<li>《HTML5与CSS3权威指南》  </li>
+<li>《Node.js开发指南》  </li>
+<li>《白帽子将Web安全》  </li>
+<li>《基于MCV的JavaScript Web富应用开发》  </li>
+<li>《响应式Web设计》  </li>
+</ul>
+<p>说明：<br>前5本书基本都看完了，后面的断断续续的~    </p>
+<h3 id="3">3</h3><p>大家都知道，跟写代码有关的技能只靠看书是万万不能的。<br>当时也是项目进度的关系，属于在压力之下通过写代码写代码写代码迅速成长。其实html和css还好，刚开始比较难的是js。最初接项目的时候我们部门没有人做前端，所以没人带我。完全不可能给你充足的时间让你吧js书看完再回来做项目，当时我们公司其他部门做过内部OA系统，我在写js不懂的时候会去别的部门请教。请教是一小部分，更多的时候我就一直登陆着OA，一个页面一个页面地看源码。比如我想实现一个功能，就回去OA上看有没有类似的功能实现，如果有就刷整个源码找到那块代码，然后去查每一个函数每一个语句的含义。就是这样慢慢积累下来的。等到几个功能页面完成后其实已经对js有了初步了解。<br>还有一方面我觉得系统的学习是特别有必要的，你不看书就不知道你写的代码有多屎。。。就不知道你写的代码性能有多差，有多难维护。而且项目里需要的东西只是很小一部分，从书里可以得到方方面面。还有一点就是看书也不是纯看，边看边写，把书里的代码都实现一下，跑一跑。看的书越多你的视野越开阔~！<br>其实我就这些感受，我觉得还是要看兴趣，因为有兴趣我才愿意把DataV里tree.js和treemap.js的源码刷一遍，才能想要去刷jQuery的源码（遇到了超多困难，才啃了一点），才愿意看到一些css或js里匪夷所思的现象去追究其原因。<br>还要提一提带我如前端的这个项目，我很感激。<br>最后说一下我常用的工具：Chrome和IE自带的调试器、IE tester、YSlow、Httpwatch</p>
+<h3 id="4">4</h3><p>再说一说面试时候的一些感受吧：  </p>
+<ul>
+<li><p>不要什么都往简历上放，最好保证简历上的东西你都熟悉。也就是说简历要是真实的，一方面对招聘方的尊重，另外一方面你写到简历上面试官就有机会问到，不要自寻死路。</p>
+</li>
+<li><p>无论你有多么牛，你准备的多么充分，面试官都可能问到你不会的东西。你可以诚实回答你不会，然后把这个问题引导到你会的领域，要主导你的面试。<br>比如，面试官问你：“你给我说下UDP协议？”<br>你心里咯噔了一下想不会呀。这时候你可以诚实地说：“我本科时候网络学过，但是研究生阶段最近一直做前端相关，所以不太记得了。但是我可以说一下http协议的工作原理以及http的各个头信息的含义以及作用。”这时候面试官一般都会开始关注你对前端以及http请求的认识，而不会再抓住你不会网络这件事儿了。</p>
+</li>
+<li><p>当你被问到了一个你特别了解的技术点时，你可以在回答完面试官注重的点之后继续扩大并延伸到多个技术点上去。这有两个好处：1.保证在有限的面试时间里大部分是你在讲，主导面试；2.向面试官展示你不光知道这个技术点还知道其他更难的技术点。这样才能充分展示你的优点嘛~  </p>
+</li>
+<li><p>当你在回答面试官的题目并延伸是，切忌不要提及你不擅长的技术点。不然又是自寻死路。这就是扬长避短。你要保证在有限的时间里展示自己的优点~  </p>
+</li>
+<li><p>其实能够任你大说特说的一般是一面面试官，通常在二面三面时面试官知道你会这个东西就会让你打住，然后往更深层次地问。这个时候就看你的功力了~  </p>
+</li>
+<li><p>其实上面只是一些技巧，但是这些小技巧不能帮你顺利过面试，最重要的是你自己知识掌握是否扎实。</p>
+</li>
+<li><p>我面的这几家公司只有欧朋一面时让我不是特别舒服，很多面试官都会给你营造相对轻松的气氛。我一般是面试前特别紧张，但是一旦开始跟面试官交流就特别自然了。你不能保证你遇到的所有面试官都和颜悦色，因为有时候他们面试面一天难免烦躁，这时候不要紧张因为他的烦躁不是针对你一个人的，这不是你的问题，从容应对。  </p>
+</li>
+<li><p>面试后一定记得总结，总结你今天不会的技术点，因为很多面试官在意的点都一样，你今天栽了不总结下次继续栽。</p>
+</li>
+<li><p>一般面试官最后会说：“你有什么问题要问我吗？”其实这是个很好的机会了解你应聘的这家公司，因为你再网上能找到的关于这个公司的都是很外在的东西，实际跟你有关的其实是你进去后这个岗位需要你做什么，你的工作环境，工作团队是什么样的。我一般会问：  </p>
+<ul>
+<li>1.你们公司前端团队大概多少人；你们前端和后台的合作方式。（一方面这个问题的确是我最关心的；另外一方面你向面试官传达了你对他们公司真心感兴趣）</li>
+<li>2.你们公司前端都做什么产品（你可以通过这个衡量你是否愿意进这个公司做这个产品，很多面试官特别乐意介绍）</li>
+<li>3.根据对我1个小时的了解，能不能给我提写建议，以此提高自己（可以看出他对你的态度）  </li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/10/05/2014-10-05-prototype/">
+                对prototype的一些认识
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-10-05
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><p>一个问题答错2次，简直不可原谅。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">O</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	O.prototype.a=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> O();</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> O();</span><br><span class="line">	o1.a=<span class="number">2</span>;</span><br><span class="line">	alert(o2.a);<span class="comment">//1  </span></span><br><span class="line">```  </span><br><span class="line">`o1.a=<span class="number">1</span>`对`o1`的属性`a`进行重置，对原型中`O.prototype.a`没有任何影响。因此`o2.a`不会变化。根据上述代码可绘制出下图：  </span><br><span class="line">![对prototype的认识](<span class="regexp">/images/</span>prototype.PNG)  </span><br><span class="line">  </span><br><span class="line">## 举例详解  </span><br><span class="line">### 示例一    </span><br><span class="line">```javascript		</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.a=[<span class="number">1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">	o1.a.push(<span class="number">2</span>);</span><br><span class="line">	alert(o2.a);<span class="comment">//1</span></span><br></pre></td></tr></table></figure></p>
+<p>在上述代码中，<code>a</code>是对象<code>Obj</code>的实例属性，每个实例的<code>a</code>属性都是一次拷贝，互不影响。<br><img src="/images/aboutprototype.PNG" alt="对prototype的认识"></p>
+<h3 id="示例二">示例二</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">Obj.prototype.a=[<span class="number">1</span>];</span><br><span class="line"><span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line"><span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">o1.a.push(<span class="number">2</span>);</span><br><span class="line">alert(o2.a)<span class="comment">//1,2</span></span><br></pre></td></tr></table></figure>
+<p>在上述代码中，<code>a</code>是对象<code>Obj</code>的原型属性，所有实例都共享<code>a</code>属性，<code>o1.a.push(2);</code>对属性a进行了修改，导致其他实例访问该属性时值已变化。绘图如下：<br><img src="/images/aboutprototype1.PNG" alt="对prototype的认识"></p>
+<h3 id="示例三">示例三</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	Obj.prototype.a=[<span class="number">1</span>];</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">	o1.a=[<span class="number">1</span>,<span class="number">2</span>];</span><br><span class="line">	alert(o2.a);<span class="comment">//1 </span></span><br><span class="line">``` </span><br><span class="line">这个实例跟文章开头那个实例的原理是一样的，`o1.a=[<span class="number">1</span>,<span class="number">2</span>];`重写原型属性`a`使`o1`增加了实例属性`a`，对于`ol`来说这个同名的属性会屏蔽原型中的`a`属性，但是并对=改变原型中的`a`。绘图如下： </span><br><span class="line">![对prototype的认识](<span class="regexp">/images/</span>aboutprototype2.PNG)  </span><br><span class="line">### 示例四  </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	Obj.prototype.a=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line">	Obj.prototype=&#123;a:<span class="number">2</span>&#125;;</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">	alert(o1.a);<span class="comment">//1</span></span><br><span class="line">	alert(o2.a);<span class="comment">//2</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/aboutprototype3.PNG" alt="对prototype的认识"><br>重写原型前已存在的实例仍指向旧原型，重写原型后新创建的实例指向新原型。  </p>
+<h3 id="实例五">实例五</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ObjA</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.a=[<span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ObjB</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">ObjB.prototype=<span class="keyword">new</span> ObjA();</span><br><span class="line"><span class="keyword">var</span> oa=<span class="keyword">new</span> ObjA();</span><br><span class="line"><span class="keyword">var</span> ob1=<span class="keyword">new</span> ObjB();</span><br><span class="line"><span class="keyword">var</span> ob2=<span class="keyword">new</span> ObjB();</span><br><span class="line">oa.a.push(<span class="number">2</span>);</span><br><span class="line">alert(ob1.a);<span class="comment">//1</span></span><br><span class="line">ob2.a.push(<span class="number">2</span>);</span><br><span class="line">alert(ob1.a);<span class="comment">//1,2</span></span><br></pre></td></tr></table></figure>
+<p>这个其实将上面讲到的几个点结合起来了。引用类型<code>a</code>是对象<code>ObjA</code>的实例属性，所以<code>ObjA</code>的两个实例<code>oa</code>和<code>ObjB.prototype</code>各自保存了一个拷贝副本，不会相互影响。因此<code>ob1</code>不受<code>oa.a.push(2);</code>的影响。但对于对象<code>ObjB</code>来讲，<code>a</code>属于原型属性，为<code>ob1</code>和<code>ob2</code>公用。绘图如下：<br><img src="/images/aboutprototype4.PNG" alt="对prototype的认识"></p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/10/04/2014-10-04-function-declare/">
+                函数的声明
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-10-04
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f=<span class="function"><span class="keyword">function</span> <span class="title">myName</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//在这里获取的到myName吗</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//在这里获取的到myName吗</span></span><br></pre></td></tr></table></figure>
+<p>看到这个问题的时候有些懵了，因此从来没有用这种方式定义过函数。<br>ps：事实上，最好不要用这种方式定义函数。不同浏览器下表现怪异。</p>
+<h2 id="函数的定义方式">函数的定义方式</h2><p>函数的定义方式有三种：  </p>
+<h3 id="函数声明">函数声明</h3><pre><code><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span></span>{}    
+</code></pre><p>以前在写《作用域链和预处理》时，讲过当通过函数声明的方式定义函数时，会对函数体内的代码进行预处理，因此你可以在函数声明之前调用该函数。</p>
+<h3 id="函数表达式">函数表达式</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">var</span> foo = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        alert(<span class="keyword">typeof</span> foo);<span class="comment">//在这里可以获取到foo</span></span><br><span class="line">    &#125;;</span><br><span class="line">    foo();    </span><br><span class="line">``` </span><br><span class="line">当通过函数表达式定义函数时，只是对于`<span class="keyword">var</span> foo`进行预处理，而不处理`<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;&#125;`内部代码。只有在执行阶段才处理`<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;&#125;`内部代码，因此以上定义必须在调用`foo`之前。  </span><br><span class="line">###  带有函数名称的函数表达式  </span><br><span class="line">```javascript   </span><br><span class="line">	<span class="keyword">var</span> foo=<span class="function"><span class="keyword">function</span> <span class="title">myName</span><span class="params">()</span></span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;;   </span><br><span class="line">```	 </span><br><span class="line">**规范要求：**只能在`myName`函数体内部获取到`myName`，在函数体外部`myName`是无效的。但是在IE下则不同（IE对ECMAScript的实现总是不按规矩来）  </span><br><span class="line">####实例一：函数名是否渗透到外部作用域中 </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="keyword">var</span> foo=<span class="function"><span class="keyword">function</span> <span class="title">myName</span><span class="params">()</span></span>&#123;</span><br><span class="line">		alert(<span class="keyword">typeof</span> myName);<span class="comment">//function</span></span><br><span class="line">	&#125;; </span><br><span class="line">	alert(<span class="keyword">typeof</span> myName);<span class="comment">//IE下返回function，其他浏览器返回undefined</span></span><br></pre></td></tr></table></figure>
+<p>关于对上述代码的处理，我是这么理解的：  </p>
+<ul>
+<li><p>在IE下，预处理阶段对<code>function myName(){}</code>进行处理(<strong>当做函数声明来处理</strong>),将<code>myName</code>添加到作用域链中，因此在外部是可以访问<code>myName</code>的；在执行时将<code>myName</code>赋值给<code>foo</code>。通过以下代码可以证实：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alert(<span class="keyword">typeof</span> myName);<span class="comment">//function</span></span><br><span class="line"><span class="keyword">var</span> foo=<span class="function"><span class="keyword">function</span> <span class="title">myName</span><span class="params">()</span></span>&#123;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在其他浏览器下，预处理阶段不会处理<code>function myName(){}</code>,执行到<code>var foo=function myName(){}</code>时将<code>myName</code>添加到作用域链中，但是该赋值语句执行完立即将<code>myName</code>从作用域链中删除，因此在外部无法访问到<code>myName</code>。  </p>
+</li>
+</ul>
+<h4 id="实例二：两个对象是否相互影响">实例二：两个对象是否相互影响</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">var</span> foo = <span class="function"><span class="keyword">function</span> <span class="title">myName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        alert(foo == myName);</span><br><span class="line">    &#125;;</span><br><span class="line">    foo();<span class="comment">//IE下返回false，其他浏览器下返回true  </span></span><br><span class="line">```  </span><br><span class="line">- IE下，`foo`和`myName`是两个独立的对象。   </span><br><span class="line"></span><br><span class="line">#### 实例三：在条件控制时使用哪种方式定义函数 </span><br><span class="line">```javascript  </span><br><span class="line">	 <span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>&#123; alert(<span class="number">1</span>); &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>&#123; alert(<span class="number">2</span>); &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    foo();</span><br></pre></td></tr></table></figure>
+<p>上述代码再FF下返回1；在其他浏览器下返回2。<br>这是由于在FF下，使用函数声明定义函数时，在预处理阶段忽略声明，在<strong>执行阶段</strong>才进行声明。<br><strong>注意：</strong>从上述代码可知，最好不要再条件判断语句中使用函数声明，可以通过函数表达式进行函数定义。例如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">	 <span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> foo=<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123; alert(<span class="number">1</span>); &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> foo=<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123; alert(<span class="number">2</span>); &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    foo();<span class="comment">//1    </span></span><br><span class="line">```  </span><br><span class="line">## 总结和疑惑  </span><br><span class="line">**总结**：尽量避免使用类似于`<span class="keyword">var</span> foo=<span class="function"><span class="keyword">function</span> <span class="title">myName</span><span class="params">()</span></span>&#123;&#125;`这种方式的函数定义，在IE、FF下都会有诡异的行为。如果你想递归调用可以使用`<span class="built_in">arguments</span>.callee`。  </span><br><span class="line">另外，尽量避免在条件判断中使用函数声明，推荐使用函数表达式。  </span><br><span class="line">  </span><br><span class="line">**疑惑**：  </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="keyword">var</span> f = <span class="function"><span class="keyword">function</span> <span class="title">g</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        alert(<span class="number">1</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">false</span>) &#123;</span><br><span class="line">        f = <span class="function"><span class="keyword">function</span> <span class="title">g</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            alert(<span class="number">2</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">	g();<span class="comment">//非IE下报错（无法访问g），在IE下输出2</span></span><br><span class="line">    f();<span class="comment">//1</span></span><br></pre></td></tr></table></figure></p>
+<p>以上代码在非IE浏览器下的输出很好理解，以为预处理阶段会忽略<code>function g(){}</code>。<br>但是对于<code>f()</code>在IE下仍输出1，没能理解。我努力试图理解了以下，不知道是不是准确： </p>
+<ul>
+<li>（IE下）在预处理阶段，由于忽略逻辑判断，<code>g</code>已经发生了变化；在执行阶段，重新创建了一个对象（类似于对<code>g</code>的深度拷贝），将该对象赋值给<code>f</code>，由于是深度拷贝所以<code>g</code>和<code>f</code>是两个互不影响的对象。  </li>
+<li>而在非IE浏览器下，执行阶段直接将对象<code>g</code>赋值给了<code>f</code>，<code>g</code>和<code>f</code>是引用关系，相互影响。<br>上述也印证了示例二。</li>
+</ul>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/10/03/2013-10-03-a-button-by-css3/">
+                用CSS3实现一个按钮
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-10-03
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><p><img src="/images/btnstep4.PNG" alt="css3实现一个小按钮"><br>看到知乎上的一个小按钮，类似上图。<br>当然，你可以使用背景图片，那样能够跨多浏览器，但是适应性不好；如果想应对宽和高不固定的情况，可能需要使用“滑动门”。<br>今天想使用CSS3多个属性结合实现一下。  </p>
+<h2 id="实现">实现</h2><h3 id="分析">分析</h3><p>上图按钮有这么几个特点：  </p>
+<ul>
+<li>圆角  </li>
+<li>上方有高光  </li>
+<li>有渐变营造出凸起的立体效果    </li>
+</ul>
+<h3 id="分步实现">分步实现</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.invite&#123;</span><br><span class="line">	min-width:<span class="number">75</span>px;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&lt;button <span class="keyword">class</span>=<span class="string">"invite"</span>&gt;邀请回答&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/btnstep1.png" alt="css3实现一个小按钮"></p>
+<h4 id="step1:圆角">step1:圆角</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.invite&#123;</span><br><span class="line">	min-width:<span class="number">75</span>px;</span><br><span class="line">	height:<span class="number">25</span>px;</span><br><span class="line">       <span class="comment">/*圆角*/</span></span><br><span class="line">       border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">       border-radius:<span class="number">4</span>px;</span><br><span class="line">       -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">       -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">       -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/btnstep2.png" alt="css3实现一个小按钮">  </p>
+<h4 id="step2:高光">step2:高光</h4><p>给<code>button</code>添加盒内阴影，颜色设置比边框稍浅<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">	.invite&#123;</span><br><span class="line">            min-width:<span class="number">75</span>px;</span><br><span class="line">            height:<span class="number">25</span>px;</span><br><span class="line">            <span class="comment">/*圆角*/</span></span><br><span class="line">            border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">            border-radius:<span class="number">4</span>px;</span><br><span class="line">            -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">            <span class="comment">/*高光*/</span></span><br><span class="line">            box-shadow:inset <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> #<span class="number">349</span>ED6;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">```  	</span><br><span class="line">![css3实现一个小按钮](<span class="regexp">/images/</span>btnstep3.png)   </span><br><span class="line">  </span><br><span class="line">#### step3：纵向渐变  </span><br><span class="line">纵向渐变，渐变开始的颜色最好比高光设置颜色深且比边框颜色浅。    </span><br><span class="line">```javascript</span><br><span class="line">	.invite&#123;</span><br><span class="line">            min-width:<span class="number">75</span>px;</span><br><span class="line">            height:<span class="number">25</span>px;</span><br><span class="line">            <span class="comment">/*圆角*/</span></span><br><span class="line">            border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">            border-radius:<span class="number">4</span>px;</span><br><span class="line">            -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">            <span class="comment">/*高光*/</span></span><br><span class="line">            box-shadow:inset <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> #<span class="number">349</span>ED6;</span><br><span class="line">            <span class="comment">/*纵向渐变造成凸出效果*/</span>  </span><br><span class="line">            background:#<span class="number">01539</span>A;</span><br><span class="line">            background-image:-webkit-gradient(linear,<span class="number">0</span>% <span class="number">0</span>%,<span class="number">0</span>% <span class="number">100</span>%,from(#<span class="number">0084</span>CC),to(#<span class="number">01539</span>A));</span><br><span class="line">            color:White;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/btnstep4.png" alt="css3实现一个小按钮"><br>上述代码设置<code>background:#01539A;</code>是为了使按钮在不支持渐变的浏览器下仍有背景。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/10/03/2013-10-03-number-and-string/">
+                js中数值和字符串的一点事儿
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-10-03
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">alert(<span class="string">"10"</span> &lt; <span class="string">"9"</span>);<span class="comment">//true</span></span><br><span class="line">alert(<span class="string">"10"</span> &lt; <span class="string">"c"</span>);<span class="comment">//true</span></span><br><span class="line">alert(<span class="number">10</span> &lt; <span class="string">"9"</span>);<span class="comment">//false</span></span><br><span class="line">alert(<span class="number">10</span> &lt; <span class="string">"11c"</span>);<span class="comment">//false</span></span><br><span class="line">alert(<span class="number">10</span> &gt; <span class="string">"11c"</span>);<span class="comment">//false</span></span><br><span class="line">alert(+<span class="string">"10"</span> &lt; <span class="string">"9"</span>);<span class="comment">//false</span></span><br><span class="line">alert(+<span class="string">"10"</span> &gt; <span class="number">9</span>);<span class="comment">//true  </span></span><br><span class="line"> alert(-<span class="string">"10"</span>&lt;<span class="number">9</span>);<span class="comment">//true</span></span><br><span class="line">alert(<span class="string">"-10"</span>&lt;<span class="number">9</span>);<span class="comment">//true </span></span><br><span class="line">alert(<span class="string">""</span> &lt; <span class="number">1</span>);<span class="comment">//true</span></span><br><span class="line">   alert(<span class="built_in">parseInt</span>(<span class="string">""</span>) &lt; <span class="number">1</span>); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+<p>有让你觉得意外的地方么~  </p>
+<h2 id="数值、字符串大小比较">数值、字符串大小比较</h2><ul>
+<li>字符串之间：这个比较简单，逐个字符进行比较ASCII码值。  </li>
+<li><p>字符串与数值之间：将<strong>字符串转换数值</strong>，然后比较数值大小。  </p>
+<pre><code class="javascript">alert(<span class="number">10</span> &lt; <span class="string">"11c"</span>);<span class="comment">//false</span>
+alert(<span class="number">10</span> &gt; <span class="string">"11c"</span>);<span class="comment">//false</span>
+</code></pre>
+<p>上述代码两次均返回<code>false</code>，这是由于<code>&quot;11c&quot;</code>不能转化为数值。可以测试<code>isNaN(&quot;11c&quot;)</code>返回<code>true</code>。<br><strong>数值与<code>NaN</code>比较大小永远返回<code>false</code>。</strong><br>需要注意的是，此处字符串转换为数值的规则<strong>与<code>parseInt()</code>是不相同的</strong>。此处的规则与<code>Number()</code>和<code>isNaN()</code>是一致的，规则如下:    </p>
+<ul>
+<li><p>若字符串只包含数字、正号<code>+</code> 和负号<code>-</code>，转化为十进制。例如：           </p>
+<pre><code>alert(+<span class="string">"10"</span> &gt; <span class="number">9</span>);<span class="comment">//true 即(10&lt;9) </span>
+ alert(+<span class="string">"10&gt;"</span><span class="number">9</span><span class="string">");//true 即(10&gt;9)</span>
+   alert(-<span class="string">"10"</span>&lt;<span class="number">9</span>);<span class="comment">//true 即(-10&lt;9)</span>
+  alert(<span class="string">"-10"</span>&lt;<span class="number">9</span>);<span class="comment">//true 即(-10&lt;9)  </span>
+</code></pre></li>
+<li>若包含有效的浮点格式，例如2.1，则转化为响应的浮点数  </li>
+<li>若为空字符串，则转换为0  </li>
+<li><p>若包含<code>0x</code>则转换为十六进制，若包含<code>0</code>则不按照八进制解析而忽略头部的任意多个0；  </p>
+<pre><code><span class="function"><span class="title">alert</span><span class="params">(<span class="string">"011"</span>&lt;<span class="number">9</span>)</span></span><span class="comment">//false 即(11&lt;9)  </span>
+<span class="function"><span class="title">alert</span><span class="params">(<span class="string">"0x11"</span>&lt;<span class="number">15</span>)</span></span><span class="comment">//false 即(17&lt;15)</span>
+</code></pre></li>
+<li><p>若包含以上格式其他字符，则返回<code>NaN</code>，例如  </p>
+<pre><code>alert(<span class="number">10</span> &lt; <span class="string">"11c"</span>);<span class="comment">//false 即(10&lt;NaN)</span>
+   alert(<span class="number">10</span> &gt; <span class="string">"11c"</span>);<span class="comment">//false 即(10&gt;NaN)</span>
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<h2 id="parseInt()工作原理">parseInt()工作原理</h2><h3 id="parseInt(string,radix)用法：">parseInt(string,radix)用法：</h3><ul>
+<li>返回值是十进制；</li>
+<li>无视<code>string</code>中最前和最后的空格；   </li>
+<li>参数<code>radix</code>是指解析<code>string</code>的进制，若未指定<code>radix</code>或值为0则按默认进制对<code>string</code>进行解析；  </li>
+<li><p>未指定<code>radix</code>的情况下，若<code>string</code>的首字符为<code>0</code>，则按照八进制进行解析；若<code>string</code>的首字符为<code>0x</code>则默认按照十六进制解析<code>string</code>，其他情况默认为十进制；    </p>
+<pre><code><span class="built_in">parseInt</span>(<span class="string">"011"</span>);<span class="comment">//9</span>
+<span class="built_in">parseInt</span>(<span class="string">"0x11"</span>);<span class="comment">//17</span>
+</code></pre></li>
+<li><p>解析从第一个字符开始，到第一个不能解析的字符（空格、英文、标点等）结束；<strong>重点说一下，能解析的字符包括数字、正号<code>+</code>和负号<code>-</code>；</strong>    </p>
+<pre><code><span class="built_in">parseInt</span>(<span class="string">"1a"</span>);<span class="comment">//1</span>
+<span class="built_in">parseInt</span>(<span class="string">""</span>);<span class="comment">//NaN</span>
+<span class="built_in">parseInt</span>(<span class="string">"-1"</span>);<span class="comment">//-1</span>
+</code></pre></li>
+<li><p>若第一个字符就不能解析，则返回NaN；  </p>
+</li>
+</ul>
+<p>实例一：   </p>
+<pre><code><span class="keyword">var</span> <span class="built_in">c</span> = parseInt(<span class="string">"017/08/2009"</span>);
+alert(<span class="built_in">c</span>);               <span class="comment">//15</span>
+</code></pre><p>解析：未指定radix，第一个字符为0，则按照八进制进行解析，且解析到7停止，017输出15。  </p>
+<p>实例二：  </p>
+<pre><code><span class="keyword">var</span> <span class="keyword">d</span> = parseInt(<span class="string">"09/08/2009"</span>);
+alert(<span class="keyword">d</span>);              <span class="comment">//0</span>
+</code></pre><p>解析：未指定radix，第一个字符为0，<strong>按照八进制解析时9属于不能解析的字符</strong>，故0输出0.</p>
+<h2 id="Number()和parseInt()区别（实例）">Number()和parseInt()区别（实例）</h2><pre><code><span class="built_in">Number</span>(<span class="string">"1a"</span>);<span class="comment">//null</span>
+<span class="built_in">parseInt</span>(<span class="string">"1a"</span>);<span class="comment">//1</span>
+
+<span class="built_in">Number</span>(<span class="string">""</span>);<span class="comment">//0</span>
+<span class="built_in">parseInt</span>(<span class="string">""</span>);<span class="comment">//NaN</span>
+
+<span class="built_in">Number</span>(<span class="string">"011"</span>);<span class="comment">//11</span>
+<span class="built_in">parseInt</span>(<span class="string">"011"</span>);<span class="comment">//9</span>
+</code></pre>
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/09/26/2014-09-26-arguments/">
+                函数之arguments
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-09-26
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><p>你觉得<code>arguments</code>很简单吗？那想想这几个问题：  </p>
+<ul>
+<li>arguments是不是数组？  </li>
+<li>arguments与命名参数如何相互影响的？  </li>
+<li>命名参数是必须的吗？  </li>
+<li>不定义命名参数可以传参吗能获取参数吗？  </li>
+<li>命名参数个数与实参个数一定要一致吗？  </li>
+<li>怎么知道定义了几个命名参数？  </li>
+<li>怎么知道执行时实际传递了几个参数？    </li>
+<li><code>arguments</code>的长度是由形参还是实参决定的？    </li>
+</ul>
+<p>按照惯例，结合例子分析清楚以上每一个点。  </p>
+<h2 id="示例及要点分析">示例及要点分析</h2><h3 id="示例一:arguments的真身">示例一:arguments的真身</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span><span class="params">(para1,para2)</span></span>&#123;</span><br><span class="line">	alert(<span class="keyword">typeof</span> <span class="built_in">arguments</span>);<span class="comment">//object</span></span><br><span class="line">	alert(<span class="built_in">arguments</span> <span class="keyword">instanceof</span> <span class="built_in">Array</span>);<span class="comment">//false</span></span><br><span class="line">&#125;)(<span class="string">"a"</span>,<span class="string">"b"</span>);</span><br></pre></td></tr></table></figure>
+<p>从上述可以看出<code>arguments</code>不是数组，<strong>它是一个对象</strong>，准确的说它是一个<strong>类数组对象！</strong>。这里穿插讲一下类数组对象：   </p>
+<h4 id="类数组对象：">类数组对象：</h4><p>从字面意思来讲，就是一个对象它拥有的一些特性或行为跟数组很像。比如类数组对象拥有length属性、可以像遍历数组一样地来遍历类数组对象；<br>类数组对象归根结底是一个<strong>对象</strong>，它是Object的一个实例，而不是Array的实例；<br>由上可知，类数组对象不能调用大多数组的方法（join、slice、concat等）；  </p>
+<h4 id="示例一解析：">示例一解析：</h4><p>可以将在上述例子中<code>arguments</code>的真身理解为下面这个类数组对象：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="number">0</span>:<span class="string">"a"</span>,<span class="number">1</span>:<span class="string">"b"</span>,length:<span class="number">2</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当使用<code>arguments[0]</code>获取第一个实参时，其实<code>0</code>是作为对象的属性名存在的，而不应理解为数组中的索引值。这时候也许有人会问，能不能用<code>arguments.0</code>来获取属性<code>0</code>的值，答案是不能（会报错）。这是因为<strong>对于对象属性来说，当属性名是合法标识符（即字面、数组、下划线组成且首字符不能是数字）时，这两种获取属性值的方式都是可用的；而当属性名不是合法标识符时，只能通过<code>[]</code>来获取属性。</strong>  </p>
+<p><strong>总结：</strong>其实归根结底牢记<code>arguments</code>是一个对象，它的特殊性在于一定拥有一个<code>length</code>属性，而且其他属性名都是数字。</p>
+<hr>
+<h3 id="实例二：形参与实参">实例二：形参与实参</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       alert(<span class="built_in">arguments</span>[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    test1(<span class="number">1</span>);    </span><br><span class="line">  </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test2</span><span class="params">(para1,para2)</span> </span>&#123;</span><br><span class="line">       alert(<span class="built_in">arguments</span>[<span class="number">1</span>]);</span><br><span class="line">       alert(para2);</span><br><span class="line">	   alert(<span class="built_in">arguments</span>.length);</span><br><span class="line">   	&#125;</span><br><span class="line">    test2(<span class="number">1</span>); <span class="comment">//undefined、undefined、1</span></span><br><span class="line">	test2(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);<span class="comment">//2,2,3</span></span><br><span class="line"></span><br><span class="line">	alert(test1.length);<span class="comment">//0</span></span><br><span class="line">	alert(test2.length);<span class="comment">//2</span></span><br><span class="line">```      </span><br><span class="line">#### 示例分析：  </span><br><span class="line">从以上代码可以说明几点：    </span><br><span class="line"></span><br><span class="line">- 在js中函数的形参是可有可无的，形参只是提供便利，不是必须的。若没有定义形参,则在函数内部通过`<span class="built_in">arguments</span>`访问实参；    </span><br><span class="line">- 形参是作为函数的局部变量存在的；  </span><br><span class="line">- 可以通过`functionName.length`获取函数定义形参的个数；  </span><br><span class="line">- 可以通过`<span class="built_in">arguments</span>.length`获取函数传入实参的个数；  </span><br><span class="line">- 若传入实参个数少于形参个数，则多余的形参自动设为`<span class="literal">undefined</span>`；  </span><br><span class="line"></span><br><span class="line">### 实例三    </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">(para1,para2)</span></span>&#123;</span><br><span class="line">		para1=<span class="string">"c"</span>;</span><br><span class="line">		alert(<span class="built_in">arguments</span>[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">arguments</span>[<span class="number">1</span>]=<span class="string">"d"</span>;  </span><br><span class="line">		alert(<span class="built_in">arguments</span>.length);<span class="comment">//执行Ⅰ</span></span><br><span class="line">		alert(para2);</span><br><span class="line">	&#125;</span><br><span class="line">	f(<span class="string">"a"</span>,<span class="string">"b"</span>);<span class="comment">//"c",2，"d"</span></span><br><span class="line">	f(<span class="string">"a"</span>);<span class="comment">//"c",1，undefined</span></span><br><span class="line">```  </span><br><span class="line">#### 实例分析：  </span><br><span class="line">从上述代码可以看出几点：  </span><br><span class="line">  </span><br><span class="line">- 参数和`<span class="built_in">arguments</span>`对象中对应的属性值是同步的，相互影响；  </span><br><span class="line">- 虽然值同步，但是参数和`<span class="built_in">arguments</span>`中属性是内存独立的；    </span><br><span class="line">- `<span class="built_in">arguments</span>`的长度`length`是由传入的实参个数确定的，而不是由形参个数确定的；这也是为什么`f(<span class="string">"a"</span>)`只传入一个参数时，即使`<span class="built_in">arguments</span>[<span class="number">1</span>]=<span class="string">"d"</span>`而`<span class="built_in">arguments</span>`的长度仍然只是<span class="number">1</span>且para2仍然为`<span class="literal">undefined</span>`。    </span><br><span class="line"></span><br><span class="line">#### 要点：着重讲一下`<span class="built_in">arguments</span>`的长度`length`是由传入的实参个数确定的，而不是由形参个数确定的。还是画图吧  </span><br><span class="line">![参数为DOM对象时jQuery对象内部结构](<span class="regexp">/images/</span><span class="built_in">arguments</span>.PNG) </span><br><span class="line"></span><br><span class="line">讲到这开头的那些疑问就全部解开了。下面写一个遇到的笔试题，跟`<span class="built_in">arguments</span>`有一点关系，不过重点还是在`<span class="keyword">this</span>`和作用域，决定找个时间好好写写`<span class="keyword">this</span>`，也请期待吧~  </span><br><span class="line">### 实例四</span><br><span class="line"></span><br><span class="line">```javascript</span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">bar: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.baz; &#125;,</span><br><span class="line">baz: <span class="number">1</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">		alert(<span class="keyword">typeof</span> <span class="built_in">arguments</span>[<span class="number">0</span>]());</span><br><span class="line">&#125;)(foo.bar);</span><br></pre></td></tr></table></figure>
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/09/25/2014-09-25-eval-scope-chain/">
+                初探eval
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-09-25
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><p>关于eval()，只在项目中对处理JSON数据时使用过，并没有具体研究过其工作原理。在面试中被寒冬问到，才发现自己根本不理解eval()。<br>这里主要将两点：1.eval()的用法；2.eval()与作用域相关</p>
+<h2 id="eval()示例及要点分析">eval()示例及要点分析</h2><p>给几个例子，边感受边理解：  </p>
+<h3 id="示例一">示例一</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">	alert(<span class="built_in">eval</span>(&#123; a: <span class="number">1</span>, b: <span class="number">2</span> &#125;));<span class="comment">//[object object]</span></span><br><span class="line">      	alert(<span class="built_in">eval</span>(<span class="string">"2+2"</span>));<span class="comment">//4</span></span><br><span class="line">      	alert(<span class="built_in">eval</span>(<span class="string">"function f()&#123;&#125;"</span>));<span class="comment">//undefined</span></span><br><span class="line">	alert(<span class="keyword">typeof</span> f);<span class="comment">//function</span></span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>示例一分析：</strong>这个例子主要想说明<code>eval()</code>的参数以及返回值：      </p>
+<ul>
+<li>若参数不是字符串则直接返回该参数，例如上述代码中<code>eval({ a: 1, b: 2 })</code>就是直接返回对象；</li>
+<li>若参数是字符串则直接执行字符串中代码，返回执行结果，例如上述代码<code>eval(&quot;2+2&quot;)</code>，表达式<code>2+2</code>返回值为4，因此eval()返回4；表达式<code>function f(){}</code>无返回值，因此<code>eval(&quot;function f(){}&quot;)</code>返回undefined。  </li>
+</ul>
+<h3 id="示例二">示例二</h3><pre><code><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+    alert(<span class="built_in">eval</span>(<span class="string">"({a:1,b:2})"</span>));<span class="comment">//[object object]</span>
+       alert(<span class="built_in">eval</span>(<span class="string">"{a:1,b:2}"</span>));<span class="comment">//出错</span>
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>   
+</code></pre><p>这个例子看上去比较诡异，在项目中解析JSON数据是时用到过，当时不这么做<code>eval(&#39;(&#39;+jsonData+&#39;)&#39;)</code>就会出错。当时没有深究过为什么。<br><strong>示例二分析：</strong><br>你可以测试一下，在代码里直接执行<code>{a:1,b:2};</code>是会报错的，但是直接执行<code>({a:1,b:2});</code>则能够正常执行。这是因为分组操作符<code>()</code>会强迫解析器将<code>{}</code>当做对象字面量来解析，而不是将<code>{}</code>当做代码段来执行。<br><strong>PS：</strong><code>()</code>只能包含表达式，而不能包含语句。  </p>
+<h3 id="示例二-1">示例二</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">         <span class="built_in">eval</span>(<span class="string">"alert(1);"</span>);</span><br><span class="line">     <span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>这个没什么好分析的，就是简单的告诉你eval()的效果就是让其参数执行。</p>
+<h3 id="示例二-2">示例二</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">    <span class="keyword">var</span> test = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">eval</span>(<span class="string">"alert(test);"</span>);<span class="comment">//1</span></span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>以上代码等价于：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">         <span class="keyword">var</span> test = <span class="number">1</span>;</span><br><span class="line">        alert(test);<span class="comment">//1</span></span><br><span class="line">     &lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="示例三">示例三</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> &lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">     <span class="built_in">eval</span>(<span class="string">"alert(test2);"</span>);<span class="comment">//undefined</span></span><br><span class="line">     <span class="keyword">var</span> test2 = <span class="number">1</span>;</span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>以上代码等价于<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">          alert(test2);</span><br><span class="line">          <span class="keyword">var</span> test2 = <span class="number">1</span>;</span><br><span class="line">     <span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>由作用域链很容易就看懂输出undefined</p>
+<h3 id="示例四">示例四</h3><pre><code class="javascript">&lt;script type=<span class="string">"text/javascript"</span>&gt;
+    <span class="built_in">eval</span>(<span class="string">"var t=1;function f(){alert('hehe');}"</span>);
+    alert(t);
+    f();
+<span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span>
+</code></pre>
+<p>以上代码等价于    </p>
+<pre><code class="javascript"> &lt;script type=<span class="string">"text/javascript"</span>&gt;
+    <span class="keyword">var</span> t=<span class="number">1</span>;
+    <span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">()</span></span>{alert(<span class="string">'hehe'</span>);}
+    alert(t);<span class="comment">//1</span>
+    f();<span class="comment">//hehe</span>
+&lt;<span class="regexp">/script&gt;</span>
+</code></pre>
+<p>不用解释了吧~</p>
+<h3 id="示例五">示例五</h3><pre><code class="javascript">&lt;script type=<span class="string">"text/javascript"</span>&gt;
+    alert(val);<span class="comment">//报错</span>
+    <span class="built_in">eval</span>(<span class="string">"var val=1;"</span>);
+<span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span>
+</code></pre>
+<p><strong>示例分析：</strong><br>示例五还有讲一讲的必要，上述代码无法会报错，这是由于<strong>参数在预处理（解析）过程中只是作为一个字符串 ，只有在执行时才创建变量</strong>。也就是说在预处理时eval中的参数<code>var val=1;</code>并未被预处理，只是作为一个字符串存在。因此执行<code>alert(val)</code>时根本找不到<code>val</code>的声明。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
 
           </div>
 
+          
+            <div class="pagination">
+              <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+            </div>
           
         </div>
 
@@ -508,11 +1047,11 @@ request.send(paras);
       <p class="site-description motion-element"></p>
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">
-            <span class="site-state-item-count">1</span>
+            <span class="site-state-item-count">0</span>
             <span class="site-state-item-name">标签</span>
         </div>
         <div class="site-state-item site-state-pages">

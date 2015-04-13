@@ -1,0 +1,876 @@
+<!doctype html>
+<html class="theme-next use-motion">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.3.0"/>
+
+
+
+
+
+    <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+    <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.3.0" />
+
+
+
+
+  <title> Ajax之jQuery对Ajax的封装（之那些被遗忘的参数） // Hexo </title>
+</head>
+
+<body>
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+    <a href="/" class="brand">
+        <span class="logo">
+          <i class="icon-logo"></i>
+        </span>
+        <span class="site-title">Hexo</span>
+    </a>
+</h1>
+
+
+  <ul id="menu" class="menu">
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+  
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Ajax之jQuery对Ajax的封装（之那些被遗忘的参数）
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-06-02
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <p>  　　</p>
+<h2 id="写在前面">　写在前面　　　　</h2><p>在项目开发过程中，在使用jQuery封装的Ajax时遇到过2个问题：  </p>
+<ol>
+<li>请求数据时，总是读浏览器缓存，即使服务器数据已发生变化  </li>
+<li>有时候需要再Ajax回调函数中输出响应主体文本，类似于“操作成功”之类的，但有时候发现输出的居然是网页源代码，这个是session超时导致的。因为这个问题被测试部烦了好久好久好久。。。。这也是下定决心总结下封装Ajax的原因。<br>在下面的总结中将穿插提到这两个问题的原因及解决方法。  </li>
+</ol>
+<h2 id="丰富的接口">丰富的接口</h2><ul>
+<li>底层封装：$.ajax()  </li>
+<li>2层封装：$(selector).load()、$.get()、$.post()  </li>
+<li>3层封装：$.getScript、$.getJSON()  </li>
+</ul>
+<h2 id="回调函数中容易被人忽视的参数">回调函数中容易被人忽视的参数</h2><p>关于封装的各个接口的具体使用不再赘述，这里重点讲下回调函数中的各参数。这部分在使用过程中很容易被忽略，大部分人很欢快地使用jquery实现了功能就不管了~</p>
+<h3 id="$(selector)-load()">$(selector).load()</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"#FileApp"</span>).load(<span class="string">'./GetSubstanceInfo'</span>,</span><br><span class="line">                    &#123; <span class="string">'ExaAppId'</span>: ExaAppId &#125;,</span><br><span class="line">                    <span class="function"><span class="keyword">function</span> <span class="params">(responseData, textStatus, XHR)</span> </span>&#123;</span><br><span class="line">                        alert(<span class="keyword">this</span>.id);<span class="comment">//FileApp</span></span><br><span class="line">					<span class="comment">//在该回调函数中，this指向$(#FileApp);</span></span><br><span class="line">					<span class="comment">//responseData 返回的响应主体内容，与XHR.responseText是一致的</span></span><br><span class="line">					<span class="comment">//textStatus http状态：success、error、notmodified、timeout  </span></span><br><span class="line">					<span class="comment">//XHR即当前XMLHttpRequest对象</span></span><br><span class="line">                    &#125;</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+<p>需要说明，<strong>在load()方法中，无论请求是否成功，只要请求完成，都会触发回调函数</strong>，这样可以在回调函数中检查textStatus就可以知道响应的情况。我觉得最值得欢呼雀跃的是返回了XHR对象，根据XHR对象的各属性及方法就可以为所欲为了<del>~</del>~  </p>
+<p>还记得我们上面提到的sesion超时导致ajax返回网页源代码的问题吧。一般情况下，当检测到session超时时，后台的常规处理是是网页跳转到指定页面（例如登录页）。对于ajax请求来说，这时就将指定页面源码当做XHR对象的响应内容返回，于是在回调函数里获取到的其实是指定页面的源码。<br>我的处理是，在后台超时处理时对请求类型进行判断，如果是ajax请求，则为XHR增加一个自定义头部信息，将其值设为<code>timeout</code>，在回调函数中根据XHR对象对这个头部信息进行判断，以做出相应处理。代码如下：  </p>
+<pre><code class="javascript">C#部分  
+public <span class="keyword">void</span> SetTimeOut()
+    {
+        string ajaxHeaser = Request.Headers[<span class="string">"x-requested-with"</span>];
+        <span class="keyword">if</span> (ajaxHeaser != <span class="literal">null</span> &amp;&amp; ajaxHeaser.ToLower().Equals(<span class="string">"XMLHttpRequest"</span>, StringComparison.OrdinalIgnoreCase))
+        {
+            <span class="comment">//是ajax请求，添加自定义头部信息sessionstatus</span>
+            Response.AppendHeader(<span class="string">"sessionstatus"</span>, <span class="string">"timeout"</span>);
+        }
+        <span class="keyword">else</span>
+        {
+            <span class="comment">//不是ajax请求，跳转到指定页面</span>
+            Response.Redirect(<span class="string">"~/Home/Login"</span>);
+        }
+
+    }  
+
+js部分
+$(<span class="string">"#FileApp"</span>).load(<span class="string">'./GetSubstanceInfo'</span>,
+                 { <span class="string">'ExaAppId'</span>: ExaAppId },
+                 <span class="function"><span class="keyword">function</span> <span class="params">(response, textStatus, XHR)</span> </span>{
+                    <span class="keyword">var</span> sessionStatus = XHR.getResponseHeader(<span class="string">"sessionstatus"</span>);
+                      <span class="keyword">if</span> (sessionStatus == <span class="string">"timeout"</span>) {
+                          <span class="comment">//.....</span>
+                      } 
+                      <span class="keyword">else</span> {
+                          <span class="comment">//......</span>
+                      }
+                 }
+ );
+</code></pre>
+<h3 id="$-get()">$.get()</h3><pre><code class="javascript">$.get(
+        <span class="string">"./GetExamerByDepId"</span>,
+        { <span class="string">"DepId"</span>: selected_dep_val },
+        <span class="function"><span class="keyword">function</span> <span class="params">(responseData, textStatus, XHR)</span> </span>{
+                <span class="comment">//this 该对象包含的是这次ajax请求的配置信息</span>
+                <span class="comment">//responseData 响应主体的内容，与XHR.responseText是一致的</span>
+                <span class="comment">//textStatus http状态：success、error、notmodified、timeout  </span>
+                <span class="comment">//XHR即当前XMLHttpRequest对象</span>
+
+        },
+        <span class="string">"text"</span>
+    );
+</code></pre>
+<p>在有些书上说$.get()的回调函数中只有两个参数responseData、textStatus。实际上，还有第三个参数XHR对象。  </p>
+<p>在$.get()回调函数内部也有个<code>this</code>对象，其结构如下：<br><img src="/images/ajax1.PNG" alt="参数为DOM对象时jQuery对象内部结构">  </p>
+<p>需要注意的是，$.get()中<strong>只有当数据成功返回才调用回调函数。</strong>    </p>
+<p>与load()不同的是，$.get()可以返回的数据类型很丰富：xml、html、script、json、text、_default。</p>
+<h3 id="$-post()">$.post()</h3><pre><code class="javascript">$.post(
+        <span class="string">"./GetExamerByDepId"</span>,
+        { <span class="string">"DepId"</span>: selected_dep_val },
+        <span class="function"><span class="keyword">function</span> <span class="params">(responseData, textStatus, XHR)</span> </span>{
+                <span class="comment">//this 该对象包含的是这次ajax请求的配置信息</span>
+                <span class="comment">//responseData 响应主体的内容，与XHR.responseText是一致的</span>
+                <span class="comment">//textStatus http状态：success、error、notmodified、timeout  </span>
+                <span class="comment">//XHR即当前XMLHttpRequest对象</span>
+
+        },
+        <span class="string">"text"</span>
+    );
+</code></pre>
+<p>如果不管post、get在实现上的区别，仅从jQuery封装的角度来看，$.get和$.post在使用上非常类似。<br>同样，其回调函数的参数也有XHR对象。其this对象的结构如下图所示：<br><img src="/images/ajax2.PNG" alt="参数为DOM对象时jQuery对象内部结构">  </p>
+<h3 id="$-ajax()">$.ajax()</h3><pre><code class="javascript">$.ajax({
+        url: <span class="string">"./CancelPublish"</span>,
+        method: <span class="string">"post"</span>,
+        cache:<span class="literal">false</span>,
+        <span class="comment">//....</span>
+        data: { <span class="string">"ExaAppId"</span>: val }, <span class="comment">//向后台传送审批ID  </span>
+        beforeSend:<span class="function"><span class="keyword">function</span><span class="params">(XHR)</span></span>{
+            <span class="comment">//this 该对象包含的是这次ajax请求的配置信息</span>
+        },
+        complete:<span class="function"><span class="keyword">function</span><span class="params">(XHR,textStatus)</span></span>{
+            <span class="comment">//this 该对象包含的是这次ajax请求的配置信息</span>
+        }
+        success: <span class="function"><span class="keyword">function</span> <span class="params">(response, textStatus, XHR)</span> </span>{
+            <span class="comment">//this 该对象包含的是这次ajax请求的配置信息</span>
+        },
+        error: <span class="function"><span class="keyword">function</span> <span class="params">(XHR,textStatus,errorThrown)</span> </span>{
+            <span class="comment">//this 该对象包含的是这次ajax请求的配置信息</span>
+        }
+    });
+</code></pre>
+<p>在项目开发中，我最喜欢用$.ajax()。因为可控性比较大，比如，可以在<code>beforeSend</code>中修改请求头部信息。     </p>
+<h3 id="特别说明">特别说明</h3><p>在上述接口中可以看到，不管是回调函数，还是$.ajax()中属性对于函数中都有一个this对象，这个对象包含的是这次ajax请求的配置信息。<br>另外，在load()中我讲到了session超时返回网页源代码的解决，这个不光在load()中适用，在其他几个接口中同样适用。  </p>
+<h2 id="缓存问题">缓存问题</h2><p>关于开头提到的缓存问题，其原因是若已经请求过一次，当再次请求时若参数<code>{key1:value1,key2:value2}</code>未发生变化，则不再从后台请求数据，而是直接读取浏览器缓存。<br>解决办法很多，我这里说两个我项目中常用到的：  </p>
+<ol>
+<li>在<code>$.ajax(options)</code>中，<code>options</code>有个可选属性<code>cache</code>，设为<code>false</code>便不再从浏览器缓存中读数据。  </li>
+<li>由于在<code>$.get()、$.post()、$(selector).load()</code>中没有<code>cache</code>属性，则在参数部分增加一个名值对，其值赋为随机数<code>{key1:value1,key2:value2...,random:Math.random()}</code>，这样每次发送的参数都是变化的则会直接请求后台而不是读取缓存。  </li>
+</ol>
+
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2013/06/02/2014-08-31-object1/">js对象之一（原型及原型链）</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2013/06/01/2013-08-30-ajax2/">AJAX之头部信息</a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+    <div class="comments" id="comments">
+      
+    </div>
+  
+
+          </div>
+
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview">
+          站点概览
+        </li>
+      </ul>
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="/images/default_avatar.jpg" alt="John Doe" />
+        <p class="site-author-name">John Doe</p>
+      </div>
+      <p class="site-description motion-element"></p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </div>
+        <div class="site-state-item site-state-tags">
+            <span class="site-state-item-count">0</span>
+            <span class="site-state-item-name">标签</span>
+        </div>
+        <div class="site-state-item site-state-pages">
+            <span class="site-state-item-count">1</span>
+            <span class="site-state-item-name">页面</span>
+        </div>
+      </div>
+
+      
+
+      <div class="social-info motion-element">
+        
+      </div>
+
+      
+      
+
+    </div>
+
+    
+      <div class="post-toc-wrap sidebar-panel-active">
+        <div class="post-toc-indicator-top post-toc-indicator"></div>
+        <div class="post-toc">
+          
+          
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">　写在前面　　　　</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#丰富的接口"><span class="nav-number">2.</span> <span class="nav-text">丰富的接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回调函数中容易被人忽视的参数"><span class="nav-number">3.</span> <span class="nav-text">回调函数中容易被人忽视的参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#$(selector)-load()"><span class="nav-number">3.1.</span> <span class="nav-text">$(selector).load()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#$-get()"><span class="nav-number">3.2.</span> <span class="nav-text">$.get()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#$-post()"><span class="nav-number">3.3.</span> <span class="nav-text">$.post()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#$-ajax()"><span class="nav-number">3.4.</span> <span class="nav-text">$.ajax()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特别说明"><span class="nav-number">3.5.</span> <span class="nav-text">特别说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存问题"><span class="nav-number">4.</span> <span class="nav-text">缓存问题</span></a></li></ol></div>
+          
+        </div>
+        <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+      </div>
+    
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">John Doe</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT</a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".fancybox").fancybox();
+    });
+  </script>
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      if ($('.post-toc-content').html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+    });
+  </script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+  
+</body>
+</html>
