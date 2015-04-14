@@ -104,83 +104,6 @@
           
           
             
-              <a class="post-title-link" href="/2014/09/16/2014-09-16-event-flow/">
-                js中事件流
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-09-16
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="DOM事件流">DOM事件流</h2><p>“DOM2级事件”规定，事件流包括三个阶段：捕获阶段、目标阶段和冒泡阶段。<br>话不多说，举例子说明事件触发顺序。  </p>
-<h2 id="实例说明">实例说明</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">       <span class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"container"</span> <span class="attribute">id</span>=<span class="value">"container"</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"test"</span>&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>上述代码文档结构如下图所示：<br><img src="/images/eventflow.PNG" alt="参数为DOM对象时jQuery对象内部结构">    </p>
-<h3 id="添加事件处理程序：">添加事件处理程序：</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">          <span class="keyword">var</span> test = <span class="built_in">document</span>.getElementById(<span class="string">"test"</span>);</span><br><span class="line">          <span class="keyword">var</span> container = <span class="built_in">document</span>.getElementById(<span class="string">"container"</span>);</span><br><span class="line">	</span><br><span class="line">		<span class="comment">//给test添加click事件，设置在“冒泡”阶段调用</span></span><br><span class="line">          test.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"test冒泡"</span>);</span><br><span class="line">          &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//给test添加click事件，设置在“捕获”阶段调用</span></span><br><span class="line">          test.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"test捕获"</span>);</span><br><span class="line">          &#125;, <span class="literal">true</span>);</span><br><span class="line">          </span><br><span class="line">		<span class="comment">//给container添加click事件，设置在“捕获”阶段调用</span></span><br><span class="line">          container.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"container捕获"</span>);</span><br><span class="line">          &#125;, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">////给container添加click事件，设置在“冒泡”阶段调用</span></span><br><span class="line">          container.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"container冒泡"</span>);</span><br><span class="line">          &#125;, <span class="literal">false</span>);</span><br><span class="line">          </span><br><span class="line"></span><br><span class="line">		<span class="comment">//给body添加click事件，设置在"冒泡"阶段调用</span></span><br><span class="line">          <span class="built_in">document</span>.body.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"body"</span>);</span><br><span class="line">          &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//给docum添加click事件，设置在"冒泡"阶段调用</span></span><br><span class="line">          <span class="built_in">document</span>.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"document"</span>);</span><br><span class="line">          &#125;, <span class="literal">false</span>);</span><br><span class="line">    <span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>当点击上图中的1时，事件的触发顺序如下图所示：<br><img src="../images/eventflow1.PNG" alt="参数为DOM对象时jQuery对象内部结构">   </p>
-<p>1，2，3指的是设置为在捕获阶段调用的click事件；4和5是目标元素上的click事件，至于先触发捕获还是先触发冒泡，这决定于先绑定的是冒泡还是捕获，4指的是先绑定的那个；6,7,8指的是设置为在冒泡阶段调用的click事件。    </p>
-<p>根据上述js代码，可以得到点击1时的输出顺序：<br>弹出”container捕获”（这是由于document、body上没有捕获阶段的click事件）——》弹出”test冒泡”——》弹出”test捕获”（这是由于在目标元素上捕获定义在了冒泡后面）——》弹出”container冒泡”——》弹出“body”——》弹出“document”。</p>
-<p><strong>ps：</strong>在关注事件流时，我们上图只包含了目标元素test与它的祖先元素们，而与test的子孙元素无关。即当我们点击上图中的2时，目标元素时container，这时候是不用考虑test元素的。 </p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/JS/">
-                #JS
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
               <a class="post-title-link" href="/2014/09/11/2014-09-11-colums/">
                 使高度不定的列等高
               </a>
@@ -532,6 +455,84 @@
           
           
             
+              <a class="post-title-link" href="/2014/08/14/node-debug/">
+                Node调试方法
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-08-14
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="前言">前言</h2><p>本文主要介绍三种调试Node的方法：命令行调试、Node-Inspector、使用WebStrom进行调试。</p>
+<p>待调试文件index.js，以下调试方法均是基于该文件：</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="reserved">var</span> http=<span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line">http.createServer(<span class="reserved">function</span>(req,res)&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html'</span>&#125;);</span><br><span class="line">    res.write(<span class="string">'&lt;h1&gt;Node.js&lt;/h1&gt;'</span>);</span><br><span class="line">    res.write(<span class="string">'&lt;p&gt;Hello World&lt;/p&gt;'</span>);</span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"listening at port 3000"</span>);</span><br><span class="line">`<span class="javascript"></span>``<span class="javascript">    </span><br><span class="line">## 方式一：命令行调试Debugger  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Debugger是Node内置的调试工具。下面主要介绍使用Debugger的调试步骤以及各调试指令的含义。</span><br><span class="line"></span><br><span class="line">### <span class="number">1.</span> 在代码中加入断点  </span><br><span class="line">调试前，通过语句</span>`<span class="keyword">debugger</span>;`<span class="javascript">设置断点位置，修改index.js文件如下：</span></span><br></pre></td></tr></table></figure>
+<p>var http=require(‘http’);</p>
+<p>http.createServer(function(req,res){<br>    res.writeHead(200,{‘Content-Type’:’text/html’});<br>    debugger;    //第一个断点<br>    res.write(‘</p><h1>Node.js</h1>‘);<br>    debugger;    //第二个断点<br>    res.write(‘<p>Hello World</p>‘);<br>}).listen(3000);<br>console.log(“listening at port 3000”);<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">### 2.通过命令行进入调试模式  </span></span><br><span class="line">  </span><br><span class="line">在浏览器中访问要调试的页面，在命令行输入以下命令：</span><br></pre></td></tr></table></figure><p></p>
+<p>$node debug index.js ￼<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">开启Node的调试功能，输出结果如下：  </span><br><span class="line"></span><br><span class="line">![<span class="link_label">11</span>](<span class="link_url">http://img2.tbcdn.cn/L1/461/1/d272b16eab9b82cf054625758ba883bf1cb639de</span>)  </span><br><span class="line">代码执行到<span class="code">`debugger;`</span>语句会暂停，提示输入指令。  </span><br><span class="line">输入指令进行调试，如下图：  </span><br><span class="line"></span><br><span class="line">![<span class="link_label">12</span>](<span class="link_url">http://img3.tbcdn.cn/L1/461/1/59dddaf134148970c59266ee13b8b7e70767365c</span>) </span><br><span class="line">  </span><br><span class="line"><span class="header">### 相关指令含义  </span></span><br><span class="line">以下部分来自[<span class="link_label">Debugger</span>](<span class="link_url">http://nodejs.org/api/debugger.html</span>)  </span><br><span class="line"><span class="header">#### 步进指令  </span></span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>cont或c —— 继续执行  </span><br><span class="line"><span class="bullet">* </span>next或n —— 执行到下一个断点  </span><br><span class="line"><span class="bullet">* </span>step或s —— 进入函数内部  </span><br><span class="line"><span class="bullet">* </span>out或o ——跳出函数  </span><br><span class="line"><span class="bullet">* </span>pause ——暂停执行 </span><br><span class="line"></span><br><span class="line"><span class="header">#### 断点操作  </span></span><br><span class="line">  </span><br><span class="line"><span class="bullet">* </span>setBreakpoint()或sb() —— 在当前行设置断点  </span><br><span class="line"><span class="bullet">* </span>setBreakpoint(line)或sb(line) —— 在特定行line设置断点  </span><br><span class="line"><span class="bullet">* </span>setBreakpoint('fn()'), sb(...) —— 在函数fn内部第一个声明出设置断点  </span><br><span class="line"><span class="bullet">* </span>setBreakpoint('script.js', 1), sb(...) —— 在文件script.js第一行设置断点  </span><br><span class="line"><span class="bullet">* </span>clearBreakpoint, cb(...) —— 删除断点  </span><br><span class="line"></span><br><span class="line"><span class="header">#### 信息查看  </span></span><br><span class="line">  </span><br><span class="line"><span class="bullet">* </span>backtrace或bt —— 输出当前执行下的堆栈信息  </span><br><span class="line"><span class="bullet">* </span>list(5) —— 输出当前上下各5行源代码  </span><br><span class="line"><span class="bullet">* </span>watch(expr) —— 添加表达式expr至观察列表  </span><br><span class="line"><span class="bullet">* </span>unwatch(expr) —— 从观察列表中移除表达式expr  </span><br><span class="line"><span class="bullet">* </span>watchers —— 列出观察列表中所有的表达式和他们的值  </span><br><span class="line"><span class="bullet">* </span>repl —— 调试脚本上下文中代码</span><br><span class="line"></span><br><span class="line"><span class="header">#### 执行控制  </span></span><br><span class="line">  </span><br><span class="line"><span class="bullet">* </span>run —— 启动脚本  </span><br><span class="line"><span class="bullet">* </span>restart —— 重启脚本  </span><br><span class="line"><span class="bullet">* </span>kill —— 终止脚本</span><br><span class="line"> </span><br><span class="line"><span class="header">#### 其他  </span></span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>scripts - 列出所有已加载的脚本  </span><br><span class="line"><span class="bullet">* </span>version - 显示 V8 的版本  </span><br><span class="line"></span><br><span class="line"><span class="header">## 方式二：Node-inspector    </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Node Inspector是基于方式一中的API实现的界面化的Node调试工具，不过node-inspector需要在Webkit内核下浏览器进行调试。以下是调试步骤：  </span><br><span class="line"></span><br><span class="line"><span class="header">### 1. 全局安装node-inspector</span></span><br></pre></td></tr></table></figure></p>
+<p>$ npm install node-inspector -g<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">### 2. 启动node-inspector监听Nodejs的debug调试端口</span></span><br></pre></td></tr></table></figure></p>
+<p>$ node-inspector￼<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">命令行输出如下图：  </span><br><span class="line">![<span class="link_label">1</span>](<span class="link_url">http://img1.tbcdn.cn/L1/461/1/aebe35fb6682e75742dadb1ff2f1769de1352eb2</span>)</span><br><span class="line"></span><br><span class="line"><span class="header">### 3. 打开浏览器，输入上图中显示地址  </span></span><br><span class="line">[<span class="link_label">`http://127.0.0.1:8080/debug?port=5858`</span>](<span class="link_url">http://127.0.0.1:8080/debug?port=5858</span>),将看到如下调试窗口：  </span><br><span class="line"></span><br><span class="line">![<span class="link_label">2</span>](<span class="link_url">http://img1.tbcdn.cn/L1/461/1/2b81f0ea1f3532c968946532bf6a98192b5f2a80</span>)</span><br><span class="line"></span><br><span class="line"><span class="header">### 4. 将需要调试的代码文件载入到上述调试窗口。  </span></span><br><span class="line">再打开一个命令行，输入：</span><br></pre></td></tr></table></figure></p>
+<p>$ node —debug index.js<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">此时刷新[<span class="link_label">`http://127.0.0.1:8080/debug?port=5858`</span>](<span class="link_url">http://127.0.0.1:8080/debug?port=5858</span>)会发现index.js已载入调试窗口，如下图所示：  </span><br><span class="line"></span><br><span class="line">![<span class="link_label">3</span>](<span class="link_url">http://img2.tbcdn.cn/L1/461/1/fedea101eda09581333cd02d1f2dcc2d5a052e6c</span>) </span><br><span class="line"></span><br><span class="line"><span class="header">### 5. 新打开一个浏览器页签，刷新你要调试的页面.  </span></span><br><span class="line">当执行到设置断点的位置时，页面会暂停加载，此时回到调试窗口node-inspector页签，能看到详细的调试信息:  </span><br><span class="line">![<span class="link_label">4</span>](<span class="link_url">http://img4.tbcdn.cn/L1/461/1/13906c6d487121d9374561516034826e7403c9bb</span>)</span><br><span class="line"></span><br><span class="line"><span class="header">#### PS：  </span></span><br><span class="line">在最新的API中，可以将步骤2，4统一为以下命令：</span><br></pre></td></tr></table></figure></p>
+<p>$ node-debug index.js<br>```</p>
+<h2 id="方式三：使用WebStorm调试Node">方式三：使用WebStorm调试Node</h2><h3 id="1-_配置需调试的Nodejs开发文件夹">1. 配置需调试的Nodejs开发文件夹</h3><p>根据下图依次操作，对需要调试的文件添加配置信息：<br><img src="http://img1.tbcdn.cn/L1/461/1/7e573203efc9c24392125702591f0a1e3d012b6e" alt="5"><br><img src="http://img2.tbcdn.cn/L1/461/1/40c87026f8e03e49e64be369fef0bb5d425fad65" alt="6"><br><img src="http://img1.tbcdn.cn/L1/461/1/62b04edec411bb25c982685617b622ba867bf13d" alt="7">  </p>
+<h3 id="2-启动调试并设置断点">2.启动调试并设置断点</h3><p>启动调试：  </p>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/ad856a8ac99b06b42193d9fece5d4a40fef1ad60" alt="8">   </p>
+<p>将出现调试窗口以及控制台，如下图：  </p>
+<p><img src="http://img4.tbcdn.cn/L1/461/1/b3735f9b3b65fe54f671dd4974b6db0e123f1149" alt="9">  </p>
+<h3 id="3-在浏览器中访问要调试的页面">3.在浏览器中访问要调试的页面</h3><p>执行到断点位置时，页面会停止加载，可以通过WebStrom的调试窗口看到详细信息：  </p>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/e2ed2005b98b4e2519873d36bf20d11f3f9f34b6" alt="10">   </p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2014/05/30/version-control/">
                 [翻译]语义化版本管理
               </a>
@@ -611,88 +612,6 @@
             
               <a href="/tags/翻译/">
                 #翻译
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2013/10/03/2013-10-03-a-button-by-css3/">
-                用CSS3实现一个按钮
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-10-03
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="写在前面">写在前面</h2><p><img src="../images/btnstep4.PNG" alt="css3实现一个小按钮"><br>看到知乎上的一个小按钮，类似上图。<br>当然，你可以使用背景图片，那样能够跨多浏览器，但是适应性不好；如果想应对宽和高不固定的情况，可能需要使用“滑动门”。<br>今天想使用CSS3多个属性结合实现一下。  </p>
-<h2 id="实现">实现</h2><h3 id="分析">分析</h3><p>上图按钮有这么几个特点：  </p>
-<ul>
-<li>圆角  </li>
-<li>上方有高光  </li>
-<li>有渐变营造出凸起的立体效果    </li>
-</ul>
-<h3 id="分步实现">分步实现</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.invite&#123;</span><br><span class="line">	min-width:<span class="number">75</span>px;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&lt;button <span class="keyword">class</span>=<span class="string">"invite"</span>&gt;邀请回答&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="../images/btnstep1.png" alt="css3实现一个小按钮"></p>
-<h4 id="step1:圆角">step1:圆角</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.invite&#123;</span><br><span class="line">	min-width:<span class="number">75</span>px;</span><br><span class="line">	height:<span class="number">25</span>px;</span><br><span class="line">       <span class="comment">/*圆角*/</span></span><br><span class="line">       border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">       border-radius:<span class="number">4</span>px;</span><br><span class="line">       -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">       -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">       -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="../images/btnstep2.png" alt="css3实现一个小按钮">  </p>
-<h4 id="step2:高光">step2:高光</h4><p>给<code>button</code>添加盒内阴影，颜色设置比边框稍浅<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">	.invite&#123;</span><br><span class="line">            min-width:<span class="number">75</span>px;</span><br><span class="line">            height:<span class="number">25</span>px;</span><br><span class="line">            <span class="comment">/*圆角*/</span></span><br><span class="line">            border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">            border-radius:<span class="number">4</span>px;</span><br><span class="line">            -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">            <span class="comment">/*高光*/</span></span><br><span class="line">            box-shadow:inset <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> #<span class="number">349</span>ED6;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">```  	</span><br><span class="line">![css3实现一个小按钮](../images/btnstep3.png)   </span><br><span class="line">  </span><br><span class="line">#### step3：纵向渐变  </span><br><span class="line">纵向渐变，渐变开始的颜色最好比高光设置颜色深且比边框颜色浅。    </span><br><span class="line">```javascript</span><br><span class="line">	.invite&#123;</span><br><span class="line">            min-width:<span class="number">75</span>px;</span><br><span class="line">            height:<span class="number">25</span>px;</span><br><span class="line">            <span class="comment">/*圆角*/</span></span><br><span class="line">            border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">            border-radius:<span class="number">4</span>px;</span><br><span class="line">            -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">            <span class="comment">/*高光*/</span></span><br><span class="line">            box-shadow:inset <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> #<span class="number">349</span>ED6;</span><br><span class="line">            <span class="comment">/*纵向渐变造成凸出效果*/</span>  </span><br><span class="line">            background:#<span class="number">01539</span>A;</span><br><span class="line">            background-image:-webkit-gradient(linear,<span class="number">0</span>% <span class="number">0</span>%,<span class="number">0</span>% <span class="number">100</span>%,from(#<span class="number">0084</span>CC),to(#<span class="number">01539</span>A));</span><br><span class="line">            color:White;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="../images/btnstep4.png" alt="css3实现一个小按钮"><br>上述代码设置<code>background:#01539A;</code>是为了使按钮在不支持渐变的浏览器下仍有背景。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/CSS/">
-                #CSS
               </a>
             
           </div>
@@ -823,6 +742,88 @@ alert(<span class="keyword">d</span>);              <span class="comment">//0</s
             
               <a href="/tags/JS/">
                 #JS
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/10/03/2013-10-03-a-button-by-css3/">
+                用CSS3实现一个按钮
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-10-03
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><p><img src="../images/btnstep4.PNG" alt="css3实现一个小按钮"><br>看到知乎上的一个小按钮，类似上图。<br>当然，你可以使用背景图片，那样能够跨多浏览器，但是适应性不好；如果想应对宽和高不固定的情况，可能需要使用“滑动门”。<br>今天想使用CSS3多个属性结合实现一下。  </p>
+<h2 id="实现">实现</h2><h3 id="分析">分析</h3><p>上图按钮有这么几个特点：  </p>
+<ul>
+<li>圆角  </li>
+<li>上方有高光  </li>
+<li>有渐变营造出凸起的立体效果    </li>
+</ul>
+<h3 id="分步实现">分步实现</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.invite&#123;</span><br><span class="line">	min-width:<span class="number">75</span>px;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&lt;button <span class="keyword">class</span>=<span class="string">"invite"</span>&gt;邀请回答&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="../images/btnstep1.png" alt="css3实现一个小按钮"></p>
+<h4 id="step1:圆角">step1:圆角</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.invite&#123;</span><br><span class="line">	min-width:<span class="number">75</span>px;</span><br><span class="line">	height:<span class="number">25</span>px;</span><br><span class="line">       <span class="comment">/*圆角*/</span></span><br><span class="line">       border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">       border-radius:<span class="number">4</span>px;</span><br><span class="line">       -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">       -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">       -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="../images/btnstep2.png" alt="css3实现一个小按钮">  </p>
+<h4 id="step2:高光">step2:高光</h4><p>给<code>button</code>添加盒内阴影，颜色设置比边框稍浅<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">	.invite&#123;</span><br><span class="line">            min-width:<span class="number">75</span>px;</span><br><span class="line">            height:<span class="number">25</span>px;</span><br><span class="line">            <span class="comment">/*圆角*/</span></span><br><span class="line">            border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">            border-radius:<span class="number">4</span>px;</span><br><span class="line">            -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">            <span class="comment">/*高光*/</span></span><br><span class="line">            box-shadow:inset <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> #<span class="number">349</span>ED6;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">```  	</span><br><span class="line">![css3实现一个小按钮](../images/btnstep3.png)   </span><br><span class="line">  </span><br><span class="line">#### step3：纵向渐变  </span><br><span class="line">纵向渐变，渐变开始的颜色最好比高光设置颜色深且比边框颜色浅。    </span><br><span class="line">```javascript</span><br><span class="line">	.invite&#123;</span><br><span class="line">            min-width:<span class="number">75</span>px;</span><br><span class="line">            height:<span class="number">25</span>px;</span><br><span class="line">            <span class="comment">/*圆角*/</span></span><br><span class="line">            border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">            border-radius:<span class="number">4</span>px;</span><br><span class="line">            -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">            <span class="comment">/*高光*/</span></span><br><span class="line">            box-shadow:inset <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> #<span class="number">349</span>ED6;</span><br><span class="line">            <span class="comment">/*纵向渐变造成凸出效果*/</span>  </span><br><span class="line">            background:#<span class="number">01539</span>A;</span><br><span class="line">            background-image:-webkit-gradient(linear,<span class="number">0</span>% <span class="number">0</span>%,<span class="number">0</span>% <span class="number">100</span>%,from(#<span class="number">0084</span>CC),to(#<span class="number">01539</span>A));</span><br><span class="line">            color:White;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="../images/btnstep4.png" alt="css3实现一个小按钮"><br>上述代码设置<code>background:#01539A;</code>是为了使按钮在不支持渐变的浏览器下仍有背景。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/CSS/">
+                #CSS
               </a>
             
           </div>
