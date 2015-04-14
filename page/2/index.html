@@ -104,6 +104,233 @@
           
           
             
+              <a class="post-title-link" href="/2014/09/16/2014-09-16-event-flow/">
+                js中事件流
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-09-16
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="DOM事件流">DOM事件流</h2><p>“DOM2级事件”规定，事件流包括三个阶段：捕获阶段、目标阶段和冒泡阶段。<br>话不多说，举例子说明事件触发顺序。  </p>
+<h2 id="实例说明">实例说明</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">       <span class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"container"</span> <span class="attribute">id</span>=<span class="value">"container"</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"test"</span>&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>上述代码文档结构如下图所示：<br><img src="/images/eventflow.PNG" alt="参数为DOM对象时jQuery对象内部结构">    </p>
+<h3 id="添加事件处理程序：">添加事件处理程序：</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">          <span class="keyword">var</span> test = <span class="built_in">document</span>.getElementById(<span class="string">"test"</span>);</span><br><span class="line">          <span class="keyword">var</span> container = <span class="built_in">document</span>.getElementById(<span class="string">"container"</span>);</span><br><span class="line">	</span><br><span class="line">		<span class="comment">//给test添加click事件，设置在“冒泡”阶段调用</span></span><br><span class="line">          test.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"test冒泡"</span>);</span><br><span class="line">          &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//给test添加click事件，设置在“捕获”阶段调用</span></span><br><span class="line">          test.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"test捕获"</span>);</span><br><span class="line">          &#125;, <span class="literal">true</span>);</span><br><span class="line">          </span><br><span class="line">		<span class="comment">//给container添加click事件，设置在“捕获”阶段调用</span></span><br><span class="line">          container.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"container捕获"</span>);</span><br><span class="line">          &#125;, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">////给container添加click事件，设置在“冒泡”阶段调用</span></span><br><span class="line">          container.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"container冒泡"</span>);</span><br><span class="line">          &#125;, <span class="literal">false</span>);</span><br><span class="line">          </span><br><span class="line"></span><br><span class="line">		<span class="comment">//给body添加click事件，设置在"冒泡"阶段调用</span></span><br><span class="line">          <span class="built_in">document</span>.body.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"body"</span>);</span><br><span class="line">          &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//给docum添加click事件，设置在"冒泡"阶段调用</span></span><br><span class="line">          <span class="built_in">document</span>.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"document"</span>);</span><br><span class="line">          &#125;, <span class="literal">false</span>);</span><br><span class="line">    <span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>当点击上图中的1时，事件的触发顺序如下图所示：<br><img src="../images/eventflow1.PNG" alt="参数为DOM对象时jQuery对象内部结构">   </p>
+<p>1，2，3指的是设置为在捕获阶段调用的click事件；4和5是目标元素上的click事件，至于先触发捕获还是先触发冒泡，这决定于先绑定的是冒泡还是捕获，4指的是先绑定的那个；6,7,8指的是设置为在冒泡阶段调用的click事件。    </p>
+<p>根据上述js代码，可以得到点击1时的输出顺序：<br>弹出”container捕获”（这是由于document、body上没有捕获阶段的click事件）——》弹出”test冒泡”——》弹出”test捕获”（这是由于在目标元素上捕获定义在了冒泡后面）——》弹出”container冒泡”——》弹出“body”——》弹出“document”。</p>
+<p><strong>ps：</strong>在关注事件流时，我们上图只包含了目标元素test与它的祖先元素们，而与test的子孙元素无关。即当我们点击上图中的2时，目标元素时container，这时候是不用考虑test元素的。 </p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/JS/">
+                #JS
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/09/11/2014-09-11-colums/">
+                使高度不定的列等高
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-09-11
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="想要达到的效果">想要达到的效果</h2><p>注意：难点在于这些列高度是可变的，不固定的。<br><img src="../images/equal_height6.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"wrapper"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"box"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">h1</span>&gt;</span>《赤裸裸》<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">p</span>&gt;</span></span><br><span class="line">           郑钧这张专辑主要面对的听众层是从18岁到30岁之间，其中包括高中生、大学生、以及走出校门步入社会时间不久的年轻人，正是这一代人中十分典型的心态。郑钧把他这份真实的感受，大胆质朴地流露在他的音乐中，相信会在年轻人中间产生强烈的共鸣。</span><br><span class="line">       <span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"box"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">h1</span>&gt;</span>郑钧简历<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">p</span>&gt;</span></span><br><span class="line">           1987年就读于杭州电子工业学院工业外贸专业，期间由于专业的影响接触了大量欧美摇滚乐，并开始最初的音乐创作。在校期间自己组建了一支乐队"火药"，并曾于杭州各高校间巡演受到热列欢迎。 </span><br><span class="line">           1992年开始了他的职业歌手生涯, 签约香港红星唱片公司。 </span><br><span class="line">           1994年6月发行首张个人专辑《赤裸裸》，十首歌曲全部由郑钧独自作词作曲并演唱。 专辑正版发行量超过五十万张，而据有据可查的盗版数量至少在一百五十万，是当年个人专辑发行量最高的歌手。其中《回到拉萨》、《赤裸裸》、《极乐世界》、《灰姑娘》、等作品今在国内广为流传。《回到拉萨》一曲曾创下了连续七周冠军、二十二周不下榜的记录，成为九四年中国乐坛的经典曲目。 </span><br><span class="line">           2000年10月 应邀参加TOSHIBA EMI “MUSIC TALKS” 现场表演轰动日本媒体和唱片界，成为全场焦点。 </span><br><span class="line">           2001年春 签约久负盛名的EMI唱片公司，成为百代中国首位内地巨星。 </span><br><span class="line">           2001年12月 加盟EMI后第一张个人专辑《郑钧》正式发行。 </span><br><span class="line">           2003年12月 《我们的生活》——充满阳光 <span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">     </span><br><span class="line">   <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"box"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">h1</span>&gt;</span>主要奖项<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">p</span>&gt;</span>1994年 《赤裸裸》获得了：94年中南十大金曲；94年广州十大金曲等数 十个奖项，他本人亦荣获北京"辉煌94"风云人物奖 </span><br><span class="line">           1996年 《赤裸裸》的ＭＴＶ保加利亚音乐节获音乐电视金奖；上海东方 电视台最佳MTV奖，本曲还曾获得过上海东方电视台的"群星耀东方"十大金曲、上海电台"茂盛杯"金曲奖，和96中国流行乐坛十年回顾"十年成就"奖。 </span><br><span class="line">           2002年6月 专辑《郑钧》荣获首届由中国音像协会主办的“中国唱片金碟奖”两大主力奖项：“最佳流行专辑奖”和“最佳摇滚专辑奖”。 </span><br><span class="line">     	<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<h2 id="分步实现过程">分步实现过程</h2><h3 id="浮动形成3列">浮动形成3列</h3><p>在实现过程中，我会给元素添加边框，这样便于理解，完成后会将边框去掉<br>添加内边距和外边距，优化视觉效果<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.wrapper</span><br><span class="line">   &#123;</span><br><span class="line">     width:<span class="number">100</span>%;</span><br><span class="line">     border:<span class="number">1</span>px solid red;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">.box</span><br><span class="line">   &#123;</span><br><span class="line">       width:<span class="number">300</span>px;</span><br><span class="line">       float:left;</span><br><span class="line">       padding:<span class="number">20</span>px;</span><br><span class="line">       margin-left:<span class="number">20</span>px;</span><br><span class="line">       border:<span class="number">1</span>px solid #ccc;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/equal_height1.PNG" alt="参数为DOM对象时jQuery对象内部结构"></p>
+<h3 id="清除浮动使父容器被撑开">清除浮动使父容器被撑开</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">	.wrapper:after</span><br><span class="line">    &#123;</span><br><span class="line">       content:<span class="string">"."</span>;</span><br><span class="line">       display:block;</span><br><span class="line">       clear:both;</span><br><span class="line">       height:<span class="number">0</span>;</span><br><span class="line">       visibility:hidden;</span><br><span class="line">        &#125;  </span><br><span class="line">```  </span><br><span class="line">![参数为DOM对象时jQuery对象内部结构](<span class="regexp">/images/</span>equal_height3.PNG)   </span><br><span class="line">### 关键步骤：使外边距和内边距抵消  </span><br><span class="line">给每个列添加大的底部内边距，将父容器撑大到一个很大的高度，    </span><br><span class="line">```javascript </span><br><span class="line">	.box</span><br><span class="line">    &#123;</span><br><span class="line">        width:<span class="number">300</span>px;</span><br><span class="line">        float:left;</span><br><span class="line">        padding:<span class="number">20</span>px;</span><br><span class="line">        margin-left:<span class="number">20</span>px;</span><br><span class="line">        border:<span class="number">1</span>px solid #ccc;</span><br><span class="line">        padding-bottom:<span class="number">300</span>px;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="images/equal_height2.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>然后再使用数值相近的负外边距，这样使每个列有一部分溢出<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.box</span><br><span class="line">   &#123;</span><br><span class="line">       width:<span class="number">300</span>px;</span><br><span class="line">       float:left;</span><br><span class="line">       padding:<span class="number">20</span>px;</span><br><span class="line">       margin-left:<span class="number">20</span>px;</span><br><span class="line">       border:<span class="number">1</span>px solid #ccc;</span><br><span class="line">       padding-bottom:<span class="number">300</span>px;</span><br><span class="line">       margin-bottom:-<span class="number">280</span>px;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/equal_height4.PNG" alt="参数为DOM对象时jQuery对象内部结构"> </p>
+<h3 id="截断">截断</h3><p>再对父容器设置<code>overflow:auto</code>就将参差不齐的溢出部分截断，使它们高度相同<br>注意上面我设置的内边距为300，外边距为-280，这是为了使截断后，每个列还有20的内边距，视觉效果比较好。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.wrapper</span><br><span class="line">  &#123;</span><br><span class="line">    width:<span class="number">100</span>%;</span><br><span class="line">    border:<span class="number">1</span>px solid red;</span><br><span class="line">    overflow:auto;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="../images/equal_height5.PNG" alt="参数为DOM对象时jQuery对象内部结构"> </p>
+<h3 id="设置颜色去除边框">设置颜色去除边框</h3><p><img src="../images/equal_height6.PNG" alt="参数为DOM对象时jQuery对象内部结构"> </p>
+<h3 id="说明">说明</h3><p>在清除浮动时我使用了伪类，其实<code>overflow:auto</code>也能够清除浮动撑开父元素，但是在这个例子中我使用伪类就是想说明此时<code>overflow:auto</code>的最主要任务是截断。  </p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/CSS/">
+                #CSS
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/09/07/2014-09-07-canvas1/">
+                用canvas绘制小图标
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-09-07
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><p>刚看了canvas，于是用最基本的几个函数绘制了几个图标。这些图标是<code>Raphael.js</code>设计的，<code>Raphael.js</code>用自己的接口绘制了矢量的图标。没事儿就用canvas实现了一遍，今天只绘制了6个，图标如下：    </p>
+<p><img src="../images/canvas1.PNG" alt="参数为DOM对象时jQuery对象内部结构">    </p>
+<h2 id="实现代码：">实现代码：</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line">  &lt;body&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas1"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas2"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas3"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas4"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas5"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas6"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas1"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.moveTo(<span class="number">5.5</span>, <span class="number">15.499</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">21.447</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">15.846</span>);</span><br><span class="line">        context.lineTo(<span class="number">25.5</span>, <span class="number">21.447</span>);</span><br><span class="line">        context.lineTo(<span class="number">25.5</span>, <span class="number">9.552</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">15.152</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">9.552</span>);</span><br><span class="line">        context.lineTo(<span class="number">5.5</span>, <span class="number">15.499</span>);</span><br><span class="line">        context.fill();</span><br><span class="line">        context.closePath();</span><br><span class="line">        <span class="comment">////////////////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas2"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.moveTo(<span class="number">15.834</span>, <span class="number">29.084</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.834</span>, <span class="number">16.166</span>);</span><br><span class="line">        context.lineTo(<span class="number">2.917</span>, <span class="number">16.166</span>);</span><br><span class="line">        context.lineTo(<span class="number">29.083</span>, <span class="number">2.917</span>);</span><br><span class="line">        context.fill();</span><br><span class="line">        context.closePath();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">///////////////////////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas3"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.fillRect(<span class="number">1</span>, <span class="number">15</span>, <span class="number">7</span>, <span class="number">15</span>);</span><br><span class="line">        context.fillRect(<span class="number">11</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">27</span>);</span><br><span class="line">        context.fillRect(<span class="number">21</span>, <span class="number">10</span>, <span class="number">7</span>, <span class="number">20</span>);</span><br><span class="line">        <span class="comment">///////////////////////////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas4"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">30</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">25</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">20</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">15</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">5</span>, <span class="number">25</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.fill();</span><br><span class="line">        <span class="comment">////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas5"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">15</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillRect(<span class="number">14</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">15</span>, <span class="number">15</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.arc(<span class="number">6</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.arc(<span class="number">12</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.arc(<span class="number">18</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.arc(<span class="number">24</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.fillRect(<span class="number">14</span>, <span class="number">16</span>, <span class="number">2</span>, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.arc(<span class="number">12</span>, <span class="number">26</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.arc(<span class="number">12</span>, <span class="number">26</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line">        <span class="comment">////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas6"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">15</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.moveTo(<span class="number">15</span>, <span class="number">6</span>);</span><br><span class="line">        context.lineTo(<span class="number">19</span>, <span class="number">6</span>);</span><br><span class="line">        context.lineTo(<span class="number">19</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">23</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">15</span>, <span class="number">19</span>);</span><br><span class="line">        context.lineTo(<span class="number">7</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">11</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">11</span>, <span class="number">6</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.translate(<span class="number">15</span>, <span class="number">24</span>);</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        <span class="comment">///////////////////////////////////////////////</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/canvas/">
+                #canvas
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2014/09/01/2014-09-01-scope-chain/">
                 js中预编译与作用域链
               </a>
@@ -165,83 +392,6 @@
 <p>由以上代码可知，在第一个<code>&lt;sctipt&gt;</code>块调用第二个代码块中函数会出错，这是由于第二个<code>&lt;script&gt;</code>还未进行预编译，是不可访问到的。第二个代码块可以访问到第一个代码块的全局变量，是因为此时第一个代码块已经预编译切执行结束了.</p>
 <h4 id="示例五:预编译时会忽略逻辑判断">示例五:预编译时会忽略逻辑判断</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">var</span> foo=<span class="number">1</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(!foo)&#123;</span><br><span class="line">			<span class="keyword">var</span> foo=<span class="number">2</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		alert(foo);</span><br><span class="line">	&#125;  </span><br><span class="line">	test()<span class="comment">//2  </span></span><br><span class="line">``` </span><br><span class="line">在预编译结束后,上述代码中test()的变量对象的foo属性为<span class="literal">undefined</span>，因此，执行时<span class="keyword">if</span>(!foo)判断为真。这样就好像在执行时foo的声明提前了。</span><br><span class="line">     </span><br><span class="line">#### 实例六   </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">(val)</span></span>&#123;</span><br><span class="line">		<span class="keyword">var</span> val=<span class="number">10</span>;</span><br><span class="line">		alert(<span class="built_in">arguments</span>[<span class="number">0</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">	f(<span class="number">1</span>)<span class="comment">//10</span></span><br></pre></td></tr></table></figure>
 <p>由实例四可知参数val和内部重复定义的val在预编译时指向同一块内存，进行两次赋值后其值为10；还要注意函数的arguments值永远和对应命名参数的值保持一致，任何一方改变都会体现在另一方，但是要知道它们内存空间是独立的。  </p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/JS/">
-                #JS
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2014/08/30/2014-08-31-object2/">
-                js对象相关之二（继承）
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-08-30
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="继承（原型链）">继承（原型链）</h2><p>  在js中继承主要是靠原型链实现的。<br>在js中，创建一个函数（包括构造函数），就为该函数赋一个prototype原型属性，该属性指向原型对象。该原型属性默认获得 一个constructor属性，指回构造函数，原型属性还继承了Object的属性和方法（toString，valueOf等）。通过该构造函数创建的所有实例都有一个[[prototype]]属性，指向原型对象。这样原型中所有的属性和方法就为所有实例共享。  </p>
-<h3 id="原型链继承">原型链继承</h3><p>从以上所说的构造函数、原型对象、实例之间的关系就很好理解原型链继承。原型链继承实质就是使一个对象B的原型对象为另一个对象A的实例。这样对象B的实例指向B的原型对象，B的原型对象又指向A的原型对象，形成了原型链，而B的实例也继承了原型链上的所有属性和方法。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">//基类	</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Person</span><span class="params">(name,interests)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name=name;</span><br><span class="line">		<span class="keyword">this</span>.interests=interests;</span><br><span class="line">	&#125;</span><br><span class="line">	Person.prototype.say=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;alert(<span class="string">"hello"</span>);&#125;;</span><br><span class="line">	<span class="comment">//子类	</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Student</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	Student.prototype=<span class="keyword">new</span> Person(<span class="string">"zc"</span>,[<span class="string">"reading"</span>,<span class="string">"dancing"</span>]);  </span><br><span class="line">	<span class="keyword">var</span> student=<span class="keyword">new</span> Student();  </span><br><span class="line">``` </span><br><span class="line">**原型链的缺点：**  </span><br><span class="line">  </span><br><span class="line">- 通过子类从基类中继承来的所有属性（不管是实例属性还是原型属性）都变成了子类的原型属性。当含有引用类型的属性时，子类创造的所有实例对该属性进行共享，那么一个实例中该属性的变化会直接体现在其他属性中。  </span><br><span class="line">- 创建子类实例是不能向构造函数中传参。  </span><br><span class="line"></span><br><span class="line">### 借助构造函数继承  </span><br><span class="line">就是在子类的构造函数内部调用基类的构造函数  </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="comment">//基类	</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Person</span><span class="params">(name,interests)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name=name;</span><br><span class="line">		<span class="keyword">this</span>.interests=interests;</span><br><span class="line">		<span class="keyword">this</span>.say=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;alert(<span class="string">"hello"</span>);&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//子类  </span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Student</span><span class="params">(name,interests)</span></span>&#123;</span><br><span class="line">		Person.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> student1=<span class="keyword">new</span> Student(<span class="string">"zc"</span>,[<span class="string">"reading"</span>,<span class="string">"dancing"</span>]);  </span><br><span class="line">``` </span><br><span class="line">**借助构造函数的缺点：**  </span><br><span class="line">  </span><br><span class="line">- 所有的属性和方法必须定义在基类的构造函数中，才能被子类继承，无法达到方法的公用。  </span><br><span class="line"></span><br><span class="line">### 组合继承  </span><br><span class="line">即是将原型链继承和借助构造函数继承结合起来。原型链实现原型属性的继承，借助构造函数实现实例属性的继承。这也是最常用的一种继承方式。</span><br><span class="line"></span><br><span class="line">举个例子说明如何通过原型链和借助构造函数实现继承的，并绘制出了完整的原型链：  </span><br><span class="line">```javascript	  </span><br><span class="line">	<span class="comment">//基类  </span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Person</span><span class="params">(name,age,interests)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name=name;</span><br><span class="line">		<span class="keyword">this</span>.age=age;</span><br><span class="line">		<span class="keyword">this</span>.interests=interests;</span><br><span class="line">	&#125; </span><br><span class="line">	Person.prototype.species=<span class="string">"人"</span>;</span><br><span class="line">	Person.prototype.sayName=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">		alert(<span class="keyword">this</span>.name);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//派生类  </span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Student</span><span class="params">(name,age,interests,grade)</span></span>&#123;</span><br><span class="line">		Person.call(<span class="keyword">this</span>,name,age,interests);</span><br><span class="line">		<span class="keyword">this</span>.grade=grade;</span><br><span class="line">	&#125;</span><br><span class="line">	Student.prototype=<span class="keyword">new</span> Person();</span><br><span class="line">	Student.prototype.constructor=Student;  </span><br><span class="line">	Student.prototype.sayGrade=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">		alert(<span class="keyword">this</span>.grade);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//创建Student实例  </span></span><br><span class="line">	<span class="keyword">var</span> student1=<span class="keyword">new</span> Student(<span class="string">"张三"</span>,<span class="number">24</span>,[<span class="string">"打球"</span>],<span class="string">"研二"</span>);  </span><br><span class="line">	student1.interests.push(<span class="string">"跳舞"</span>);</span><br><span class="line">	<span class="keyword">var</span> student2=<span class="keyword">new</span> Student(<span class="string">"李四"</span>,<span class="number">23</span>,[<span class="string">"呵呵"</span>,<span class="string">"哈哈"</span>],<span class="string">"博一"</span>);</span><br></pre></td></tr></table></figure></p>
-<p>以上代码的完整原型链为：<br><img src="/images/prototype6.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>由上图可以看出：<br><strong>student1的原型链为(沿红线方向)：</strong><code>student1-&gt;Student.prototype-&gt;Person.prototype-&gt;Object.prototype</code><br>当读取对象student1的属性时，沿着原型链一直找，直到找到返回。    </p>
-<p><strong>对象student1的所有属性和方法：</strong>    </p>
-<ul>
-<li>实例属性：grade、name、age、interests  </li>
-<li>引用属性：sayGrade、sayName、constructor、species</li>
-</ul>
 
           
         
@@ -346,6 +496,274 @@
             
               <a href="/tags/JS/">
                 #JS
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/08/14/viewport/">
+                对viewport的部分理解
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-08-14
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><p>最近第一次接触接触移动端的前端开发，发现水很深，要持续学习的还有很多。遇到了一些和<code>viewport</code>相关的问题，看了很多前辈的文章和总结终于有了一点点理解。</p>
+<p>第一次接触<code>viewport</code>是要求页面为手机、平板、pc等不同设备做合理的适配。当时我只听说过媒体查询，以为有了媒体查询和百分比就能搞定响应式设计。当我写完媒体查询，在手机上打开页面时，发现页面已经被缩小到无法正常浏览了。后来我知道应该加上<code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;&gt;</code>，至于为什么我没有深究。  </p>
+<p>第二次接触是在一个移动端页面的原代码里我看到了这样的逻辑处理：检测到设备是retina屏时元素的尺寸（宽、高、边框、图片大小等）均是非retina屏的2倍，且retina屏下页面初始缩放比例为0.5即<code>&lt;meta name=&quot;viewport&quot; content=&quot;initial-scale=0.5&gt;</code>，非retina屏下页面初始缩放比例为1即<code>&lt;meta name=&quot;viewport&quot; content=&quot;initial-scale=1&gt;</code>。我当时就觉得简直无法理解，为什么非要在retina屏下先是尺寸放大2倍然后再把页面缩小为0.5，直接都为1不行吗？当时去查了下devicePixelRatio相关，还是懵懵懂懂。  </p>
+<p>以下均以iPhone5s（分辨率为640x1136）为例。  </p>
+<h2 id="设置width=device-width时，发生了什么">设置<code>width=device-width</code>时，发生了什么</h2><p>首先来研究下我遇到的第一个问题：我原以为给页面宽度设置了100%它就能自适应手机屏宽度，而事实是在手机浏览器里它被缩放到无法直视。  </p>
+<p>那么给页面宽度设置了100%，而不设置<code>width=device-width</code>时，发生了什么<br>先看下面代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">document</span>.documentElement.clientWidth);<span class="comment">//980</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">document</span>.documentElement.scrollWidth);<span class="comment">//980</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.screen.width);<span class="comment">//320横屏</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.screen.width);<span class="comment">//568竖屏</span></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">以上是页面宽度为<span class="number">100</span>%的页面在iPhone5s中Safari上的运行结果。由结果可知，此时无论横屏还是竖屏网页实际宽度是<span class="number">980</span>px，可以理解为实际上是把<span class="number">980</span>px宽的页面缩放在了<span class="number">320</span>宽的容器里，其文字效果自然被缩放到影响阅读。那这个<span class="number">980</span>px是哪来的呢？下面会说到。  </span><br><span class="line"></span><br><span class="line">现在我们给页面宽度设置<span class="number">100</span>%，并进行设置`&lt;meta name=<span class="string">"viewport"</span> content=<span class="string">"width=device-width"</span>&gt;`，此时页面效果（字体大小等）就舒服多了。看以下代码输出：</span><br></pre></td></tr></table></figure>
+<p>console.log(document.documentElement.clientWidth);//竖屏下320，横屏下568<br>console.log(document.documentElement.scrollWidth);//竖屏下320，横屏下568<br>console.log(window.screen.width);//320<br>console.log(window.screen.height);//568<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">看到以上输出，我们先思考以下问题：  </span><br><span class="line"></span><br><span class="line">1. `width=device-width`中的width设置的是谁的宽度？   </span><br><span class="line">Apple在移动版的Safari中定义了`viewport meta`标签，该标签创建了一个虚拟的窗口`layout viewprot`，这里的width即是对虚拟窗口的值进行设置。在Apple在移动版的Safari中其默认值为980px。我们开发的页面就是在这个虚拟窗口里进行布局的。  </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">2. `width=device-width`中的device-width是谁的值，值是多少？  </span><br><span class="line">我感觉可以将device-width看做是‘设备独立像素’，在iphone竖屏下其值为320，单位都是物理像素。其实，可以将device-width跟window.screen.width/height(横/竖屏)对应起来。设置了之后`layout viewport`宽度就变为了320px（竖屏）、568px（横屏），单位都是CSS像素。</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="comment">## 为什么1x图片在retina屏下会糊掉？   </span></span><br><span class="line"></span><br><span class="line">在研究这个问题之前，我们先看下retina、非retina之间的区别。显然的是retina屏比非retina屏要清晰，其原因通俗点说就是因为retina屏在相同尺寸的屏幕下拥有的物理像素多于非retina屏。我们看到的图像都是通过物理像素展现的，物理像素越密集图像就越清晰。这就引出了设备像素比devicePixelRatio：   </span><br><span class="line"></span><br><span class="line"><span class="keyword">*</span><span class="keyword">*</span>devicePixelRatio=设备物理像素/设备独立像素<span class="keyword">*</span><span class="keyword">*</span>    </span><br><span class="line">以iPhone为例，retina下devicePixelRatio=1，非retina下devicePixelRatio=2.  </span><br><span class="line">无论是retina还是非retina屏，竖屏下，设备独立像素都是320，而它们的设备物理像素分别为640、320。  </span><br><span class="line"></span><br><span class="line"><span class="keyword">*</span><span class="keyword">*</span>物理像素与CSS像素的关系：<span class="keyword">*</span><span class="keyword">*</span>  </span><br><span class="line">页面的清晰和模糊其实可以通过设备物理像素和css像素的关系来解释。在页面缩放比例为100%时：  </span><br><span class="line">非retina屏下，一个css像素“覆盖”在一个设备物理像素上；  </span><br><span class="line">retina屏下，一个css像素“覆盖”在四个设备物理像素上，实质是一个css像素被瓜分成了四份，效果就变糊了。  </span><br><span class="line">例如，同样一个10x10px的图片，在非retina屏下占据的物理像素是10x10；在retina屏下占据的物理像素是20x20，平均一个物理像素瓜分到四分之一的css像素，那么物理像素在表现图像时取颜色相似值，效果就糊了。</span><br><span class="line"></span><br><span class="line"><span class="keyword">*</span><span class="keyword">*</span>页面缩放时发生了什么？<span class="keyword">*</span><span class="keyword">*</span>  </span><br><span class="line">缩小网页时，发现screen.width不变，window.clientWidth变大，意思是同样的屏幕可以容纳的css像素更多了（可以理解为多个css像素挤在一起），放大网页正好相反。因此进行设置`<span class="variable">&lt;meta name="viewport" content="width=device-width,initial-scale=0.5"&gt;</span>`后：</span><br></pre></td></tr></table></figure></p>
+<p>console.log(document.documentElement.clientWidth);//竖屏下640px<br>console.log(document.documentElement.scrollWidth);//竖屏下640px<br>console.log(window.screen.width);//320<br><code>``  
+设置缩放比例</code>initial-scale=0.5`之后，window.clientWidth变为原来2倍，同样屏幕内的css像素数变为之前的4倍，此时在retina屏下一个css像素“覆盖”在一个设备物理像素上，效果就变清晰了。</p>
+<p>做以下测试：  </p>
+<ol>
+<li>同一张图片，准备两个尺寸分别为320x320、640x640  </li>
+<li>页面1包含320x320px的图片，且设置<code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;</code>  </li>
+<li>页面2包含640x640px的图片，且设置<code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=0.5&quot;&gt;</code>  </li>
+<li>在retina屏iPhone下观察页面1和页面2的效果  </li>
+</ol>
+<p>可以看出两个页面图片（宽度）都刚好铺在屏幕上，不同的是页面2明显比页面1清晰。这正是由于在页面2中css像素与设备像素是1：1，而在页面1中css像素与设备像素是1：4.   </p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/05/30/version-control/">
+                [翻译]语义化版本管理
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-05-30
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="摘要">摘要</h2><p>一个完整的版本号分三部分：&lt;主版本号&gt;.&lt;次版本号&gt;.&lt;修订版本号&gt;，版本号的升级原则如下：  </p>
+<ol>
+<li>主版本号：对API进行了不能兼容原版本的改动。  </li>
+<li>次版本号：新增了向后兼容的功能。   </li>
+<li>修订版本号：修复了向后兼容的bug。  </li>
+</ol>
+<p>有关预发布和编译数据的信息可以作为&lt;主版本号&gt;.&lt;次版本号&gt;.&lt;修订版本号&gt;这种版本号格式的扩展。  </p>
+<h2 id="简介">简介</h2><p>在软件管理的领域存在着令管理者惧怕的“相依性地狱”，是指随着越来越多的软件包加入系统，系统规模越来越大，管理者越可能在某一天濒临崩溃。  </p>
+<p>在相依性高的系统中，发布新版本的软件包可能会很快成为噩梦。如果依赖性过高，将会面临版本锁死的风险（更新一个软件包时必须将其依赖的所有软件包进行更新）。如果依赖关系过于松散，版本号混乱将无法避免（假如将来能够相互兼容的版本数多于合理的数值）。“相依性地狱”即是版本锁死或版本混乱导致项目无法便利地、安全地推进。    </p>
+<p>为了解决这个问题，本文提出了一套简单的规则和要求，来规定版本号的分配和升级。这些规则的设定建立在开源和非开源软件都已广泛使用的惯例上，但又不局限于此。为了让系统工作，首先需要声明一套公共API。该API可以由文档构成也可以通过代码来实施。无论如何，该API要清晰明了是最重要的。一旦定义了公共API，API的变化可以通过版本号升级的详细信息来展现。考虑到X.Y.Z（主版本号.次版本号.修订版本号）这样的版本号格式，进行不影响API的bug修复时增加修订版本号，新增或修改向后兼容的API时增加次版本号，进行不向后兼容的API修改时增加主版本号。<br>我称该系统为“语义化版本管理”。在这个体系中，版本号及其升级的方式传达了底层代码的含义以及相邻版本之间的修改内容。  </p>
+<h2 id="语义化版本管理规范">语义化版本管理规范</h2><p><a href="http://tools.ietf.org/html/rfc2119" target="_blank" rel="external">RFC 2119</a>对以下文档中的关键词”MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”和”OPTIONAL” 进行了解释。  </p>
+<ol>
+<li>使用语义化版本管理的软件<strong>必须</strong>声明一套公共API。该API可以在代码中声明，也可以严格地通过文档声明。无论用何种方式声明，API应该是准确和全面的。  </li>
+<li>标准的版本号<strong>必须</strong>遵循X.Y.Z的格式，其中X，Y，Z为非负数且<strong>禁止</strong>在头部加0（例如，1.01.3是不允许的）。X是主版本号，Y是次版本号，Z是修订版本号。每一个版本号<strong>必须</strong>以数值形式连续递增。例如：1.9.0-&gt;1.10.0-&gt;1.11.0。  </li>
+<li>一旦确定版本号的软件包发布后，禁止再修改该版本的内容，任何的改动<strong>必须</strong>以新版本的形式发布。  </li>
+<li>主版本号0（0.y.z）用于初始阶段的开发。不应该认为公共API是稳定的，它随时会发生变化。  </li>
+<li>版本号1.0.0定义了公共API。在此版本之后的版本号如何升级依赖于该公共API及其改变方式（例如修复了bug、新增了向后兼容的功能或进行了不兼容的修改）。  </li>
+<li>当仅对bug进行了向后兼容的修复时，修订版本号Z（x.y.Z|x&gt;0）<strong>必须</strong>增加。这里所说的bug修复是指针对错误结果进行的内部修改。  </li>
+<li>当公共API增加了向后兼容的新功能时，次版本号Y（x.Y.z|x&gt;0）<strong>必须</strong>增加。当弃用公共API中的任何功能时，次版本号也<strong>必须</strong>增加。当私有代码有所改进或引入了大量新功能时（<strong>可能</strong>包含修订版本级别的更改），次版本号<strong>可以</strong>增加。当次版本号增加时修订版本号<strong>必须</strong>重置为0。  </li>
+<li>当公共API进行了任何不能向后兼容的改动时（<strong>可能</strong>包含次版本和修订版本级别的更改），主版本号X（X.y.z|X&gt;0）<strong>必须</strong>增加。当主版本号增加时次版本号和修订版本号<strong>必须</strong>重置为0。  </li>
+<li><strong>可以</strong>通过在修订版本号后添加一个连字符“-”和一系列以点“.”分割的标识符来表示预发布版本。标识符只能由字母数字和连字符组成，例如[0-9A-Za-z-]。标识符<strong>禁止</strong>为空。标识符中的数字<strong>禁止</strong>在头部加0（例01）。预发布版本的优先级低于相关的正式版本。预发布版本表明该版本还不稳定，或者该版本不像正式版本那样符合了预期的兼容性需求。示例：1.0.0-alpha.1，1.0.0-0.3.7，1.0.0-x.7.z.92。  </li>
+<li><strong>可以</strong>通过在修订版本号（或预发布版本号）后添加一个“+”和一系列以“.”分割的标识符来表示编译数据信息。标识符只能由字母数字和连字符构成，例如[0-9A-Za-z-]。标识符<strong>禁止</strong>为空。在确定版本优先级时<strong>应该</strong>忽略编译数据信息。因此，若两个版本号只有编译信息不同，那它们优先级一致。示例：1.0.0-alpha+001，1.0.0+20130313144700，1.0.0-beta+exp.sha.5114f85。  </li>
+<li>优先级是指在对版本号进行排序时如何进行对比。计算优先级时<strong>必须</strong>将版本号拆分为主版本号、次版本号、修订版本号和预发布版本号进行排序（编译信息不影响优先级）。通过从左到右的顺序对比主版本号、次版本号和修订版本号时（主版本号、次版本号和修订版本号通常为数字），第一次的差异决定了优先级。例如：1.0.0&lt;2.0.0&lt;2.1.0&lt;2.1.1。主版本号、次版本号和修订版本号一致时，预发布版本号的优先级低于正式版本号。例如：1.0.0-alpha&lt;1.0.0。若两个预发布版本号的主版本号、次版本号和修订版本号一致，优先级<strong>必须</strong>通过以下方式确定：以从左到右的顺序对比由点“.”分割的标识符，直到第一次差异产生。其中标识符的对比规则如下：标识符仅由数字构成时进行数字大小的对比，标识符由字母或字母与数字构成时根据ASCII值逐个对比。非数值型标识符的优先级高于数值型标识符。当前面的标识符相同时，以点“.”分隔的标识符越多优先级越高。例如：1.0.0-alpha&lt;1.0.0-alpha.1&lt;1.0.0-alpha.beta&lt;1.0.0-beta&lt;1.0.0-beta.2&lt;1.0.0-beta.11&lt;1.0.0-rc.1&lt;1.0.0。  </li>
+</ol>
+<h2 id="为什么使用语义化版本管理">为什么使用语义化版本管理</h2><p>语义化版本管理并不是一个新的或革命性的想法。实际上，你可能已经做了类似的事情。问题是你做的还不够“类似”。如果不遵从某种标准的规范，版本号对于相依性管理实际上是无用的。通过清晰地定义上述方案，软件的使用者更容易理解你的意图。一旦明确了这些意图，最终就能促成灵活的（又不会过于灵活）相依性管理规范。  </p>
+<p>通过一个简单的例子可以示范语义化版本管理如何解决“相依性地狱”的问题。假设有一个叫做“消防车”的软件库，它需要一个叫做“梯子”的软件包，且“梯子”已进行了语义化版本管理。在“消防车”被创建时，“梯子”的版本号是3.1.0。由于“消防车”使用的一些功能是首次引入到3.1.0版本的，你可以放心地将相依于“梯子”的版本号指定为3.1.0到4.0.0之间，也可以等于3.1.0。现在，当“梯子”已有3.1.1和3.2.0版本时，可以将它们发布到你的软件包管理系统中，它们兼容现有的相依性软件包。</p>
+<p> 作为一个负责的开发者，你当然希望确保软件包的任何升级能像其声明的一样正常运作。现实世界是混乱的，我们能做的只有提高警惕。语义化版本管理是一个明智的选择，让你在发布和升级软件包时无需更新所有依赖的软件包，从而节省时间并省去很多麻烦。<br> 如果你认同这些想法，你只需声明你正在使用语义化版本管理并遵循这些规则。将该网站链接添加到你的README中让其他人了解语义化版本管理的规则并从中受益。  </p>
+<h2 id="FAQ">FAQ</h2><p>Q1. 在初始开发阶段0.y.z，应该如何进行版本控制？<br>你要做的就是以0.1.0作为你的初始开发版本号，然后随后的每一次发布都增加次版本号。 </p>
+<p>Q2. 我如何判定何时发布版本1.0.0？<br>如果你的软件已上线为产品，那应该已经是版本1.0.0。如果你的API已经稳定且被用户依赖，那也应该是版本1.0.0。如果你很担心向后兼容性，那也应该是1.0.0。   </p>
+<p>Q3. 语义化版本管理不会阻碍软件快速开发和迭代吗？<br>主版本号0就是为了快速开发。如果你每天都在更改API，那你应该还处在0.y.z的开发阶段或者在下个主版本的独立开发分支中。    </p>
+<p>Q4. 对于公共API，如果进行很细微的不可向后兼容的更改也要增加主版本号，那版本号会不会很快增加到42.0.0？<br>这就牵扯到开发中责任感和前瞻性的问题。对于拥有相依性代码的软件，不应该随意地进行不可向后兼容的更改。升级所要付出的代价可以是巨大的。当不得不增加主版本号来发布不可向后兼容的更改时，意味着你要考虑清楚更改带来的影响并评估相关的成本/收益比率。  </p>
+<p>Q5. 用文档声明整个公共API工作量太大！<br>作为一个专业的开发者你有责任编写恰当的文档以便用户使用软件。掌控软件的复杂度对于保持项目高效非常重要，如果没人知道怎么使用你的软件或者不知道哪些方法可以安全调用，那么很难掌控软件的复杂度。长远来看，进行语义化版本管理以及坚持对公共API进行良好的规范能使一切顺利进行。  </p>
+<p>Q6. 如果无意中将不可向后兼容的更改当做次版本号进行发布了，该怎么办？<br>一旦意识到违反了语义化版本管理规范，发布一个新的次版本号，该版本修复这个问题并恢复向后兼容。即使在这种情况下，也不能对已发布的版本内容进行修改。恰当的做法是，记录有问题的版本号并告知使用者问题所在。  </p>
+<p>Q7. 如果我更新了自己的项目依赖而没有修改公共API，该怎么做？<br>如果没有影响公共API可以认为是向后兼容的修改。如果某一软件与你的软件包有相同的相依性，那它应该有自己的相依性规范并且软件的作者会注意到任何的冲突。在判定更改是属于修订版本号级别还是次版本号级别时，取决于你是为了修复bug还是为了增加新功能而更新了你的相依性。对于后者（增加新功能）通常会增加额外的代码，这显然是一个次版本号级别的升级。  </p>
+<p>Q8. 如果我无意中未遵循版本号的变更规则对公共API进行了修改（也就是在进行修订版本等级的发布时，代码错误地进行了主版本级别的修改），怎么办？<br>调动你最佳的判断力。如果按照公共API的意图将修改变更回去会使大量用户群受到强烈影响，那么最好进行一次主版本号级别的发布，尽管严格来讲这次改动只是修订级别的。记住，语义化版本管理的目的就是通过版本号的变更方式传达信息。如果这些变更对用户很重要，那就通过版本号告知用户。  </p>
+<p>Q9. 该如何处理弃用的功能？<br>在软件开发中弃用现有的功能是很正常的，而且为了推动开发进程也常常这样做。当你弃用公共API中的部分功能时，你该做以下两件事：（1）升级文档告知用户变更的内容，（2）在适当的时候发布新的次版本号，该版本包含弃用信息。在发布完全移除弃用功能的主版本号之前，至少要发布一次包含弃用信息的次版本号，以便用户能平滑地过渡到新的API。  </p>
+<p>Q10. 语义化版本管理对于版本号字符串的长度是否有限制？<br>没有限制。但你要进行判断，例如，一个长为255的版本号字符串就太夸张了。而且，特定的系统可能会限定自己的字符串长度。  </p>
+<h2 id="关于">关于</h2><p>原文：<a href="http://semver.org/" target="_blank" rel="external">Semantic Versioning 2.0.0</a><br>语义化版本管理规范是由Gravatars的创办人兼Github共同创办人<a href="http://tom.preston-werner.com/" target="_blank" rel="external">Tom Preston-Werner</a>发起的。<br>如果你有任何建议，请提交至<a href="https://github.com/mojombo/semver/issues" target="_blank" rel="external">GitHub</a>。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/翻译/">
+                #翻译
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/10/03/2013-10-03-a-button-by-css3/">
+                用CSS3实现一个按钮
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-10-03
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><p><img src="../images/btnstep4.PNG" alt="css3实现一个小按钮"><br>看到知乎上的一个小按钮，类似上图。<br>当然，你可以使用背景图片，那样能够跨多浏览器，但是适应性不好；如果想应对宽和高不固定的情况，可能需要使用“滑动门”。<br>今天想使用CSS3多个属性结合实现一下。  </p>
+<h2 id="实现">实现</h2><h3 id="分析">分析</h3><p>上图按钮有这么几个特点：  </p>
+<ul>
+<li>圆角  </li>
+<li>上方有高光  </li>
+<li>有渐变营造出凸起的立体效果    </li>
+</ul>
+<h3 id="分步实现">分步实现</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.invite&#123;</span><br><span class="line">	min-width:<span class="number">75</span>px;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&lt;button <span class="keyword">class</span>=<span class="string">"invite"</span>&gt;邀请回答&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="../images/btnstep1.png" alt="css3实现一个小按钮"></p>
+<h4 id="step1:圆角">step1:圆角</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.invite&#123;</span><br><span class="line">	min-width:<span class="number">75</span>px;</span><br><span class="line">	height:<span class="number">25</span>px;</span><br><span class="line">       <span class="comment">/*圆角*/</span></span><br><span class="line">       border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">       border-radius:<span class="number">4</span>px;</span><br><span class="line">       -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">       -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">       -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="../images/btnstep2.png" alt="css3实现一个小按钮">  </p>
+<h4 id="step2:高光">step2:高光</h4><p>给<code>button</code>添加盒内阴影，颜色设置比边框稍浅<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">	.invite&#123;</span><br><span class="line">            min-width:<span class="number">75</span>px;</span><br><span class="line">            height:<span class="number">25</span>px;</span><br><span class="line">            <span class="comment">/*圆角*/</span></span><br><span class="line">            border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">            border-radius:<span class="number">4</span>px;</span><br><span class="line">            -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">            <span class="comment">/*高光*/</span></span><br><span class="line">            box-shadow:inset <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> #<span class="number">349</span>ED6;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">```  	</span><br><span class="line">![css3实现一个小按钮](../images/btnstep3.png)   </span><br><span class="line">  </span><br><span class="line">#### step3：纵向渐变  </span><br><span class="line">纵向渐变，渐变开始的颜色最好比高光设置颜色深且比边框颜色浅。    </span><br><span class="line">```javascript</span><br><span class="line">	.invite&#123;</span><br><span class="line">            min-width:<span class="number">75</span>px;</span><br><span class="line">            height:<span class="number">25</span>px;</span><br><span class="line">            <span class="comment">/*圆角*/</span></span><br><span class="line">            border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">            border-radius:<span class="number">4</span>px;</span><br><span class="line">            -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">            <span class="comment">/*高光*/</span></span><br><span class="line">            box-shadow:inset <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> #<span class="number">349</span>ED6;</span><br><span class="line">            <span class="comment">/*纵向渐变造成凸出效果*/</span>  </span><br><span class="line">            background:#<span class="number">01539</span>A;</span><br><span class="line">            background-image:-webkit-gradient(linear,<span class="number">0</span>% <span class="number">0</span>%,<span class="number">0</span>% <span class="number">100</span>%,from(#<span class="number">0084</span>CC),to(#<span class="number">01539</span>A));</span><br><span class="line">            color:White;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="../images/btnstep4.png" alt="css3实现一个小按钮"><br>上述代码设置<code>background:#01539A;</code>是为了使按钮在不支持渐变的浏览器下仍有背景。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/CSS/">
+                #CSS
               </a>
             
           </div>
@@ -504,88 +922,6 @@ alert(<span class="keyword">d</span>);              <span class="comment">//0</s
           
           
             
-              <a class="post-title-link" href="/2013/10/03/2013-10-03-a-button-by-css3/">
-                用CSS3实现一个按钮
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-10-03
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="写在前面">写在前面</h2><p><img src="../images/btnstep4.PNG" alt="css3实现一个小按钮"><br>看到知乎上的一个小按钮，类似上图。<br>当然，你可以使用背景图片，那样能够跨多浏览器，但是适应性不好；如果想应对宽和高不固定的情况，可能需要使用“滑动门”。<br>今天想使用CSS3多个属性结合实现一下。  </p>
-<h2 id="实现">实现</h2><h3 id="分析">分析</h3><p>上图按钮有这么几个特点：  </p>
-<ul>
-<li>圆角  </li>
-<li>上方有高光  </li>
-<li>有渐变营造出凸起的立体效果    </li>
-</ul>
-<h3 id="分步实现">分步实现</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.invite&#123;</span><br><span class="line">	min-width:<span class="number">75</span>px;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&lt;button <span class="keyword">class</span>=<span class="string">"invite"</span>&gt;邀请回答&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="../images/btnstep1.png" alt="css3实现一个小按钮"></p>
-<h4 id="step1:圆角">step1:圆角</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.invite&#123;</span><br><span class="line">	min-width:<span class="number">75</span>px;</span><br><span class="line">	height:<span class="number">25</span>px;</span><br><span class="line">       <span class="comment">/*圆角*/</span></span><br><span class="line">       border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">       border-radius:<span class="number">4</span>px;</span><br><span class="line">       -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">       -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">       -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="../images/btnstep2.png" alt="css3实现一个小按钮">  </p>
-<h4 id="step2:高光">step2:高光</h4><p>给<code>button</code>添加盒内阴影，颜色设置比边框稍浅<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">	.invite&#123;</span><br><span class="line">            min-width:<span class="number">75</span>px;</span><br><span class="line">            height:<span class="number">25</span>px;</span><br><span class="line">            <span class="comment">/*圆角*/</span></span><br><span class="line">            border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">            border-radius:<span class="number">4</span>px;</span><br><span class="line">            -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">            <span class="comment">/*高光*/</span></span><br><span class="line">            box-shadow:inset <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> #<span class="number">349</span>ED6;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">```  	</span><br><span class="line">![css3实现一个小按钮](../images/btnstep3.png)   </span><br><span class="line">  </span><br><span class="line">#### step3：纵向渐变  </span><br><span class="line">纵向渐变，渐变开始的颜色最好比高光设置颜色深且比边框颜色浅。    </span><br><span class="line">```javascript</span><br><span class="line">	.invite&#123;</span><br><span class="line">            min-width:<span class="number">75</span>px;</span><br><span class="line">            height:<span class="number">25</span>px;</span><br><span class="line">            <span class="comment">/*圆角*/</span></span><br><span class="line">            border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">            border-radius:<span class="number">4</span>px;</span><br><span class="line">            -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">            <span class="comment">/*高光*/</span></span><br><span class="line">            box-shadow:inset <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> #<span class="number">349</span>ED6;</span><br><span class="line">            <span class="comment">/*纵向渐变造成凸出效果*/</span>  </span><br><span class="line">            background:#<span class="number">01539</span>A;</span><br><span class="line">            background-image:-webkit-gradient(linear,<span class="number">0</span>% <span class="number">0</span>%,<span class="number">0</span>% <span class="number">100</span>%,from(#<span class="number">0084</span>CC),to(#<span class="number">01539</span>A));</span><br><span class="line">            color:White;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="../images/btnstep4.png" alt="css3实现一个小按钮"><br>上述代码设置<code>background:#01539A;</code>是为了使按钮在不支持渐变的浏览器下仍有背景。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/CSS/">
-                #CSS
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
               <a class="post-title-link" href="/2013/09/16/2013-09-16-layout-box/">
                 CSS盒模型（box model）
               </a>
@@ -643,366 +979,6 @@ alert(<span class="keyword">d</span>);              <span class="comment">//0</s
 
 
   
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2013/09/11/2013-09-11-ie6-3px-bug/">
-                IE6下文本偏移3px的问题
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-09-11
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="写在前面">写在前面</h2><p>当文本与浮动元素相邻（已知左侧元素左浮动）时，如何<strong>跨浏览器兼容（包括IE6等低版本IE浏览器）</strong>实现以下布局：<br><img src="/images/3px1.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>已知HTML结构如下所示：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">	&lt;body&gt;</span><br><span class="line">	    <span class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"left"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"right"</span>&gt;</span></span><br><span class="line">		    浮动元素后面的非浮动元素的显示问题：后面的元素认为浮动元素已脱离文档流；  其后面非浮动元素中的块级元素的背景和边框会被浮动元素盖住，但块级元素其中的文本不会被浮动元素盖住；其后面非浮动元素中的行级元素的背景、边框和内容都不会被浮动元但在IE6下很奇快，不会盖住块级元素，反而会盖住行级元素；且会产生3px边距。可通过zoom：1消除。若在浮动元素后面加上一个层,则此后的元素都按原来方式排列，不受影响；或者将紧随其后的第一个元素增加设置`”clear:both”`。</span><br><span class="line">		    浮动元素后面的非浮动元素的显示问题：后面的元素认为浮动元素已脱离文档流；  其后面非浮动元素中的块级元素的背景和边框会被浮动元素盖住，但块级元素其中的文本不会被浮动元素盖住；其后面非浮动元素中的行级元素的背景、边框和内容都不会被浮动元但在IE6下很奇快，不会盖住块级元素，反而会盖住行级元素；且会产生3px边距。可通过zoom：1消除。若在浮动元素后面加上一个层,则此后的元素都按原来方式排列，不受影响；或者将紧随其后的第一个元素增加设置`”clear:both”`。</span><br><span class="line">		    浮动元素后面的非浮动元素的显示问题：后面的元素认为浮动元素已脱离文档流；  其后面非浮动元素中的块级元素的背景和边框会被浮动元素盖住，但块级元素其中的文本不会被浮动元素盖住；其后面非浮动元素中的行级元素的背景、边框和内容都不会被浮动元但在IE6下很奇快，不会盖住块级元素，反而会盖住行级元素；且会产生3px边距。可通过zoom：1消除。若在浮动元素后面加上一个层,则此后的元素都按原来方式排列，不受影响；或者将紧随其后的第一个元素增加设置`”clear:both”`。</span><br><span class="line">		<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line">```  </span><br><span class="line">## 实现步骤    </span><br><span class="line">### 初始效果：     </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span><span class="css"></span><br><span class="line">          <span class="class">.left</span></span><br><span class="line">          <span class="rules">&#123;</span><br><span class="line">              <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">100px</span></span></span>;</span><br><span class="line">              <span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">50px</span></span></span>;</span><br><span class="line">              <span class="rule"><span class="attribute">background-color</span>:<span class="value">Olive</span></span>;</span><br><span class="line"></span><br><span class="line">              <span class="rule"><span class="attribute">float</span>:<span class="value">left</span></span>;</span><br><span class="line">        </span><br><span class="line">              <span class="rule">&#125;</span></span></span><br><span class="line">         </span><br><span class="line">          <span class="class">.right</span></span><br><span class="line">          <span class="rules">&#123;</span><br><span class="line">              <span class="rule"><span class="attribute">border</span>:<span class="value"><span class="number">1px</span> black solid</span></span>;</span><br><span class="line">              <span class="rule"><span class="attribute">background-color</span>:<span class="value">Teal</span></span>;</span><br><span class="line">         </span><br><span class="line">              <span class="rule">&#125;</span></span></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>    </span><br><span class="line">```      </span><br><span class="line">当.right宽度不确定时，在主流浏览器和IE6下，其效果不大相同，差距很难看出，如下图：  </span><br><span class="line">![参数为DOM对象时jQuery对象内部结构](/images/3px5.PNG)  </span><br><span class="line">### 情况一：.right元素宽度确定    </span><br><span class="line">**在IE6下给.right设定宽度后相当于使.right拥有layout属性**，而拥有布局的元素会清理浮动，因此设定.right宽度后在其他浏览器下效果不变如上图，但在IE6下有3px边距效果如下图：  </span><br><span class="line">![参数为DOM对象时jQuery对象内部结构](/images/3px3.PNG) </span><br><span class="line">      </span><br><span class="line">可以看到，在IE6下.left有3px的右外边距。  </span><br><span class="line">这时候想达到目标效果，有两种方法：  </span><br><span class="line"></span><br><span class="line">- 方法1，将.right也左浮动起来   </span><br><span class="line">这样会消除IE6的3px问题，也会使其他浏览器形成两列布局，最终代码： </span><br><span class="line">```javascript</span><br><span class="line">		<span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span><span class="css"></span><br><span class="line">	          <span class="class">.left</span></span><br><span class="line">	          <span class="rules">&#123;</span><br><span class="line">	              <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">100px</span></span></span>;</span><br><span class="line">	              <span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">50px</span></span></span>;</span><br><span class="line">	              <span class="rule"><span class="attribute">background-color</span>:<span class="value">Olive</span></span>;</span><br><span class="line">	</span><br><span class="line">	              <span class="rule"><span class="attribute">float</span>:<span class="value">left</span></span>;</span><br><span class="line">	        </span><br><span class="line">	              <span class="rule">&#125;</span></span></span><br><span class="line">	         </span><br><span class="line">	          <span class="class">.right</span></span><br><span class="line">	          <span class="rules">&#123;</span><br><span class="line">	              <span class="rule"><span class="attribute">border</span>:<span class="value"><span class="number">1px</span> black solid</span></span>;</span><br><span class="line">	              <span class="rule"><span class="attribute">background-color</span>:<span class="value">Teal</span></span>;</span><br><span class="line">	</span><br><span class="line">	              <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">500px</span></span></span>;</span><br><span class="line">	              <span class="rule"><span class="attribute">float</span>:<span class="value">left</span></span>;</span><br><span class="line">	         </span><br><span class="line">	              <span class="rule">&#125;</span></span></span><br><span class="line">	    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>方法2：给.right元素添加margin-left<br>对非IE6浏览器来讲，给.right设置<code>margin-left</code>值为.left的宽度；<br>在IE6来讲，给.left设置<code>margin-right</code>为-3px抵消。最终代码：  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=<span class="string">"text/css"</span>&gt;</span><br><span class="line">        .left</span><br><span class="line">        &#123;</span><br><span class="line">            width:<span class="number">100</span>px;</span><br><span class="line">            height:<span class="number">50</span>px;</span><br><span class="line">            background-color:Olive;  </span><br><span class="line"></span><br><span class="line">            float:left;</span><br><span class="line">            *margin-right:-<span class="number">3</span>px;</span><br><span class="line">            &#125;</span><br><span class="line">       </span><br><span class="line">        .right</span><br><span class="line">        &#123;</span><br><span class="line">            border:<span class="number">1</span>px black solid;</span><br><span class="line">            background-color:Teal;</span><br><span class="line">              </span><br><span class="line">             width:<span class="number">500</span>px;</span><br><span class="line">             margin-left:<span class="number">100</span>px;</span><br><span class="line">             *margin-left:<span class="number">0</span>;</span><br><span class="line">            </span><br><span class="line">            &#125;</span><br><span class="line">  &lt;<span class="regexp">/style&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>将.right元素的<code>margin-left</code>设置为.left元素的宽度值。</p>
-<h3 id="-right宽度不确定">.right宽度不确定</h3><p>此时可以设置.right的<code>margin-left</code>为.left的宽度，使.right不再环绕.left。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=<span class="string">"text/css"</span>&gt;</span><br><span class="line">         div</span><br><span class="line">         &#123;</span><br><span class="line">             width:<span class="number">100</span>px;</span><br><span class="line">             height:<span class="number">50</span>px;</span><br><span class="line">             background-color:red;</span><br><span class="line">             float:left;</span><br><span class="line">             &#125;</span><br><span class="line">        </span><br><span class="line">         p</span><br><span class="line">         &#123;</span><br><span class="line">             border:<span class="number">1</span>px black solid;</span><br><span class="line">             background-color:pink;</span><br><span class="line"></span><br><span class="line">             margin-left:<span class="number">100</span>px;</span><br><span class="line">             &#125;</span><br><span class="line">   &lt;<span class="regexp">/style&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>此时非IE6的主流浏览器已达到目标效果；<br>但是在IE6下.right元素产生了3px边距，这次的3px边距效果如下图所示：<br><img src="/images/3px6.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>可以通过清理浮动将这个3px文本偏移解决，即给.right设置<code>height:1%</code>或<code>zoom:1</code>等，这些方法都是启动layout进行间接清除浮动，消除这个类型的3px，其效果为： </p>
-<p><img src="/images/3px7.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>然后即可以通过上述讲的消除.left外部3px达到效果，最终代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=<span class="string">"text/css"</span>&gt;</span><br><span class="line">        .left</span><br><span class="line">        &#123;</span><br><span class="line">            width:<span class="number">100</span>px;</span><br><span class="line">            height:<span class="number">50</span>px;</span><br><span class="line">            background-color:Olive;</span><br><span class="line">            float:left;</span><br><span class="line">            *margin-right:-<span class="number">3</span>px;</span><br><span class="line">            &#125;</span><br><span class="line">       </span><br><span class="line">        .right</span><br><span class="line">        &#123;</span><br><span class="line">            border:<span class="number">1</span>px black solid;</span><br><span class="line">            background-color:Teal;</span><br><span class="line">             </span><br><span class="line">            margin-left:<span class="number">100</span>px;</span><br><span class="line">            *height:<span class="number">1</span>%;</span><br><span class="line">            *margin-left:<span class="number">0</span>;</span><br><span class="line">            </span><br><span class="line">            &#125;</span><br><span class="line">  &lt;<span class="regexp">/style&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="总结">总结</h3><p>其实，总的说来，在IE6当右侧元素未清除浮动时，这个3px在内部；当右侧元素已清除浮动（不管以何种方式<code>zoom:1</code>、<code>height:1%</code>等），这个3px在外部。这两种3px都可以使用.left的<code>margin-right:-3px</code>消除，另外，外部3px浮动可以通过.right的<code>float:left</code>来消除。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/CSS/">
-                #CSS
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2013/09/11/2013-09-11-margin/">
-                外边距问题
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-09-11
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="理想和现实的差距">理想和现实的差距</h2><p>对于以下代码我们期望的和实际的呈现效果是有很大差距的：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">   <span class="xml"><span class="tag">&lt;<span class="title">title</span>&gt;</span>Untitled Page<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span><span class="css"></span><br><span class="line">           <span class="tag">body</span><span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">300px</span></span></span>;<span class="rule">&#125;</span></span></span><br><span class="line">          <span class="class">.top</span><span class="rules">&#123;<span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">20px</span></span></span>;<span class="rule"><span class="attribute">background-color</span>:<span class="value"><span class="hexcolor">#ccc</span></span></span>;<span class="rule"><span class="attribute">border</span>:<span class="value">solid <span class="number">1px</span> <span class="hexcolor">#ccc</span></span></span>;<span class="rule">&#125;</span></span></span><br><span class="line">          <span class="tag">p</span><span class="rules">&#123;<span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">10px</span></span></span>;<span class="rule"><span class="attribute">background-color</span>:<span class="value">red</span></span>;<span class="rule">&#125;</span></span></span><br><span class="line">          <span class="class">.bottom</span><span class="rules">&#123;<span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">20px</span></span></span>;<span class="rule"><span class="attribute">background-color</span>:<span class="value"><span class="hexcolor">#ccc</span></span></span>;<span class="rule"><span class="attribute">border</span>:<span class="value">solid <span class="number">1px</span> <span class="hexcolor">#ccc</span></span></span>;<span class="rule">&#125;</span></span></span><br><span class="line">   </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"top"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>content<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"bottom"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
-<p>对于以上代码，理想如下图：<br><img src="/images/margin2.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>但现实是残酷的，实际现实如下图：<br><img src="/images/margin1.PNG" alt="参数为DOM对象时jQuery对象内部结构">    </p>
-<h2 id="问题的分析与解决">问题的分析与解决</h2><h3 id="解释问题">解释问题</h3><p>从上面两个图我们可以看出对于垂直外边距的两个问题：  </p>
-<ol>
-<li>两个上下相邻的兄弟元素top和bottom，当它们的垂直外边距相遇时，会叠加成较大的一个值，而不是两者相加。  </li>
-<li>对于两个为父子关系的块级元素，其垂直外边距也会叠加成较大的那个值，而且当父高度未设置时，其父高度=子高度+上内边距+下内边距+上边框+下边框。效果就是子的外边距被忽略了，而父的外边距的值=父子垂直边距叠加后的值。  <h3 id="解决问题">解决问题</h3></li>
-<li>对于第一个问题，当我们需要使上下两元素间距为N时，只需设置上面元素的<code>margin-bottom</code>或下面元素的<code>margin-top</code>为N即可，避免同时设置两个 元素的上下边距  </li>
-<li>对于第二个问题，给父元素添加一点内边距或者给父元素添加边框。  </li>
-</ol>
-<h3 id="修改后代码为：">修改后代码为：</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//给父添加边框</span><br><span class="line">&lt;style type="text/css"&gt;</span><br><span class="line">           body&#123;width:300px;&#125;</span><br><span class="line">          .top&#123;margin:20px;background-color:#ccc;border:solid 1px #ccc;&#125;</span><br><span class="line">          p&#123;margin:10px;background-color:red;&#125;</span><br><span class="line">          .bottom&#123;height:20px;margin:20px;background-color:#ccc;border:solid 1px #ccc;&#125;</span><br><span class="line">   &lt;/style&gt;  </span><br><span class="line">//给父添加内边距</span><br><span class="line">&lt;style type="text/css"&gt;</span><br><span class="line">           body&#123;width:300px;&#125;</span><br><span class="line">          .top&#123;margin:20px;background-color:#ccc;padding:1px;&#125;</span><br><span class="line">          p&#123;margin:10px;background-color:red;&#125;</span><br><span class="line">          .bottom&#123;height:20px;margin:20px;background-color:#ccc;border:solid 1px #ccc;&#125;</span><br><span class="line">   &lt;/style&gt;</span><br></pre></td></tr></table></figure>
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/CSS/">
-                #CSS
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2013/09/06/2013-09-06-html-drag/">
-                HTML5之拖拽
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-09-06
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="直接上例子">直接上例子</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">   <span class="xml"><span class="tag">&lt;<span class="title">title</span>&gt;</span>Untitled Page<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">       <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">           <span class="keyword">var</span> image = <span class="built_in">document</span>.createElement(<span class="string">"img"</span>);</span><br><span class="line">           image.src = <span class="string">"images/audit_pub.png"</span>;</span><br><span class="line">		<span class="comment">//被拖拽的元素</span></span><br><span class="line">           <span class="keyword">var</span> source = <span class="built_in">document</span>.getElementById(<span class="string">"dragme"</span>);</span><br><span class="line">		<span class="comment">//目标元素，即被拖拽的元素可能经过的元素或将被拖拽的的元素放到该元素中</span></span><br><span class="line">           <span class="keyword">var</span> dest = <span class="built_in">document</span>.getElementById(<span class="string">"house"</span>);</span><br><span class="line">           <span class="keyword">var</span> talk = <span class="built_in">document</span>.getElementById(<span class="string">"talk"</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//被拖拽元素开始拖拽的操作</span></span><br><span class="line">           source.addEventListener(<span class="string">"dragstart"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               <span class="keyword">var</span> dt = ev.dataTransfer;</span><br><span class="line">			<span class="comment">//修改拖拽时的图标（测试时只有FF支持）</span></span><br><span class="line">               dt.setDragImage(image, -<span class="number">10</span>, -<span class="number">10</span>);</span><br><span class="line">			<span class="comment">//设置元素被拖拽时允许的视觉效果</span></span><br><span class="line">               dt.effectAllowed = <span class="string">"all"</span>;</span><br><span class="line">			<span class="comment">//存放元素被拖拽时要存放的数据</span></span><br><span class="line">               dt.setData(<span class="string">"text/plain"</span>, <span class="string">"珍爱生命，远离熊孩子！"</span>);</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//被拖拽元素拖拽结束的操作</span></span><br><span class="line">           source.addEventListener(<span class="string">"dragend"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               ev.preventDefault();</span><br><span class="line">               talk.innerHTML = <span class="string">""</span>;</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">//目标元素dest感受到有元素开始进入它的区域</span></span><br><span class="line">           dest.addEventListener(<span class="string">"dragenter"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               talk.innerHTML = <span class="string">"砸开你家玻璃，溜进你家。"</span>;</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//目标元素dest感受到有元素在它范围内移动</span></span><br><span class="line">           dest.addEventListener(<span class="string">"dragover"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               <span class="keyword">this</span>.textContent = <span class="string">"熊孩子在我家里走来走去！"</span>;</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//目标元素dest感受到有元素离开它的范围</span></span><br><span class="line">           dest.addEventListener(<span class="string">"dragleave"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               talk.innerHTML = <span class="string">"玩够了，回家找妈妈去了！"</span>;</span><br><span class="line">               <span class="keyword">this</span>.textContent = <span class="string">"尼玛，熊孩子终于走了！"</span>;</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line">		<span class="comment">//目标元素dest感受到有元素被扔进它的范围</span></span><br><span class="line">           dest.addEventListener(<span class="string">"drop"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               <span class="keyword">var</span> dt = ev.dataTransfer;</span><br><span class="line">               <span class="keyword">var</span> text = dt.getData(<span class="string">"text/plain"</span>);</span><br><span class="line">               dest.textContent = text;</span><br><span class="line">               ev.preventDefault();</span><br><span class="line">               ev.stopPropagation();</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="built_in">document</span>.ondragover = <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> </span>&#123; e.preventDefault(); &#125;</span><br><span class="line">       <span class="built_in">document</span>.ondrop = <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> </span>&#123; e.preventDefault(); &#125;</span><br><span class="line">   </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span> <span class="attribute">onload</span>=<span class="value">"init()"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">h1</span>&gt;</span>拖拽示例之熊孩子<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"dragme"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"images/xhz.gif"</span> <span class="attribute">alt</span>=<span class="value">"熊孩子王尼玛"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">span</span>&gt;</span>熊孩子说：<span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">id</span>=<span class="value">"talk"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"house"</span> <span class="attribute">style</span>=<span class="value">"width:200px;height:200px;border:1px solid #ccc;"</span>&gt;</span>     </span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="解释说明">解释说明</h2><p>对于上面代码，可以自己感受下，注意一定是高端浏览器~  </p>
-<h3 id="与拖拽相关的事件的归属问题">与拖拽相关的事件的归属问题</h3><p>与拖拽相关的事件可分为两类：    </p>
-<ul>
-<li><code>dragstart、drag、dragend</code>这三个事件是针对被拖拽元素的  </li>
-<li><code>dragenter、dragover、dragleave、drop</code>这三个事件时针对目标元素的  </li>
-</ul>
-<h3 id="阻止默认行为很关键">阻止默认行为很关键</h3><ul>
-<li>在目标行为的<code>drop</code>事件处理程序中，阻止默认行为，（因为默认不接受被拖放的元素）  </li>
-<li>对整个页面的<code>dragover、drop</code>事件，也要阻止默认行为，否则拖放处理不能够实现。  </li>
-</ul>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/HTML5/">
-                #HTML5
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2013/09/06/2013-09-16-layout-postion/">
-                CSS布局之定位
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-09-06
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="CSS中定位方案">CSS中定位方案</h2><p>有三种：标准流、浮动、绝对定位</p>
-<h2 id="display">display</h2><p>块框（block box）、行内框（inline box）、行框（line box）<br>HTML中一切元素都会形成一个”框”(box)，块级元素即块框，行内元素即行内框。由一行形成的水平框即行框，行框可能包含多个行内框。行框的高度总是足以容纳它包含的所有的行内框，他们之间的关系如下图所示：<br><img src="../images/linebox.PNG" alt="参数为DOM对象时jQuery对象内部结构"></p>
-<h3 id="块级元素、行内元素的区别">块级元素、行内元素的区别</h3><p>常见的<strong>块级元素：</strong><code>&lt;h1&gt;~&lt;h6&gt;、&lt;p&gt;、&lt;ol&gt;、&lt;ul&gt;、&lt;dl&gt;、&lt;dt&gt;、&lt;li&gt;、&lt;table&gt;、&lt;form&gt;、&lt;caption&gt;、&lt;div&gt;</code><br>常见的<strong>行内元素：</strong><code>&lt;span&gt;、&lt;img&gt;、&lt;input&gt;、&lt;em&gt;、&lt;srong&gt;</code>等</p>
-<ul>
-<li>块级元素：<br>  独占一行，默认情况下，宽度会占满父元素，多个块级框从上到下排列；垂直距离根据垂直外边距计算；<br>  可以设置<code>width、height</code>   </li>
-<li>行内元素：<br>  不独占一行，多个块级框在一行中水平布置，可以通过内边距、外边距调整行内框之间距离；<br>  设置<code>width、height</code>无效；<br>  其<code>padding、margin</code>属性只在水平方向 有效，在垂直方向无效。</li>
-</ul>
-<h2 id="position">position</h2><ul>
-<li>static：<br>元素仍然存在与标准流中。元素框正常生成。  </li>
-<li>relative：<br>元素框在标准流中的占位保留；<br>元素的display属性不变；<br>元素的top、bottom、left、right、z-index属性被激活；<br>元素的top、bottom、left、right都是相对于自身在标准量中的占位而言；      </li>
-<li>absolute：<br>元素框脱离标准文本流，不再占位；<br>元素的display属性被改变为<code>inline-block</code>，而不管之前该元素是块级元素还是行内元素<br>元素的top、bottom、left、right、z-index属性被激活；<br>元素的top、bottom、left、right都是相对于其设置了<code>postion:relative</code>或<code>position:absolute</code>的最近祖先元素而言；</li>
-<li>fixed：<br>其表现与absolute相似，可以说是absolute的一种，区别就在于fixed的top、bottom、left、right定位是相对于视窗而言。<br>元素框脱离标准文本流，不再占位；<br>元素的display属性被改变为<code>inline-block</code>，而不管之前该元素是块级元素还是行内元素<br>元素的top、bottom、left、right、z-index属性被激活；    </li>
-</ul>
-<p><strong>特别注意：</strong> <strong>top的优先级高于bottom，left的优先级高于right</strong>；当设置矛盾时会优先top和left的设置，这个在<code>relative、absolute、fixed</code>下都是适用的，如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.relative&#123;top:<span class="number">10</span>px;</span><br><span class="line">		  bottom:<span class="number">10</span>px;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>z-index优先级：</strong>    </p>
-<ul>
-<li>不显示设置<code>z-index</code>时，<code>relative、absolute、fixed</code>优先级一样，后定义的元素出现在上层     </li>
-<li>显示设置<code>z-index</code>时，该属性值大的在上层。<h2 id="display与position的关系">display与position的关系</h2>上面说过，<code>position:absolute\fixed</code>会将元素的display改变为<code>inline-block</code>，这时候如果显示设置<code>display</code>为其他值会失效。  </li>
-</ul>
-<p>同样，<code>float</code>也会将元素的display改变为<code>inline-block</code>，这时候如果显示设置<code>display</code>为其他值也会失效。  </p>
-<h2 id="BFC和hasLayout和containing_block">BFC和hasLayout和containing block</h2><p>大多时候一个元素的<strong>尺寸</strong>和<strong>位置</strong>不是由自己决定的（例如：未设置宽、高尺寸的块级元素、绝对定位的元素等），而是要参考它的某个祖先容器。那详细的问题就来了：什么时候一个元素能够当家做主决定自己的尺寸和位置呢？当自己不能决定时要参考那个祖先元素呢？   </p>
-<p>首先引入IE的布局概念，hasLayout（拥有布局）的元素能够负责自身的以及子元素的尺寸和位置设置。当一个元素没有布局不能决定自身尺寸和位置时，由离它最近的hasLayout（拥有布局）的元素来决定。举例说明吧：  </p>
-<pre><code class="javascript">&lt;style type="text/css"&gt;
-      .father
-      {
-          border:1px solid #ccc;
-          float:left;
-      }
-
-&lt;/style&gt;    
-&lt;body&gt;
-    &lt;div class="test"&gt;
-            局概念
-    &lt;/div&gt;
-&lt;/body&gt;
-</code></pre>
-<p>我们看到上面代码中的元素.test没有设置宽、高，它的尺寸由父body（在IE中body是默认hasLayout的元素之一）来决定，所以可以看到.father的宽度是与父等宽的，而不管其中元素是否撑满。    </p>
-<p>然后给.father设置<code>float:left</code>，你会发现此时.father的宽度根据其内容进行调整，而不再是与其父元素等宽。这是由于<code>float：left</code>使.father拥有布局(hasLayout)。  </p>
-<p>在上面那个例子已经谈到了hasLayout和containing block：  </p>
-<h3 id="haslayout：一个元素如果hasLayout那么能够决定自己的尺寸和位置，对于没有布局的元素，可以通过一些CSS设置使其hasLayout：">haslayout：一个元素如果hasLayout那么能够决定自己的尺寸和位置，对于没有布局的元素，可以通过一些CSS设置使其hasLayout：</h3><ul>
-<li>设置width  </li>
-<li>设置height</li>
-<li>使其浮动float</li>
-<li>设置display为inline-block  </li>
-<li>设置overflow为hidden、auto、scroll</li>
-<li>设置zoom(仅IE)  </li>
-</ul>
-<h3 id="containing_block(包含块)">containing block(包含块)</h3><p>上面说到，当一个元素E无法决定自己的尺寸和定位，需要依靠其某一祖先元素来决定，这里提到的<code>某一个祖先元素</code>就是E的containing block(包含块)：  </p>
-<ul>
-<li>初始包含块：即浏览器窗口  </li>
-<li>对于设置<code>position:fixed</code>的元素E，其位置需要依靠浏览器窗口决定个，因此E的包含块就是初始包含块  </li>
-<li>对于设置<code>position:absolute</code>的元素E，其包含块就是’离E最近的设置了<code>position:relative\absolute</code>的祖先元素’   </li>
-</ul>
-<h3 id="BFC">BFC</h3><p>我觉得BFC在主流浏览器中的角色类似于hasLayout在IE中的功能。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/CSS/">
-                #CSS
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
 
           </div>
 
@@ -1035,11 +1011,11 @@ alert(<span class="keyword">d</span>);              <span class="comment">//0</s
       <p class="site-description motion-element"></p>
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">
-            <span class="site-state-item-count">4</span>
+            <span class="site-state-item-count">5</span>
             <span class="site-state-item-name">标签</span>
         </div>
         <div class="site-state-item site-state-pages">

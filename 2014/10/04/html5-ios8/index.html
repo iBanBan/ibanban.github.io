@@ -1,0 +1,856 @@
+<!doctype html>
+<html class="theme-next use-motion">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.3.0"/>
+
+
+
+
+	<meta name="keywords" content="翻译," />
+
+  <title> [译]苹果通过 iOS 8 向 HTML5 示爱 // Hexo </title>
+</head>
+
+<body>
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+    <a href="/" class="brand">
+        <span class="logo">
+          <i class="icon-logo"></i>
+        </span>
+        <span class="site-title">Hexo</span>
+    </a>
+</h1>
+
+
+  <ul id="menu" class="menu">
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+  
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              [译]苹果通过 iOS 8 向 HTML5 示爱
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-10-04
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <p>与所有人一样，我们对于上周的苹果 iOS8 发布会感到很兴奋。虽然才拿到 iOS 8的 GA 版本，但是我们想尽可能快地完成一份报告来为全球的 Web 开发社区提供一份对苹果最近发布的深度观察。毫无疑问在接下来的几周或者几个月内，我们会发现一些被遗漏的东西，但我们现在就开始测试并分享我们的发现。</p>
+<p>这篇文章记录了当 iOS 8 成为苹果设备的基准时 HTML 5 的性能和技术缺陷。如果你想了解为 web 开发者提供的针对 iOS 7 的类似的评论，请看我们去年的<a href="http://www.sencha.com/blog/the-html5-scorecard-the-good-the-bad-and-the-ugly-in-ios7/" target="_blank" rel="external">博文</a>。</p>
+<h2 id="iOS_8_的新特性将会推进_HTML5_开发">iOS 8 的新特性将会推进 HTML5 开发</h2><p>让我们首先来看看这次升级中增加的一些新特性。</p>
+<p><img src="http://img2.tbcdn.cn/L1/461/1/aea2e549bbb843d3e9b542428eb4bf093d3ef80e" alt="_2014_10_04_11_09_30"></p>
+<p>图片来自：<a href="caniuse.com">caniuse.com</a></p>
+<p>尽管所有的这些新特性都很棒并且能推动 HTML5 开发，但其中的重量级特性有以下这些：</p>
+<h3 id="WebGL_-_3D_Canvas_Graphics">WebGL - 3D Canvas Graphics</h3><p>支持 3D 动画的硬件加速对 web 开发者来说无疑是一个重大的特性。我们很可能会看到这个特性在游戏编程中被重度使用，并且还有很多其他的应用，特别是在<code>animations</code> 和 <code>transitions</code>中。想快速浏览一下使用这个特性能做些什么，可以打开这个 <a href="http://threejs.org/examples/webgl_particles_sprites" target="_blank" rel="external">WebGL Sprite Particle Demo</a>。</p>
+<h3 id="CSS_Shapes_Level_1">CSS Shapes Level 1</h3><p>这个很少见的特性只能在 Chrome、Chrome for Android 和 Opera 上使用，但终于在 iOS 8 中得到前缀形式的支持。<code>CSS Shapes</code>支持更为动态的文字布局，可以让你的应用更像一本杂志而不是一个网页。如果想看更多的实例，可以查看<a href="http://webplatform.adobe.com/shapes/" target="_blank" rel="external">Shapes from Adobe</a>。</p>
+<h3 id="HTML_Templates">HTML Templates</h3><p><code>Templates</code>作为<code>Web Component</code>的基本元素在最新的 Android 和 iOS 浏览器中已经可以使用了。这向真正的模块化<code>web</code>开发迈进了一大步，也为更少依赖<code>polyfill</code>的情况提供了可能。</p>
+<h3 id="Navigation/High_Resolution_Timing_APIs">Navigation/High Resolution Timing APIs</h3><p>尽管表面上看来，<code>timing API</code>不是一个非常流行的面向终端用户的特性，但它拥有的精简性能可以提供更好的跨平台测试和性能测试。</p>
+<h3 id="IndexedDB">IndexedDB</h3><p>尽管一直依赖<code>WebSQL</code>可以在 Android 和 iOS 上使用，但目前并不支持 IE 。更糟的是已经不再维护 Web SQL Spec 了，并且很可能在将来的版本中将其去掉。幸运的是，<code>IndexedDB</code> 现在可以在 iOS、Android、Chrome for Android、Safari、移动版 IE上使用，Blackberry 10 和 IE 10/11 也对其部分支持。</p>
+<h3 id="SVG_Fragment_Identifiers">SVG Fragment Identifiers</h3><p>这个特性因为它晦涩的名字显得很不起眼，但请相信它非常强大。目前 IE 10/ 11 、Mobile、iOS 8 Safari、Chrome for Android都支持<code>SVG Fragment Identifiers</code>，从而可以采用非常强大的矢量精灵序列（<code>spritesheets</code>）。这不仅对于 web 游戏来说十分重要，对于动态图标和其他 UI 元素也是如此。</p>
+<blockquote>
+<p>作为移动 web 开发者，你已经习惯使用最新的浏览器和特性进行开发。我们都知道苹果有一套绝妙的升级系统来让所有用户快速地部署 iOS 8 。如果你的应用专门针对 iOS 设备开发，你可以很容易地开始使用<code>IndexedDB</code>、<code>SVG Fragments</code>这样的新特性或者使用新的<code>Timing API</code>来测试性能。而对于希望与 iOS 7 保持一直或跨平台（Android、Windows Phone、BlackBerry）的开发者，可以使用 Sencha Touch内置的操作系统检测来确定新特性的使用范围。Sencha Touch 使你可以在应用中使用这些新特性并且随着时间推移淘汰旧的代码。</p>
+</blockquote>
+<h2 id="全新的_WKWebView">全新的 WKWebView</h2><p>iOS 8 的发布带来的碎片化是一柄双刃剑。iOS 8 自带两个原生的 webview。第一个是我们熟知并喜爱的「UIWebView」，它目前因为历史遗留原因被保留了下来，但可喜的是苹果并没有简单地将 iOS 7 的「UIWebView」塞进 iOS 8，而是升级了核心的 WebKit 代码，使其与全新的「WKWebView」平起平坐。迁移到 iOS 8 后，「WKWebView」将是开发 hyrid 应用的利器。经测试发现「WKWebView」中的 Nitro JS 引擎的性能至少是UIWebView」的4倍。这有可能成为 hybrid 应用的一个巨大胜利。然而现在还存在一些明显的 bug，将会影响到几乎所有人。文章的后面将会提到更多。</p>
+<blockquote>
+<p>好消息是从 web 开发的角度来看，新的高性能的「WKWebView」是往正确的方向上前进了一步。虽然JavaScript很少是应用的瓶颈，更多的问题出在动画或者 DOM 重绘上，但我们相信伴随着 Dom Core 的显著加速，「WKWebView」会使 Sencha Touch 应用的性能大幅提高。</p>
+</blockquote>
+<h2 id="全面的性能提升">全面的性能提升</h2><p>性能测试总是必须的，这次我们得到了一些有趣的结果。总体来看，iOS 8 似乎对所有人来说都是好消息。iOS 8 中有几项 Octane打分略低一点。让我们来研究一些图表，试着弄明白这些都意味着什么。</p>
+<blockquote>
+<p>注意：所有的测试都是在第5代的 iPod Touch 上进行的，希望能与 iPhone 5s 和很快到来的 iPhone 6s 作比较，这些分数将会帮你找到 iOS 开发的最低性能阈值。</p>
+</blockquote>
+<p><img src="http://img2.tbcdn.cn/L1/461/1/b10923dde15b2ff1269bb0a263078c33b3784858" alt="_2014_10_04_11_28_23"><br>图片来源：<a href="http://octane-benchmark.googlecode.com/svn/tags/v1/index.html" target="_blank" rel="external">http://octane-benchmark.googlecode.com/svn/tags/v1/index.html</a></p>
+<p>不幸的是，在测试的时候 Google Octane v2 在 iOS 8 的 Safari 上崩溃了，所以我们没能进行更多的测试。尽管如此，这还是给了我们一个很好的概览。</p>
+<p>可以看到除了 CodeLoad 以外，iOS 8 在每一项测试中都胜出了。CodeLoad<br>是指 JavaScript 引擎在加载了一个很大的 JavaScript 文件后多久开始运行。值得一提的是用于测试的代码是基于 Closure 和 jQuery 的。</p>
+<blockquote>
+<p>对于使用 Sencha 开发的应用，与 iOS 7 相比，应用启动时可能有稍长的延迟，因为这些应用都倾向于直接加载较大的 JavaScript 文件而不是分级加载。对于其他所有测试，iOS 8 都略微或者明显胜过 iOS 7。</p>
+</blockquote>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/cfaea319be9c587a56406b8aff4ac1a6dd67a07f" alt="_2014_10_04_11_10_46"></p>
+<p>图片来源：<a href="http://dromaeo.com/?dom" target="_blank" rel="external">http://dromaeo.com/?dom</a></p>
+<p>使用 Dromaeo 来进行的 Dom Core 测试结果实际上比图表展示的更好。 Query 展现了巨大的性能改良，使得 Attributes ，Modification 和 Traversal 上的提升黯然失色。看看这里的原始数字，Attributes 有 122% 的性能提升，Modification 有 65% 的提升，Traversal 有 48% 的提升，Dom Query 有 308% 的巨大提升。</p>
+<blockquote>
+<p>这对于 Sencha 开发者来说是一个好消息，因为dom查询在 Sencha 框架里用得很多。</p>
+</blockquote>
+<p><img src="http://img4.tbcdn.cn/L1/461/1/3a2f630dbcaa463b5e3a99ce591031033512693e" alt="_2014_10_04_11_21_34"><br>图片来源：<a href="http://dromaeo.com/?cssquery" target="_blank" rel="external">http://dromaeo.com/?cssquery</a></p>
+<p>了解了 DOM Core 测试中的惊人性能改进之后，我们研究了框架层面上的 CSS 选择器的性能提高。Ext JS 仅仅是简单地移到 iOS 8 Safari 上就有 126% 的性能提高。</p>
+<blockquote>
+<p>注意这些 CSS 选择器测试目前采用的是 Ext JS 3.X，而这个框架在发布了 Ext JS 5.X 之后性能有了巨大改进。因此实际的性能改善将会更好。</p>
+</blockquote>
+<p><img src="http://img2.tbcdn.cn/L1/461/1/183fd530dbfbf4429317d4c41e4bb887f53319e4" alt="_2014_10_04_11_25_59"></p>
+<p>图片来源：<a href="http://dromaeo.com/?dromaeo" target="_blank" rel="external">http://dromaeo.com/?dromaeo</a></p>
+<p>继续进行一些纯代码测试，我们关注的是一些几乎每个应用都会用到的基本的 JavaScript 函数。可以看到当处理 Base64 字符串、通过new Function 和 eval 进行代码评估时性能会有所下降。数组的性能有很大的提高，特别是数组创建。开发者们不用太在意，就像我们在 Fastbook 的文章中讨论过的，JavaScript 对于开发大多数应用已经足够快了。现在要开发一款流畅的应用，GPU 加速比 JavaScript 的性能要重要得多。因此接下来的测试中我们将重点关注 GPU 的交互性。</p>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/a9b29fc016d4454ad5f3ffddd7122ee5693beec4" alt="_2014_10_04_11_12_35"></p>
+<p>图片来源：<a href="http://ie.microsoft.com/testdrive/performance/fishietank/" target="_blank" rel="external">http://ie.microsoft.com/testdrive/performance/fishietank/</a></p>
+<p>上面的图表不言自明。仅仅是从 iOS 7 上的 Safari 换到 iOS 8，在fps上有 78% 的提高。显然 Canvas 有很多的更新，测试结果在我们的 WebGL 例子面前也毫不逊色。</p>
+<p><img src="http://img4.tbcdn.cn/L1/461/1/8a705af9f5df0881ab42b6993767d9da19720cc0" alt="_2014_10_04_11_13_11"></p>
+<p>图片来源：<a href="http://dromaeo.com/?cssquery" target="_blank" rel="external">http://dromaeo.com/?cssquery</a></p>
+<p>这是一张喜忧参半的图，尽管我们可以看到「WKWebView」的巨大提高。但如果你直接跳到文章后面的 Bug 说明，你会发现目前还存在一些挑战使得我们不能在 hybrid 应用里使用「WKWebView」。</p>
+<blockquote>
+<p>我们希望这些数字能够让更多开发者去推进苹果尽快修复「WKWebView」中的 Bug，这样就可以在所有的应用中享受这些性能的提高。再一次，Dom Query 的光芒掩盖了所有其他的数据。需要指出的是，「WKWebView」相比于旧的「UIWebView」，Attributes 速度提高了 208%，Modification 快了 37%，Traversal 性能提升了 249%，Query 有了 358% 的惊人提高。</p>
+</blockquote>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/9968c0c22c8b6501eb0adfbd1e7685d4ff00727a" alt="_2014_10_04_11_24_43"></p>
+<p>图片来源：<a href="https://www.webkit.org/perf/sunspider/sunspider.html" target="_blank" rel="external">https://www.webkit.org/perf/sunspider/sunspider.html</a></p>
+<p>尽管 Sunspider 的测试结果一点也不令人惊讶，但我们还是能看到一些提高。iOS Safari 相对于 iOS 7 提高了 17%，「UIWebView」提高了大约 5%。虽然增长很小，却都是正面的，这说明一切都在朝着正确的方向前进。</p>
+<p><img src="http://img3.tbcdn.cn/L1/461/1/d3f13d0bedc0616588aa053863631bc0bc7db1f0" alt="_2014_10_04_11_14_13"></p>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/066b81b5a68c4e1dde2f93c783bbd3c37a2c1876" alt="_2014_10_04_11_15_11"><br>图片来源：<a href="http://html5test.com/" target="_blank" rel="external">http://html5test.com/</a></p>
+<p>图中显示的是 HTML5 测试的原始分数，明显可以看出 iOS 8 相对于 iOS 7 对于支持的特性有着漂亮的提升。然而，要正确地理解这些结果，我们还需要谈谈对这些统计结果有巨大影响的一些变化。总结为以下几点：</p>
+<ul>
+<li>iOS 8 去除了无缝 iFrame </li>
+<li>IndexedDB 被添加到了 iOS 8 Safari 和 「WKWebView」中</li>
+<li>IndexedDB 在 iOS 8 「UIWebView」和主屏幕应用中无法使用</li>
+<li>Objectstore Array Buffer 在 iOS 8 Safari 和 「WKWebView」中无法工作（注意：尽管这项特性能正常使用，但是这项在 HTML5 测试网站上的测试却没有通过。如果这被正确检测，iOS 8 Safari 会拿到 440 分。）</li>
+<li>在 iOS 8 「UIWebView」和主屏幕应用中无法使用Objectstore Array Buffer 。</li>
+<li>WebGL 3D 图像被添加到了 iOS 8 的 Safari、「WKWebView」、「UIWebView」和主屏应用中</li>
+<li>「UIWebView」、「WKWebView」和主屏应用的 User Agent 是相同的。</li>
+</ul>
+<blockquote>
+<p>尽管苹果在保持「WKWebView」、「UIWebView」、Safari 和主屏应用在同一功能水平方面做了大量工作，但是仍然存在的一些差别可能会令 Sencha 开发者非常沮丧。如今开发者们需要更多地注意他们应用的运行环境。例如：「UIWebView」和主屏幕应用不支持 IndexedDB 和 Objectstore ArrayBuffer。因为他们的浏览器 User Agent 是相同的，所以没有简单的方法来根据运行环境来优化你的应用，这就意味着开发者需要分别检测这些特性是非被支持。</p>
+</blockquote>
+<h2 id="Bugs">Bugs</h2><p>我们都知道任何软件的发布都是有 bug 的，iOS 8 也有一些值得一提的 bug。到目前为止，我们发现了三个主要的 bug 将会影响到 HTML5 开发者，因此将影响到 Sencha 用户。也就是说，这些 bug 并不只是特定地影响 Sencha 应用，而将会在接下来的几个月内影响许多开发者的开发成果。如果你想帮忙，请点击每个 bug 下面的 Radar 链接并跳转到 Apple Bug Reporter。在那里，你可以复制我们的 bug 并提交，我们提供越多的数据和测试结果来证明这些<br> bug 的影响，（我们希望）这些 bug 能更快地被注意并修复。</p>
+<h2 id="WKWebView_本地文件加载_Bug">WKWebView 本地文件加载 Bug</h2><p>还记得我们刚刚向你介绍的令人惊叹的新 WebView？那个有着极速 Nitro JS 引擎和其他酷炫新东西的家伙。然而，它使有问题的。。。这个 bug 是一个安全问题，它使得「WKWebView」无法从本地文件系统加载文件。这就意味着「WKWebView」无法访问你内嵌的 index.html。它使得 PhoneGap 和 Cordova 的应用无法工作，因为后者采用离线/本地文件来为应用提供服务。因此现在如果你想要在你的应用中使用「WKWebView」，你必须从远程服务器加载你的文件。举个例子：加载<code>index.html</code>是不行的，但是加载<code>http://www.google.com</code>就没问题。</p>
+<p>Radar Bug Report: <a href="http://www.openradar.me/radar?id=5839348817723392" target="_blank" rel="external">http://www.openradar.me/radar?id=5839348817723392</a></p>
+<h2 id="XHR_本地文件访问">XHR 本地文件访问</h2><p>目前，所有采用新「WKWebView」的代码的程序都存在 XHR 本地文件的问题。这个问题影响到 Safari、主屏幕应用和所有内嵌在「WKWebView」中的应用。如果你正在使用 Cordova 或者 PhoneGap，你将只能使用不存在此 bug 的旧的「UIWebView」。如果你的应用正在使用图库或者相机来获取一张照片，然后通过 AJAX 将其发送到服务器，你在 iOS 8 中就要倒霉了。你会看到当你调用「send」之后程序会挂起，没有任何反应。</p>
+<p>Radar Bug Report: <a href="http://www.openradar.me/radar?id=5834555097350144" target="_blank" rel="external">http://www.openradar.me/radar?id=5834555097350144</a></p>
+<h2 id="主屏应用在锁屏/唤醒之后定时函数失效">主屏应用在锁屏/唤醒之后定时函数失效</h2><p>如果你的应用被以主屏幕应用的方式使用，你会发现自己悲剧了。当然，每个 web 应用都是可以被用户转换成一个主屏幕应用，因此我认为技术上来说这会影响到开发远程 web 应用的每一个人。这个 bug 很容易重现，只需要简单地通过一些按钮或者事件来调用<code>setTimeout</code>(回调函数)，或者<code>requestAnimationFrame</code>（回调函数）。当你第一次打开你的应用，你会发现所有的定时函数都能正常工作。但是如果你锁上你的手机接着解锁回到你的应用，你回发现所有这些定时函数都再也不能调用回调函数。他们在 Native 层就失效了。无法重置，也无法让你的应用起死回生，这种情况下只能关掉它然后重启。这些定时函数对于 Sencha Touch 和 Ext JS 框架以及以后的几乎所有其他 JavaScript 框架/库都至关重要。你绝对需要尽快向苹果反映，让他们知道你想要你的所有 JavaScript 函数一直都有效。</p>
+<p>Radar Bug Report: <a href="http://www.openradar.me/radar?id=5895945212395520" target="_blank" rel="external">http://www.openradar.me/radar?id=5895945212395520</a></p>
+<blockquote>
+<p>好消息好消息，因为目前为止，我们只发现了影响「WKWebView」的问题。如果你是尝试或者正在使用 <a href="http://www.sencha.com/products/space/" target="_blank" rel="external">Sencha Space</a> 的许多人中的一个，这些对你绝对没有影响，因为你的应用是安全的——因为使用了 Space，你的应用在一个托管的 web 运行时中，后者包含了一个安全浏览器。如果你还没有使用过 <a href="http://www.sencha.com/products/space/" target="_blank" rel="external">Sencha Space</a> ，你应该看看<a href="http://www.sencha.com/products/space/get-started/" target="_blank" rel="external">这里</a>。</p>
+</blockquote>
+<h2 id="即将到来的事情">即将到来的事情</h2><p>总的来说，随着 iOS 8 的发布，我们对苹果 iOS 的发展方向感到非常高兴，因为这些性能特高和新特性只会提高为 iOS 8 平台开发的应用的用户体验。然而，我们当然希望苹果快速解决我们上面讨论过的 bug ，因为它们的存在损害了 web 开发者对 iOS 强大威力的认识——无论他们有没有使用 Sencha 框架或者其他流行的替代品。</p>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/c1cacf7d2ce19c18a029e070f7c6f30046716221" alt="_2014_10_04_11_15_54"></p>
+<p>图片来源：<a href="http://www.caniuse.com/" target="_blank" rel="external">caniuse.com</a></p>
+<p>如果我们展望未来，我们可以期待见到一些支持 iOS 8 和 Chrome for Android 的跨平台实现，并且有着非常棒的特性如 CSS Shapes、Srcset Attitude 以及 SVG fragment identifiers。尽管在上面的图片中没有见到，Chrome for Android 已经部分支持了 WebGL 3D Canvas，而且这里的部分支持不仅仅是指那些能够运行 Chrome 但还未支持 WebGL 3D 的关键部分的老设备。</p>
+<h2 id="总结">总结</h2><p>iOS 8 对于 Web 开发者来说确实是一个令人兴奋的发布，因为有着激动人心的新特性和巨大的性能提升，这些都将有助于 HTML5 跨平台开发。</p>
+<p>原文地址：<a href="http://www.sencha.com/blog/apple-shows-love-for-html5-with-ios-8" target="_blank" rel="external">Apple Shows Love for HTML5 with iOS 8</a></p>
+
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/翻译/">
+                #翻译
+              </a>
+            
+          </div>
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2014/10/04/2014-10-04-function-declare/">函数的声明</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2014/09/26/2014-09-26-arguments/">函数之arguments</a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+    <div class="comments" id="comments">
+      
+    </div>
+  
+
+          </div>
+
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview">
+          站点概览
+        </li>
+      </ul>
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="/images/default_avatar.jpg" alt="John Doe" />
+        <p class="site-author-name">John Doe</p>
+      </div>
+      <p class="site-description motion-element"></p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </div>
+        <div class="site-state-item site-state-tags">
+            <span class="site-state-item-count">5</span>
+            <span class="site-state-item-name">标签</span>
+        </div>
+        <div class="site-state-item site-state-pages">
+            <span class="site-state-item-count">1</span>
+            <span class="site-state-item-name">页面</span>
+        </div>
+      </div>
+
+      
+
+      <div class="social-info motion-element">
+        
+      </div>
+
+      
+      
+
+    </div>
+
+    
+      <div class="post-toc-wrap sidebar-panel-active">
+        <div class="post-toc-indicator-top post-toc-indicator"></div>
+        <div class="post-toc">
+          
+          
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS_8_的新特性将会推进_HTML5_开发"><span class="nav-number">1.</span> <span class="nav-text">iOS 8 的新特性将会推进 HTML5 开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#WebGL_-_3D_Canvas_Graphics"><span class="nav-number">1.1.</span> <span class="nav-text">WebGL - 3D Canvas Graphics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS_Shapes_Level_1"><span class="nav-number">1.2.</span> <span class="nav-text">CSS Shapes Level 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML_Templates"><span class="nav-number">1.3.</span> <span class="nav-text">HTML Templates</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Navigation/High_Resolution_Timing_APIs"><span class="nav-number">1.4.</span> <span class="nav-text">Navigation/High Resolution Timing APIs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IndexedDB"><span class="nav-number">1.5.</span> <span class="nav-text">IndexedDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVG_Fragment_Identifiers"><span class="nav-number">1.6.</span> <span class="nav-text">SVG Fragment Identifiers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全新的_WKWebView"><span class="nav-number">2.</span> <span class="nav-text">全新的 WKWebView</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全面的性能提升"><span class="nav-number">3.</span> <span class="nav-text">全面的性能提升</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bugs"><span class="nav-number">4.</span> <span class="nav-text">Bugs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WKWebView_本地文件加载_Bug"><span class="nav-number">5.</span> <span class="nav-text">WKWebView 本地文件加载 Bug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XHR_本地文件访问"><span class="nav-number">6.</span> <span class="nav-text">XHR 本地文件访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主屏应用在锁屏/唤醒之后定时函数失效"><span class="nav-number">7.</span> <span class="nav-text">主屏应用在锁屏/唤醒之后定时函数失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#即将到来的事情"><span class="nav-number">8.</span> <span class="nav-text">即将到来的事情</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
+          
+        </div>
+        <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+      </div>
+    
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">John Doe</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT</a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".fancybox").fancybox();
+    });
+  </script>
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      if ($('.post-toc-content').html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+    });
+  </script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+  
+</body>
+</html>

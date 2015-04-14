@@ -104,6 +104,366 @@
           
           
             
+              <a class="post-title-link" href="/2013/09/11/2013-09-11-ie6-3px-bug/">
+                IE6下文本偏移3px的问题
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-09-11
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><p>当文本与浮动元素相邻（已知左侧元素左浮动）时，如何<strong>跨浏览器兼容（包括IE6等低版本IE浏览器）</strong>实现以下布局：<br><img src="/images/3px1.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>已知HTML结构如下所示：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">	&lt;body&gt;</span><br><span class="line">	    <span class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"left"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"right"</span>&gt;</span></span><br><span class="line">		    浮动元素后面的非浮动元素的显示问题：后面的元素认为浮动元素已脱离文档流；  其后面非浮动元素中的块级元素的背景和边框会被浮动元素盖住，但块级元素其中的文本不会被浮动元素盖住；其后面非浮动元素中的行级元素的背景、边框和内容都不会被浮动元但在IE6下很奇快，不会盖住块级元素，反而会盖住行级元素；且会产生3px边距。可通过zoom：1消除。若在浮动元素后面加上一个层,则此后的元素都按原来方式排列，不受影响；或者将紧随其后的第一个元素增加设置`”clear:both”`。</span><br><span class="line">		    浮动元素后面的非浮动元素的显示问题：后面的元素认为浮动元素已脱离文档流；  其后面非浮动元素中的块级元素的背景和边框会被浮动元素盖住，但块级元素其中的文本不会被浮动元素盖住；其后面非浮动元素中的行级元素的背景、边框和内容都不会被浮动元但在IE6下很奇快，不会盖住块级元素，反而会盖住行级元素；且会产生3px边距。可通过zoom：1消除。若在浮动元素后面加上一个层,则此后的元素都按原来方式排列，不受影响；或者将紧随其后的第一个元素增加设置`”clear:both”`。</span><br><span class="line">		    浮动元素后面的非浮动元素的显示问题：后面的元素认为浮动元素已脱离文档流；  其后面非浮动元素中的块级元素的背景和边框会被浮动元素盖住，但块级元素其中的文本不会被浮动元素盖住；其后面非浮动元素中的行级元素的背景、边框和内容都不会被浮动元但在IE6下很奇快，不会盖住块级元素，反而会盖住行级元素；且会产生3px边距。可通过zoom：1消除。若在浮动元素后面加上一个层,则此后的元素都按原来方式排列，不受影响；或者将紧随其后的第一个元素增加设置`”clear:both”`。</span><br><span class="line">		<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line">```  </span><br><span class="line">## 实现步骤    </span><br><span class="line">### 初始效果：     </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span><span class="css"></span><br><span class="line">          <span class="class">.left</span></span><br><span class="line">          <span class="rules">&#123;</span><br><span class="line">              <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">100px</span></span></span>;</span><br><span class="line">              <span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">50px</span></span></span>;</span><br><span class="line">              <span class="rule"><span class="attribute">background-color</span>:<span class="value">Olive</span></span>;</span><br><span class="line"></span><br><span class="line">              <span class="rule"><span class="attribute">float</span>:<span class="value">left</span></span>;</span><br><span class="line">        </span><br><span class="line">              <span class="rule">&#125;</span></span></span><br><span class="line">         </span><br><span class="line">          <span class="class">.right</span></span><br><span class="line">          <span class="rules">&#123;</span><br><span class="line">              <span class="rule"><span class="attribute">border</span>:<span class="value"><span class="number">1px</span> black solid</span></span>;</span><br><span class="line">              <span class="rule"><span class="attribute">background-color</span>:<span class="value">Teal</span></span>;</span><br><span class="line">         </span><br><span class="line">              <span class="rule">&#125;</span></span></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>    </span><br><span class="line">```      </span><br><span class="line">当.right宽度不确定时，在主流浏览器和IE6下，其效果不大相同，差距很难看出，如下图：  </span><br><span class="line">![参数为DOM对象时jQuery对象内部结构](/images/3px5.PNG)  </span><br><span class="line">### 情况一：.right元素宽度确定    </span><br><span class="line">**在IE6下给.right设定宽度后相当于使.right拥有layout属性**，而拥有布局的元素会清理浮动，因此设定.right宽度后在其他浏览器下效果不变如上图，但在IE6下有3px边距效果如下图：  </span><br><span class="line">![参数为DOM对象时jQuery对象内部结构](/images/3px3.PNG) </span><br><span class="line">      </span><br><span class="line">可以看到，在IE6下.left有3px的右外边距。  </span><br><span class="line">这时候想达到目标效果，有两种方法：  </span><br><span class="line"></span><br><span class="line">- 方法1，将.right也左浮动起来   </span><br><span class="line">这样会消除IE6的3px问题，也会使其他浏览器形成两列布局，最终代码： </span><br><span class="line">```javascript</span><br><span class="line">		<span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span><span class="css"></span><br><span class="line">	          <span class="class">.left</span></span><br><span class="line">	          <span class="rules">&#123;</span><br><span class="line">	              <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">100px</span></span></span>;</span><br><span class="line">	              <span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">50px</span></span></span>;</span><br><span class="line">	              <span class="rule"><span class="attribute">background-color</span>:<span class="value">Olive</span></span>;</span><br><span class="line">	</span><br><span class="line">	              <span class="rule"><span class="attribute">float</span>:<span class="value">left</span></span>;</span><br><span class="line">	        </span><br><span class="line">	              <span class="rule">&#125;</span></span></span><br><span class="line">	         </span><br><span class="line">	          <span class="class">.right</span></span><br><span class="line">	          <span class="rules">&#123;</span><br><span class="line">	              <span class="rule"><span class="attribute">border</span>:<span class="value"><span class="number">1px</span> black solid</span></span>;</span><br><span class="line">	              <span class="rule"><span class="attribute">background-color</span>:<span class="value">Teal</span></span>;</span><br><span class="line">	</span><br><span class="line">	              <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">500px</span></span></span>;</span><br><span class="line">	              <span class="rule"><span class="attribute">float</span>:<span class="value">left</span></span>;</span><br><span class="line">	         </span><br><span class="line">	              <span class="rule">&#125;</span></span></span><br><span class="line">	    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>方法2：给.right元素添加margin-left<br>对非IE6浏览器来讲，给.right设置<code>margin-left</code>值为.left的宽度；<br>在IE6来讲，给.left设置<code>margin-right</code>为-3px抵消。最终代码：  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=<span class="string">"text/css"</span>&gt;</span><br><span class="line">        .left</span><br><span class="line">        &#123;</span><br><span class="line">            width:<span class="number">100</span>px;</span><br><span class="line">            height:<span class="number">50</span>px;</span><br><span class="line">            background-color:Olive;  </span><br><span class="line"></span><br><span class="line">            float:left;</span><br><span class="line">            *margin-right:-<span class="number">3</span>px;</span><br><span class="line">            &#125;</span><br><span class="line">       </span><br><span class="line">        .right</span><br><span class="line">        &#123;</span><br><span class="line">            border:<span class="number">1</span>px black solid;</span><br><span class="line">            background-color:Teal;</span><br><span class="line">              </span><br><span class="line">             width:<span class="number">500</span>px;</span><br><span class="line">             margin-left:<span class="number">100</span>px;</span><br><span class="line">             *margin-left:<span class="number">0</span>;</span><br><span class="line">            </span><br><span class="line">            &#125;</span><br><span class="line">  &lt;<span class="regexp">/style&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>将.right元素的<code>margin-left</code>设置为.left元素的宽度值。</p>
+<h3 id="-right宽度不确定">.right宽度不确定</h3><p>此时可以设置.right的<code>margin-left</code>为.left的宽度，使.right不再环绕.left。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=<span class="string">"text/css"</span>&gt;</span><br><span class="line">         div</span><br><span class="line">         &#123;</span><br><span class="line">             width:<span class="number">100</span>px;</span><br><span class="line">             height:<span class="number">50</span>px;</span><br><span class="line">             background-color:red;</span><br><span class="line">             float:left;</span><br><span class="line">             &#125;</span><br><span class="line">        </span><br><span class="line">         p</span><br><span class="line">         &#123;</span><br><span class="line">             border:<span class="number">1</span>px black solid;</span><br><span class="line">             background-color:pink;</span><br><span class="line"></span><br><span class="line">             margin-left:<span class="number">100</span>px;</span><br><span class="line">             &#125;</span><br><span class="line">   &lt;<span class="regexp">/style&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>此时非IE6的主流浏览器已达到目标效果；<br>但是在IE6下.right元素产生了3px边距，这次的3px边距效果如下图所示：<br><img src="/images/3px6.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>可以通过清理浮动将这个3px文本偏移解决，即给.right设置<code>height:1%</code>或<code>zoom:1</code>等，这些方法都是启动layout进行间接清除浮动，消除这个类型的3px，其效果为： </p>
+<p><img src="/images/3px7.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>然后即可以通过上述讲的消除.left外部3px达到效果，最终代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=<span class="string">"text/css"</span>&gt;</span><br><span class="line">        .left</span><br><span class="line">        &#123;</span><br><span class="line">            width:<span class="number">100</span>px;</span><br><span class="line">            height:<span class="number">50</span>px;</span><br><span class="line">            background-color:Olive;</span><br><span class="line">            float:left;</span><br><span class="line">            *margin-right:-<span class="number">3</span>px;</span><br><span class="line">            &#125;</span><br><span class="line">       </span><br><span class="line">        .right</span><br><span class="line">        &#123;</span><br><span class="line">            border:<span class="number">1</span>px black solid;</span><br><span class="line">            background-color:Teal;</span><br><span class="line">             </span><br><span class="line">            margin-left:<span class="number">100</span>px;</span><br><span class="line">            *height:<span class="number">1</span>%;</span><br><span class="line">            *margin-left:<span class="number">0</span>;</span><br><span class="line">            </span><br><span class="line">            &#125;</span><br><span class="line">  &lt;<span class="regexp">/style&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="总结">总结</h3><p>其实，总的说来，在IE6当右侧元素未清除浮动时，这个3px在内部；当右侧元素已清除浮动（不管以何种方式<code>zoom:1</code>、<code>height:1%</code>等），这个3px在外部。这两种3px都可以使用.left的<code>margin-right:-3px</code>消除，另外，外部3px浮动可以通过.right的<code>float:left</code>来消除。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/CSS/">
+                #CSS
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/09/11/2013-09-11-margin/">
+                外边距问题
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-09-11
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="理想和现实的差距">理想和现实的差距</h2><p>对于以下代码我们期望的和实际的呈现效果是有很大差距的：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">   <span class="xml"><span class="tag">&lt;<span class="title">title</span>&gt;</span>Untitled Page<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span><span class="css"></span><br><span class="line">           <span class="tag">body</span><span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">300px</span></span></span>;<span class="rule">&#125;</span></span></span><br><span class="line">          <span class="class">.top</span><span class="rules">&#123;<span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">20px</span></span></span>;<span class="rule"><span class="attribute">background-color</span>:<span class="value"><span class="hexcolor">#ccc</span></span></span>;<span class="rule"><span class="attribute">border</span>:<span class="value">solid <span class="number">1px</span> <span class="hexcolor">#ccc</span></span></span>;<span class="rule">&#125;</span></span></span><br><span class="line">          <span class="tag">p</span><span class="rules">&#123;<span class="rule"><span class="attribute">margin</span>:<span class="value"><span class="number">10px</span></span></span>;<span class="rule"><span class="attribute">background-color</span>:<span class="value">red</span></span>;<span class="rule">&#125;</span></span></span><br><span class="line">          <span class="class">.bottom</span><span class="rules">&#123;<span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">20px</span></span></span>;<span class="rule"><span class="attribute">background-color</span>:<span class="value"><span class="hexcolor">#ccc</span></span></span>;<span class="rule"><span class="attribute">border</span>:<span class="value">solid <span class="number">1px</span> <span class="hexcolor">#ccc</span></span></span>;<span class="rule">&#125;</span></span></span><br><span class="line">   </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"top"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">p</span>&gt;</span>content<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"bottom"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>对于以上代码，理想如下图：<br><img src="/images/margin2.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>但现实是残酷的，实际现实如下图：<br><img src="/images/margin1.PNG" alt="参数为DOM对象时jQuery对象内部结构">    </p>
+<h2 id="问题的分析与解决">问题的分析与解决</h2><h3 id="解释问题">解释问题</h3><p>从上面两个图我们可以看出对于垂直外边距的两个问题：  </p>
+<ol>
+<li>两个上下相邻的兄弟元素top和bottom，当它们的垂直外边距相遇时，会叠加成较大的一个值，而不是两者相加。  </li>
+<li>对于两个为父子关系的块级元素，其垂直外边距也会叠加成较大的那个值，而且当父高度未设置时，其父高度=子高度+上内边距+下内边距+上边框+下边框。效果就是子的外边距被忽略了，而父的外边距的值=父子垂直边距叠加后的值。  <h3 id="解决问题">解决问题</h3></li>
+<li>对于第一个问题，当我们需要使上下两元素间距为N时，只需设置上面元素的<code>margin-bottom</code>或下面元素的<code>margin-top</code>为N即可，避免同时设置两个 元素的上下边距  </li>
+<li>对于第二个问题，给父元素添加一点内边距或者给父元素添加边框。  </li>
+</ol>
+<h3 id="修改后代码为：">修改后代码为：</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//给父添加边框</span><br><span class="line">&lt;style type="text/css"&gt;</span><br><span class="line">           body&#123;width:300px;&#125;</span><br><span class="line">          .top&#123;margin:20px;background-color:#ccc;border:solid 1px #ccc;&#125;</span><br><span class="line">          p&#123;margin:10px;background-color:red;&#125;</span><br><span class="line">          .bottom&#123;height:20px;margin:20px;background-color:#ccc;border:solid 1px #ccc;&#125;</span><br><span class="line">   &lt;/style&gt;  </span><br><span class="line">//给父添加内边距</span><br><span class="line">&lt;style type="text/css"&gt;</span><br><span class="line">           body&#123;width:300px;&#125;</span><br><span class="line">          .top&#123;margin:20px;background-color:#ccc;padding:1px;&#125;</span><br><span class="line">          p&#123;margin:10px;background-color:red;&#125;</span><br><span class="line">          .bottom&#123;height:20px;margin:20px;background-color:#ccc;border:solid 1px #ccc;&#125;</span><br><span class="line">   &lt;/style&gt;</span><br></pre></td></tr></table></figure>
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/CSS/">
+                #CSS
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/09/06/2013-09-06-html-drag/">
+                HTML5之拖拽
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-09-06
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="直接上例子">直接上例子</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">   <span class="xml"><span class="tag">&lt;<span class="title">title</span>&gt;</span>Untitled Page<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">       <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">           <span class="keyword">var</span> image = <span class="built_in">document</span>.createElement(<span class="string">"img"</span>);</span><br><span class="line">           image.src = <span class="string">"images/audit_pub.png"</span>;</span><br><span class="line">		<span class="comment">//被拖拽的元素</span></span><br><span class="line">           <span class="keyword">var</span> source = <span class="built_in">document</span>.getElementById(<span class="string">"dragme"</span>);</span><br><span class="line">		<span class="comment">//目标元素，即被拖拽的元素可能经过的元素或将被拖拽的的元素放到该元素中</span></span><br><span class="line">           <span class="keyword">var</span> dest = <span class="built_in">document</span>.getElementById(<span class="string">"house"</span>);</span><br><span class="line">           <span class="keyword">var</span> talk = <span class="built_in">document</span>.getElementById(<span class="string">"talk"</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//被拖拽元素开始拖拽的操作</span></span><br><span class="line">           source.addEventListener(<span class="string">"dragstart"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               <span class="keyword">var</span> dt = ev.dataTransfer;</span><br><span class="line">			<span class="comment">//修改拖拽时的图标（测试时只有FF支持）</span></span><br><span class="line">               dt.setDragImage(image, -<span class="number">10</span>, -<span class="number">10</span>);</span><br><span class="line">			<span class="comment">//设置元素被拖拽时允许的视觉效果</span></span><br><span class="line">               dt.effectAllowed = <span class="string">"all"</span>;</span><br><span class="line">			<span class="comment">//存放元素被拖拽时要存放的数据</span></span><br><span class="line">               dt.setData(<span class="string">"text/plain"</span>, <span class="string">"珍爱生命，远离熊孩子！"</span>);</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//被拖拽元素拖拽结束的操作</span></span><br><span class="line">           source.addEventListener(<span class="string">"dragend"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               ev.preventDefault();</span><br><span class="line">               talk.innerHTML = <span class="string">""</span>;</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">//目标元素dest感受到有元素开始进入它的区域</span></span><br><span class="line">           dest.addEventListener(<span class="string">"dragenter"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               talk.innerHTML = <span class="string">"砸开你家玻璃，溜进你家。"</span>;</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//目标元素dest感受到有元素在它范围内移动</span></span><br><span class="line">           dest.addEventListener(<span class="string">"dragover"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               <span class="keyword">this</span>.textContent = <span class="string">"熊孩子在我家里走来走去！"</span>;</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//目标元素dest感受到有元素离开它的范围</span></span><br><span class="line">           dest.addEventListener(<span class="string">"dragleave"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               talk.innerHTML = <span class="string">"玩够了，回家找妈妈去了！"</span>;</span><br><span class="line">               <span class="keyword">this</span>.textContent = <span class="string">"尼玛，熊孩子终于走了！"</span>;</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line">		<span class="comment">//目标元素dest感受到有元素被扔进它的范围</span></span><br><span class="line">           dest.addEventListener(<span class="string">"drop"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               <span class="keyword">var</span> dt = ev.dataTransfer;</span><br><span class="line">               <span class="keyword">var</span> text = dt.getData(<span class="string">"text/plain"</span>);</span><br><span class="line">               dest.textContent = text;</span><br><span class="line">               ev.preventDefault();</span><br><span class="line">               ev.stopPropagation();</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="built_in">document</span>.ondragover = <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> </span>&#123; e.preventDefault(); &#125;</span><br><span class="line">       <span class="built_in">document</span>.ondrop = <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> </span>&#123; e.preventDefault(); &#125;</span><br><span class="line">   </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span> <span class="attribute">onload</span>=<span class="value">"init()"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">h1</span>&gt;</span>拖拽示例之熊孩子<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"dragme"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"images/xhz.gif"</span> <span class="attribute">alt</span>=<span class="value">"熊孩子王尼玛"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">span</span>&gt;</span>熊孩子说：<span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">id</span>=<span class="value">"talk"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"house"</span> <span class="attribute">style</span>=<span class="value">"width:200px;height:200px;border:1px solid #ccc;"</span>&gt;</span>     </span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="解释说明">解释说明</h2><p>对于上面代码，可以自己感受下，注意一定是高端浏览器~  </p>
+<h3 id="与拖拽相关的事件的归属问题">与拖拽相关的事件的归属问题</h3><p>与拖拽相关的事件可分为两类：    </p>
+<ul>
+<li><code>dragstart、drag、dragend</code>这三个事件是针对被拖拽元素的  </li>
+<li><code>dragenter、dragover、dragleave、drop</code>这三个事件时针对目标元素的  </li>
+</ul>
+<h3 id="阻止默认行为很关键">阻止默认行为很关键</h3><ul>
+<li>在目标行为的<code>drop</code>事件处理程序中，阻止默认行为，（因为默认不接受被拖放的元素）  </li>
+<li>对整个页面的<code>dragover、drop</code>事件，也要阻止默认行为，否则拖放处理不能够实现。  </li>
+</ul>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/HTML5/">
+                #HTML5
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/09/06/2013-09-16-layout-postion/">
+                CSS布局之定位
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-09-06
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="CSS中定位方案">CSS中定位方案</h2><p>有三种：标准流、浮动、绝对定位</p>
+<h2 id="display">display</h2><p>块框（block box）、行内框（inline box）、行框（line box）<br>HTML中一切元素都会形成一个”框”(box)，块级元素即块框，行内元素即行内框。由一行形成的水平框即行框，行框可能包含多个行内框。行框的高度总是足以容纳它包含的所有的行内框，他们之间的关系如下图所示：<br><img src="../images/linebox.PNG" alt="参数为DOM对象时jQuery对象内部结构"></p>
+<h3 id="块级元素、行内元素的区别">块级元素、行内元素的区别</h3><p>常见的<strong>块级元素：</strong><code>&lt;h1&gt;~&lt;h6&gt;、&lt;p&gt;、&lt;ol&gt;、&lt;ul&gt;、&lt;dl&gt;、&lt;dt&gt;、&lt;li&gt;、&lt;table&gt;、&lt;form&gt;、&lt;caption&gt;、&lt;div&gt;</code><br>常见的<strong>行内元素：</strong><code>&lt;span&gt;、&lt;img&gt;、&lt;input&gt;、&lt;em&gt;、&lt;srong&gt;</code>等</p>
+<ul>
+<li>块级元素：<br>  独占一行，默认情况下，宽度会占满父元素，多个块级框从上到下排列；垂直距离根据垂直外边距计算；<br>  可以设置<code>width、height</code>   </li>
+<li>行内元素：<br>  不独占一行，多个块级框在一行中水平布置，可以通过内边距、外边距调整行内框之间距离；<br>  设置<code>width、height</code>无效；<br>  其<code>padding、margin</code>属性只在水平方向 有效，在垂直方向无效。</li>
+</ul>
+<h2 id="position">position</h2><ul>
+<li>static：<br>元素仍然存在与标准流中。元素框正常生成。  </li>
+<li>relative：<br>元素框在标准流中的占位保留；<br>元素的display属性不变；<br>元素的top、bottom、left、right、z-index属性被激活；<br>元素的top、bottom、left、right都是相对于自身在标准量中的占位而言；      </li>
+<li>absolute：<br>元素框脱离标准文本流，不再占位；<br>元素的display属性被改变为<code>inline-block</code>，而不管之前该元素是块级元素还是行内元素<br>元素的top、bottom、left、right、z-index属性被激活；<br>元素的top、bottom、left、right都是相对于其设置了<code>postion:relative</code>或<code>position:absolute</code>的最近祖先元素而言；</li>
+<li>fixed：<br>其表现与absolute相似，可以说是absolute的一种，区别就在于fixed的top、bottom、left、right定位是相对于视窗而言。<br>元素框脱离标准文本流，不再占位；<br>元素的display属性被改变为<code>inline-block</code>，而不管之前该元素是块级元素还是行内元素<br>元素的top、bottom、left、right、z-index属性被激活；    </li>
+</ul>
+<p><strong>特别注意：</strong> <strong>top的优先级高于bottom，left的优先级高于right</strong>；当设置矛盾时会优先top和left的设置，这个在<code>relative、absolute、fixed</code>下都是适用的，如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.relative&#123;top:<span class="number">10</span>px;</span><br><span class="line">		  bottom:<span class="number">10</span>px;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>z-index优先级：</strong>    </p>
+<ul>
+<li>不显示设置<code>z-index</code>时，<code>relative、absolute、fixed</code>优先级一样，后定义的元素出现在上层     </li>
+<li>显示设置<code>z-index</code>时，该属性值大的在上层。<h2 id="display与position的关系">display与position的关系</h2>上面说过，<code>position:absolute\fixed</code>会将元素的display改变为<code>inline-block</code>，这时候如果显示设置<code>display</code>为其他值会失效。  </li>
+</ul>
+<p>同样，<code>float</code>也会将元素的display改变为<code>inline-block</code>，这时候如果显示设置<code>display</code>为其他值也会失效。  </p>
+<h2 id="BFC和hasLayout和containing_block">BFC和hasLayout和containing block</h2><p>大多时候一个元素的<strong>尺寸</strong>和<strong>位置</strong>不是由自己决定的（例如：未设置宽、高尺寸的块级元素、绝对定位的元素等），而是要参考它的某个祖先容器。那详细的问题就来了：什么时候一个元素能够当家做主决定自己的尺寸和位置呢？当自己不能决定时要参考那个祖先元素呢？   </p>
+<p>首先引入IE的布局概念，hasLayout（拥有布局）的元素能够负责自身的以及子元素的尺寸和位置设置。当一个元素没有布局不能决定自身尺寸和位置时，由离它最近的hasLayout（拥有布局）的元素来决定。举例说明吧：  </p>
+<pre><code class="javascript">&lt;style type="text/css"&gt;
+      .father
+      {
+          border:1px solid #ccc;
+          float:left;
+      }
+
+&lt;/style&gt;    
+&lt;body&gt;
+    &lt;div class="test"&gt;
+            局概念
+    &lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+<p>我们看到上面代码中的元素.test没有设置宽、高，它的尺寸由父body（在IE中body是默认hasLayout的元素之一）来决定，所以可以看到.father的宽度是与父等宽的，而不管其中元素是否撑满。    </p>
+<p>然后给.father设置<code>float:left</code>，你会发现此时.father的宽度根据其内容进行调整，而不再是与其父元素等宽。这是由于<code>float：left</code>使.father拥有布局(hasLayout)。  </p>
+<p>在上面那个例子已经谈到了hasLayout和containing block：  </p>
+<h3 id="haslayout：一个元素如果hasLayout那么能够决定自己的尺寸和位置，对于没有布局的元素，可以通过一些CSS设置使其hasLayout：">haslayout：一个元素如果hasLayout那么能够决定自己的尺寸和位置，对于没有布局的元素，可以通过一些CSS设置使其hasLayout：</h3><ul>
+<li>设置width  </li>
+<li>设置height</li>
+<li>使其浮动float</li>
+<li>设置display为inline-block  </li>
+<li>设置overflow为hidden、auto、scroll</li>
+<li>设置zoom(仅IE)  </li>
+</ul>
+<h3 id="containing_block(包含块)">containing block(包含块)</h3><p>上面说到，当一个元素E无法决定自己的尺寸和定位，需要依靠其某一祖先元素来决定，这里提到的<code>某一个祖先元素</code>就是E的containing block(包含块)：  </p>
+<ul>
+<li>初始包含块：即浏览器窗口  </li>
+<li>对于设置<code>position:fixed</code>的元素E，其位置需要依靠浏览器窗口决定个，因此E的包含块就是初始包含块  </li>
+<li>对于设置<code>position:absolute</code>的元素E，其包含块就是’离E最近的设置了<code>position:relative\absolute</code>的祖先元素’   </li>
+</ul>
+<h3 id="BFC">BFC</h3><p>我觉得BFC在主流浏览器中的角色类似于hasLayout在IE中的功能。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/CSS/">
+                #CSS
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2013/09/05/2013-09-05-html5-file/">
                 HTML5之文件
               </a>
@@ -803,11 +1163,11 @@ HTML:
       <p class="site-description motion-element"></p>
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">
-            <span class="site-state-item-count">4</span>
+            <span class="site-state-item-count">5</span>
             <span class="site-state-item-name">标签</span>
         </div>
         <div class="site-state-item site-state-pages">

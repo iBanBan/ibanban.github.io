@@ -174,6 +174,161 @@
           
           
             
+              <a class="post-title-link" href="/2014/10/23/2014-10-23-object2/">
+                js对象相关之二（继承）
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-10-23
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="继承（原型链）">继承（原型链）</h2><p>  在js中继承主要是靠原型链实现的。<br>在js中，创建一个函数（包括构造函数），就为该函数赋一个prototype原型属性，该属性指向原型对象。该原型属性默认获得 一个constructor属性，指回构造函数，原型属性还继承了Object的属性和方法（toString，valueOf等）。通过该构造函数创建的所有实例都有一个[[prototype]]属性，指向原型对象。这样原型中所有的属性和方法就为所有实例共享。  </p>
+<h3 id="原型链继承">原型链继承</h3><p>从以上所说的构造函数、原型对象、实例之间的关系就很好理解原型链继承。原型链继承实质就是使一个对象B的原型对象为另一个对象A的实例。这样对象B的实例指向B的原型对象，B的原型对象又指向A的原型对象，形成了原型链，而B的实例也继承了原型链上的所有属性和方法。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">//基类	</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Person</span><span class="params">(name,interests)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name=name;</span><br><span class="line">		<span class="keyword">this</span>.interests=interests;</span><br><span class="line">	&#125;</span><br><span class="line">	Person.prototype.say=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;alert(<span class="string">"hello"</span>);&#125;;</span><br><span class="line">	<span class="comment">//子类	</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Student</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	Student.prototype=<span class="keyword">new</span> Person(<span class="string">"zc"</span>,[<span class="string">"reading"</span>,<span class="string">"dancing"</span>]);  </span><br><span class="line">	<span class="keyword">var</span> student=<span class="keyword">new</span> Student();  </span><br><span class="line">``` </span><br><span class="line">**原型链的缺点：**  </span><br><span class="line">  </span><br><span class="line">- 通过子类从基类中继承来的所有属性（不管是实例属性还是原型属性）都变成了子类的原型属性。当含有引用类型的属性时，子类创造的所有实例对该属性进行共享，那么一个实例中该属性的变化会直接体现在其他属性中。  </span><br><span class="line">- 创建子类实例是不能向构造函数中传参。  </span><br><span class="line"></span><br><span class="line">### 借助构造函数继承  </span><br><span class="line">就是在子类的构造函数内部调用基类的构造函数  </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="comment">//基类	</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Person</span><span class="params">(name,interests)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name=name;</span><br><span class="line">		<span class="keyword">this</span>.interests=interests;</span><br><span class="line">		<span class="keyword">this</span>.say=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;alert(<span class="string">"hello"</span>);&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//子类  </span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Student</span><span class="params">(name,interests)</span></span>&#123;</span><br><span class="line">		Person.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> student1=<span class="keyword">new</span> Student(<span class="string">"zc"</span>,[<span class="string">"reading"</span>,<span class="string">"dancing"</span>]);  </span><br><span class="line">``` </span><br><span class="line">**借助构造函数的缺点：**  </span><br><span class="line">  </span><br><span class="line">- 所有的属性和方法必须定义在基类的构造函数中，才能被子类继承，无法达到方法的公用。  </span><br><span class="line"></span><br><span class="line">### 组合继承  </span><br><span class="line">即是将原型链继承和借助构造函数继承结合起来。原型链实现原型属性的继承，借助构造函数实现实例属性的继承。这也是最常用的一种继承方式。</span><br><span class="line"></span><br><span class="line">举个例子说明如何通过原型链和借助构造函数实现继承的，并绘制出了完整的原型链：  </span><br><span class="line">```javascript	  </span><br><span class="line">	<span class="comment">//基类  </span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Person</span><span class="params">(name,age,interests)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name=name;</span><br><span class="line">		<span class="keyword">this</span>.age=age;</span><br><span class="line">		<span class="keyword">this</span>.interests=interests;</span><br><span class="line">	&#125; </span><br><span class="line">	Person.prototype.species=<span class="string">"人"</span>;</span><br><span class="line">	Person.prototype.sayName=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">		alert(<span class="keyword">this</span>.name);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//派生类  </span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Student</span><span class="params">(name,age,interests,grade)</span></span>&#123;</span><br><span class="line">		Person.call(<span class="keyword">this</span>,name,age,interests);</span><br><span class="line">		<span class="keyword">this</span>.grade=grade;</span><br><span class="line">	&#125;</span><br><span class="line">	Student.prototype=<span class="keyword">new</span> Person();</span><br><span class="line">	Student.prototype.constructor=Student;  </span><br><span class="line">	Student.prototype.sayGrade=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">		alert(<span class="keyword">this</span>.grade);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//创建Student实例  </span></span><br><span class="line">	<span class="keyword">var</span> student1=<span class="keyword">new</span> Student(<span class="string">"张三"</span>,<span class="number">24</span>,[<span class="string">"打球"</span>],<span class="string">"研二"</span>);  </span><br><span class="line">	student1.interests.push(<span class="string">"跳舞"</span>);</span><br><span class="line">	<span class="keyword">var</span> student2=<span class="keyword">new</span> Student(<span class="string">"李四"</span>,<span class="number">23</span>,[<span class="string">"呵呵"</span>,<span class="string">"哈哈"</span>],<span class="string">"博一"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>以上代码的完整原型链为：<br><img src="/images/prototype6.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>由上图可以看出：<br><strong>student1的原型链为(沿红线方向)：</strong><code>student1-&gt;Student.prototype-&gt;Person.prototype-&gt;Object.prototype</code><br>当读取对象student1的属性时，沿着原型链一直找，直到找到返回。    </p>
+<p><strong>对象student1的所有属性和方法：</strong>    </p>
+<ul>
+<li>实例属性：grade、name、age、interests  </li>
+<li>引用属性：sayGrade、sayName、constructor、species</li>
+</ul>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/JS/">
+                #JS
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/10/14/node-debug/">
+                Node调试方法
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-10-14
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="前言">前言</h2><p>本文主要介绍三种调试Node的方法：命令行调试、Node-Inspector、使用WebStrom进行调试。</p>
+<p>待调试文件index.js，以下调试方法均是基于该文件：</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="reserved">var</span> http=<span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line">http.createServer(<span class="reserved">function</span>(req,res)&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>,&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/html'</span>&#125;);</span><br><span class="line">    res.write(<span class="string">'&lt;h1&gt;Node.js&lt;/h1&gt;'</span>);</span><br><span class="line">    res.write(<span class="string">'&lt;p&gt;Hello World&lt;/p&gt;'</span>);</span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"listening at port 3000"</span>);</span><br><span class="line">`<span class="javascript"></span>``<span class="javascript">    </span><br><span class="line">## 方式一：命令行调试Debugger  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Debugger是Node内置的调试工具。下面主要介绍使用Debugger的调试步骤以及各调试指令的含义。</span><br><span class="line"></span><br><span class="line">### <span class="number">1.</span> 在代码中加入断点  </span><br><span class="line">调试前，通过语句</span>`<span class="keyword">debugger</span>;`<span class="javascript">设置断点位置，修改index.js文件如下：</span></span><br></pre></td></tr></table></figure>
+<p>var http=require(‘http’);</p>
+<p>http.createServer(function(req,res){<br>    res.writeHead(200,{‘Content-Type’:’text/html’});<br>    debugger;    //第一个断点<br>    res.write(‘</p><h1>Node.js</h1>‘);<br>    debugger;    //第二个断点<br>    res.write(‘<p>Hello World</p>‘);<br>}).listen(3000);<br>console.log(“listening at port 3000”);<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">### 2.通过命令行进入调试模式  </span></span><br><span class="line">  </span><br><span class="line">在浏览器中访问要调试的页面，在命令行输入以下命令：</span><br></pre></td></tr></table></figure><p></p>
+<p>$node debug index.js ￼<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">开启Node的调试功能，输出结果如下：  </span><br><span class="line"></span><br><span class="line">![<span class="link_label">11</span>](<span class="link_url">http://img2.tbcdn.cn/L1/461/1/d272b16eab9b82cf054625758ba883bf1cb639de</span>)  </span><br><span class="line">代码执行到<span class="code">`debugger;`</span>语句会暂停，提示输入指令。  </span><br><span class="line">输入指令进行调试，如下图：  </span><br><span class="line"></span><br><span class="line">![<span class="link_label">12</span>](<span class="link_url">http://img3.tbcdn.cn/L1/461/1/59dddaf134148970c59266ee13b8b7e70767365c</span>) </span><br><span class="line">  </span><br><span class="line"><span class="header">### 相关指令含义  </span></span><br><span class="line">以下部分来自[<span class="link_label">Debugger</span>](<span class="link_url">http://nodejs.org/api/debugger.html</span>)  </span><br><span class="line"><span class="header">#### 步进指令  </span></span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>cont或c —— 继续执行  </span><br><span class="line"><span class="bullet">* </span>next或n —— 执行到下一个断点  </span><br><span class="line"><span class="bullet">* </span>step或s —— 进入函数内部  </span><br><span class="line"><span class="bullet">* </span>out或o ——跳出函数  </span><br><span class="line"><span class="bullet">* </span>pause ——暂停执行 </span><br><span class="line"></span><br><span class="line"><span class="header">#### 断点操作  </span></span><br><span class="line">  </span><br><span class="line"><span class="bullet">* </span>setBreakpoint()或sb() —— 在当前行设置断点  </span><br><span class="line"><span class="bullet">* </span>setBreakpoint(line)或sb(line) —— 在特定行line设置断点  </span><br><span class="line"><span class="bullet">* </span>setBreakpoint('fn()'), sb(...) —— 在函数fn内部第一个声明出设置断点  </span><br><span class="line"><span class="bullet">* </span>setBreakpoint('script.js', 1), sb(...) —— 在文件script.js第一行设置断点  </span><br><span class="line"><span class="bullet">* </span>clearBreakpoint, cb(...) —— 删除断点  </span><br><span class="line"></span><br><span class="line"><span class="header">#### 信息查看  </span></span><br><span class="line">  </span><br><span class="line"><span class="bullet">* </span>backtrace或bt —— 输出当前执行下的堆栈信息  </span><br><span class="line"><span class="bullet">* </span>list(5) —— 输出当前上下各5行源代码  </span><br><span class="line"><span class="bullet">* </span>watch(expr) —— 添加表达式expr至观察列表  </span><br><span class="line"><span class="bullet">* </span>unwatch(expr) —— 从观察列表中移除表达式expr  </span><br><span class="line"><span class="bullet">* </span>watchers —— 列出观察列表中所有的表达式和他们的值  </span><br><span class="line"><span class="bullet">* </span>repl —— 调试脚本上下文中代码</span><br><span class="line"></span><br><span class="line"><span class="header">#### 执行控制  </span></span><br><span class="line">  </span><br><span class="line"><span class="bullet">* </span>run —— 启动脚本  </span><br><span class="line"><span class="bullet">* </span>restart —— 重启脚本  </span><br><span class="line"><span class="bullet">* </span>kill —— 终止脚本</span><br><span class="line"> </span><br><span class="line"><span class="header">#### 其他  </span></span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>scripts - 列出所有已加载的脚本  </span><br><span class="line"><span class="bullet">* </span>version - 显示 V8 的版本  </span><br><span class="line"></span><br><span class="line"><span class="header">## 方式二：Node-inspector    </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Node Inspector是基于方式一中的API实现的界面化的Node调试工具，不过node-inspector需要在Webkit内核下浏览器进行调试。以下是调试步骤：  </span><br><span class="line"></span><br><span class="line"><span class="header">### 1. 全局安装node-inspector</span></span><br></pre></td></tr></table></figure></p>
+<p>$ npm install node-inspector -g<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">### 2. 启动node-inspector监听Nodejs的debug调试端口</span></span><br></pre></td></tr></table></figure></p>
+<p>$ node-inspector￼<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">命令行输出如下图：  </span><br><span class="line">![<span class="link_label">1</span>](<span class="link_url">http://img1.tbcdn.cn/L1/461/1/aebe35fb6682e75742dadb1ff2f1769de1352eb2</span>)</span><br><span class="line"></span><br><span class="line"><span class="header">### 3. 打开浏览器，输入上图中显示地址  </span></span><br><span class="line">[<span class="link_label">`http://127.0.0.1:8080/debug?port=5858`</span>](<span class="link_url">http://127.0.0.1:8080/debug?port=5858</span>),将看到如下调试窗口：  </span><br><span class="line"></span><br><span class="line">![<span class="link_label">2</span>](<span class="link_url">http://img1.tbcdn.cn/L1/461/1/2b81f0ea1f3532c968946532bf6a98192b5f2a80</span>)</span><br><span class="line"></span><br><span class="line"><span class="header">### 4. 将需要调试的代码文件载入到上述调试窗口。  </span></span><br><span class="line">再打开一个命令行，输入：</span><br></pre></td></tr></table></figure></p>
+<p>$ node —debug index.js<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">此时刷新[<span class="link_label">`http://127.0.0.1:8080/debug?port=5858`</span>](<span class="link_url">http://127.0.0.1:8080/debug?port=5858</span>)会发现index.js已载入调试窗口，如下图所示：  </span><br><span class="line"></span><br><span class="line">![<span class="link_label">3</span>](<span class="link_url">http://img2.tbcdn.cn/L1/461/1/fedea101eda09581333cd02d1f2dcc2d5a052e6c</span>) </span><br><span class="line"></span><br><span class="line"><span class="header">### 5. 新打开一个浏览器页签，刷新你要调试的页面.  </span></span><br><span class="line">当执行到设置断点的位置时，页面会暂停加载，此时回到调试窗口node-inspector页签，能看到详细的调试信息:  </span><br><span class="line">![<span class="link_label">4</span>](<span class="link_url">http://img4.tbcdn.cn/L1/461/1/13906c6d487121d9374561516034826e7403c9bb</span>)</span><br><span class="line"></span><br><span class="line"><span class="header">#### PS：  </span></span><br><span class="line">在最新的API中，可以将步骤2，4统一为以下命令：</span><br></pre></td></tr></table></figure></p>
+<p>$ node-debug index.js<br>```</p>
+<h2 id="方式三：使用WebStorm调试Node">方式三：使用WebStorm调试Node</h2><h3 id="1-_配置需调试的Nodejs开发文件夹">1. 配置需调试的Nodejs开发文件夹</h3><p>根据下图依次操作，对需要调试的文件添加配置信息：<br><img src="http://img1.tbcdn.cn/L1/461/1/7e573203efc9c24392125702591f0a1e3d012b6e" alt="5"><br><img src="http://img2.tbcdn.cn/L1/461/1/40c87026f8e03e49e64be369fef0bb5d425fad65" alt="6"><br><img src="http://img1.tbcdn.cn/L1/461/1/62b04edec411bb25c982685617b622ba867bf13d" alt="7">  </p>
+<h3 id="2-启动调试并设置断点">2.启动调试并设置断点</h3><p>启动调试：  </p>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/ad856a8ac99b06b42193d9fece5d4a40fef1ad60" alt="8">   </p>
+<p>将出现调试窗口以及控制台，如下图：  </p>
+<p><img src="http://img4.tbcdn.cn/L1/461/1/b3735f9b3b65fe54f671dd4974b6db0e123f1149" alt="9">  </p>
+<h3 id="3-在浏览器中访问要调试的页面">3.在浏览器中访问要调试的页面</h3><p>执行到断点位置时，页面会停止加载，可以通过WebStrom的调试窗口看到详细信息：  </p>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/e2ed2005b98b4e2519873d36bf20d11f3f9f34b6" alt="10">   </p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2014/10/05/2014-10-05-prototype/">
                 对prototype的一些认识
               </a>
@@ -313,6 +468,161 @@
             
               <a href="/tags/JS/">
                 #JS
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/10/04/html5-ios8/">
+                [译]苹果通过 iOS 8 向 HTML5 示爱
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-10-04
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>与所有人一样，我们对于上周的苹果 iOS8 发布会感到很兴奋。虽然才拿到 iOS 8的 GA 版本，但是我们想尽可能快地完成一份报告来为全球的 Web 开发社区提供一份对苹果最近发布的深度观察。毫无疑问在接下来的几周或者几个月内，我们会发现一些被遗漏的东西，但我们现在就开始测试并分享我们的发现。</p>
+<p>这篇文章记录了当 iOS 8 成为苹果设备的基准时 HTML 5 的性能和技术缺陷。如果你想了解为 web 开发者提供的针对 iOS 7 的类似的评论，请看我们去年的<a href="http://www.sencha.com/blog/the-html5-scorecard-the-good-the-bad-and-the-ugly-in-ios7/" target="_blank" rel="external">博文</a>。</p>
+<h2 id="iOS_8_的新特性将会推进_HTML5_开发">iOS 8 的新特性将会推进 HTML5 开发</h2><p>让我们首先来看看这次升级中增加的一些新特性。</p>
+<p><img src="http://img2.tbcdn.cn/L1/461/1/aea2e549bbb843d3e9b542428eb4bf093d3ef80e" alt="_2014_10_04_11_09_30"></p>
+<p>图片来自：<a href="caniuse.com">caniuse.com</a></p>
+<p>尽管所有的这些新特性都很棒并且能推动 HTML5 开发，但其中的重量级特性有以下这些：</p>
+<h3 id="WebGL_-_3D_Canvas_Graphics">WebGL - 3D Canvas Graphics</h3><p>支持 3D 动画的硬件加速对 web 开发者来说无疑是一个重大的特性。我们很可能会看到这个特性在游戏编程中被重度使用，并且还有很多其他的应用，特别是在<code>animations</code> 和 <code>transitions</code>中。想快速浏览一下使用这个特性能做些什么，可以打开这个 <a href="http://threejs.org/examples/webgl_particles_sprites" target="_blank" rel="external">WebGL Sprite Particle Demo</a>。</p>
+<h3 id="CSS_Shapes_Level_1">CSS Shapes Level 1</h3><p>这个很少见的特性只能在 Chrome、Chrome for Android 和 Opera 上使用，但终于在 iOS 8 中得到前缀形式的支持。<code>CSS Shapes</code>支持更为动态的文字布局，可以让你的应用更像一本杂志而不是一个网页。如果想看更多的实例，可以查看<a href="http://webplatform.adobe.com/shapes/" target="_blank" rel="external">Shapes from Adobe</a>。</p>
+<h3 id="HTML_Templates">HTML Templates</h3><p><code>Templates</code>作为<code>Web Component</code>的基本元素在最新的 Android 和 iOS 浏览器中已经可以使用了。这向真正的模块化<code>web</code>开发迈进了一大步，也为更少依赖<code>polyfill</code>的情况提供了可能。</p>
+<h3 id="Navigation/High_Resolution_Timing_APIs">Navigation/High Resolution Timing APIs</h3><p>尽管表面上看来，<code>timing API</code>不是一个非常流行的面向终端用户的特性，但它拥有的精简性能可以提供更好的跨平台测试和性能测试。</p>
+<h3 id="IndexedDB">IndexedDB</h3><p>尽管一直依赖<code>WebSQL</code>可以在 Android 和 iOS 上使用，但目前并不支持 IE 。更糟的是已经不再维护 Web SQL Spec 了，并且很可能在将来的版本中将其去掉。幸运的是，<code>IndexedDB</code> 现在可以在 iOS、Android、Chrome for Android、Safari、移动版 IE上使用，Blackberry 10 和 IE 10/11 也对其部分支持。</p>
+<h3 id="SVG_Fragment_Identifiers">SVG Fragment Identifiers</h3><p>这个特性因为它晦涩的名字显得很不起眼，但请相信它非常强大。目前 IE 10/ 11 、Mobile、iOS 8 Safari、Chrome for Android都支持<code>SVG Fragment Identifiers</code>，从而可以采用非常强大的矢量精灵序列（<code>spritesheets</code>）。这不仅对于 web 游戏来说十分重要，对于动态图标和其他 UI 元素也是如此。</p>
+<blockquote>
+<p>作为移动 web 开发者，你已经习惯使用最新的浏览器和特性进行开发。我们都知道苹果有一套绝妙的升级系统来让所有用户快速地部署 iOS 8 。如果你的应用专门针对 iOS 设备开发，你可以很容易地开始使用<code>IndexedDB</code>、<code>SVG Fragments</code>这样的新特性或者使用新的<code>Timing API</code>来测试性能。而对于希望与 iOS 7 保持一直或跨平台（Android、Windows Phone、BlackBerry）的开发者，可以使用 Sencha Touch内置的操作系统检测来确定新特性的使用范围。Sencha Touch 使你可以在应用中使用这些新特性并且随着时间推移淘汰旧的代码。</p>
+</blockquote>
+<h2 id="全新的_WKWebView">全新的 WKWebView</h2><p>iOS 8 的发布带来的碎片化是一柄双刃剑。iOS 8 自带两个原生的 webview。第一个是我们熟知并喜爱的「UIWebView」，它目前因为历史遗留原因被保留了下来，但可喜的是苹果并没有简单地将 iOS 7 的「UIWebView」塞进 iOS 8，而是升级了核心的 WebKit 代码，使其与全新的「WKWebView」平起平坐。迁移到 iOS 8 后，「WKWebView」将是开发 hyrid 应用的利器。经测试发现「WKWebView」中的 Nitro JS 引擎的性能至少是UIWebView」的4倍。这有可能成为 hybrid 应用的一个巨大胜利。然而现在还存在一些明显的 bug，将会影响到几乎所有人。文章的后面将会提到更多。</p>
+<blockquote>
+<p>好消息是从 web 开发的角度来看，新的高性能的「WKWebView」是往正确的方向上前进了一步。虽然JavaScript很少是应用的瓶颈，更多的问题出在动画或者 DOM 重绘上，但我们相信伴随着 Dom Core 的显著加速，「WKWebView」会使 Sencha Touch 应用的性能大幅提高。</p>
+</blockquote>
+<h2 id="全面的性能提升">全面的性能提升</h2><p>性能测试总是必须的，这次我们得到了一些有趣的结果。总体来看，iOS 8 似乎对所有人来说都是好消息。iOS 8 中有几项 Octane打分略低一点。让我们来研究一些图表，试着弄明白这些都意味着什么。</p>
+<blockquote>
+<p>注意：所有的测试都是在第5代的 iPod Touch 上进行的，希望能与 iPhone 5s 和很快到来的 iPhone 6s 作比较，这些分数将会帮你找到 iOS 开发的最低性能阈值。</p>
+</blockquote>
+<p><img src="http://img2.tbcdn.cn/L1/461/1/b10923dde15b2ff1269bb0a263078c33b3784858" alt="_2014_10_04_11_28_23"><br>图片来源：<a href="http://octane-benchmark.googlecode.com/svn/tags/v1/index.html" target="_blank" rel="external">http://octane-benchmark.googlecode.com/svn/tags/v1/index.html</a></p>
+<p>不幸的是，在测试的时候 Google Octane v2 在 iOS 8 的 Safari 上崩溃了，所以我们没能进行更多的测试。尽管如此，这还是给了我们一个很好的概览。</p>
+<p>可以看到除了 CodeLoad 以外，iOS 8 在每一项测试中都胜出了。CodeLoad<br>是指 JavaScript 引擎在加载了一个很大的 JavaScript 文件后多久开始运行。值得一提的是用于测试的代码是基于 Closure 和 jQuery 的。</p>
+<blockquote>
+<p>对于使用 Sencha 开发的应用，与 iOS 7 相比，应用启动时可能有稍长的延迟，因为这些应用都倾向于直接加载较大的 JavaScript 文件而不是分级加载。对于其他所有测试，iOS 8 都略微或者明显胜过 iOS 7。</p>
+</blockquote>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/cfaea319be9c587a56406b8aff4ac1a6dd67a07f" alt="_2014_10_04_11_10_46"></p>
+<p>图片来源：<a href="http://dromaeo.com/?dom" target="_blank" rel="external">http://dromaeo.com/?dom</a></p>
+<p>使用 Dromaeo 来进行的 Dom Core 测试结果实际上比图表展示的更好。 Query 展现了巨大的性能改良，使得 Attributes ，Modification 和 Traversal 上的提升黯然失色。看看这里的原始数字，Attributes 有 122% 的性能提升，Modification 有 65% 的提升，Traversal 有 48% 的提升，Dom Query 有 308% 的巨大提升。</p>
+<blockquote>
+<p>这对于 Sencha 开发者来说是一个好消息，因为dom查询在 Sencha 框架里用得很多。</p>
+</blockquote>
+<p><img src="http://img4.tbcdn.cn/L1/461/1/3a2f630dbcaa463b5e3a99ce591031033512693e" alt="_2014_10_04_11_21_34"><br>图片来源：<a href="http://dromaeo.com/?cssquery" target="_blank" rel="external">http://dromaeo.com/?cssquery</a></p>
+<p>了解了 DOM Core 测试中的惊人性能改进之后，我们研究了框架层面上的 CSS 选择器的性能提高。Ext JS 仅仅是简单地移到 iOS 8 Safari 上就有 126% 的性能提高。</p>
+<blockquote>
+<p>注意这些 CSS 选择器测试目前采用的是 Ext JS 3.X，而这个框架在发布了 Ext JS 5.X 之后性能有了巨大改进。因此实际的性能改善将会更好。</p>
+</blockquote>
+<p><img src="http://img2.tbcdn.cn/L1/461/1/183fd530dbfbf4429317d4c41e4bb887f53319e4" alt="_2014_10_04_11_25_59"></p>
+<p>图片来源：<a href="http://dromaeo.com/?dromaeo" target="_blank" rel="external">http://dromaeo.com/?dromaeo</a></p>
+<p>继续进行一些纯代码测试，我们关注的是一些几乎每个应用都会用到的基本的 JavaScript 函数。可以看到当处理 Base64 字符串、通过new Function 和 eval 进行代码评估时性能会有所下降。数组的性能有很大的提高，特别是数组创建。开发者们不用太在意，就像我们在 Fastbook 的文章中讨论过的，JavaScript 对于开发大多数应用已经足够快了。现在要开发一款流畅的应用，GPU 加速比 JavaScript 的性能要重要得多。因此接下来的测试中我们将重点关注 GPU 的交互性。</p>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/a9b29fc016d4454ad5f3ffddd7122ee5693beec4" alt="_2014_10_04_11_12_35"></p>
+<p>图片来源：<a href="http://ie.microsoft.com/testdrive/performance/fishietank/" target="_blank" rel="external">http://ie.microsoft.com/testdrive/performance/fishietank/</a></p>
+<p>上面的图表不言自明。仅仅是从 iOS 7 上的 Safari 换到 iOS 8，在fps上有 78% 的提高。显然 Canvas 有很多的更新，测试结果在我们的 WebGL 例子面前也毫不逊色。</p>
+<p><img src="http://img4.tbcdn.cn/L1/461/1/8a705af9f5df0881ab42b6993767d9da19720cc0" alt="_2014_10_04_11_13_11"></p>
+<p>图片来源：<a href="http://dromaeo.com/?cssquery" target="_blank" rel="external">http://dromaeo.com/?cssquery</a></p>
+<p>这是一张喜忧参半的图，尽管我们可以看到「WKWebView」的巨大提高。但如果你直接跳到文章后面的 Bug 说明，你会发现目前还存在一些挑战使得我们不能在 hybrid 应用里使用「WKWebView」。</p>
+<blockquote>
+<p>我们希望这些数字能够让更多开发者去推进苹果尽快修复「WKWebView」中的 Bug，这样就可以在所有的应用中享受这些性能的提高。再一次，Dom Query 的光芒掩盖了所有其他的数据。需要指出的是，「WKWebView」相比于旧的「UIWebView」，Attributes 速度提高了 208%，Modification 快了 37%，Traversal 性能提升了 249%，Query 有了 358% 的惊人提高。</p>
+</blockquote>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/9968c0c22c8b6501eb0adfbd1e7685d4ff00727a" alt="_2014_10_04_11_24_43"></p>
+<p>图片来源：<a href="https://www.webkit.org/perf/sunspider/sunspider.html" target="_blank" rel="external">https://www.webkit.org/perf/sunspider/sunspider.html</a></p>
+<p>尽管 Sunspider 的测试结果一点也不令人惊讶，但我们还是能看到一些提高。iOS Safari 相对于 iOS 7 提高了 17%，「UIWebView」提高了大约 5%。虽然增长很小，却都是正面的，这说明一切都在朝着正确的方向前进。</p>
+<p><img src="http://img3.tbcdn.cn/L1/461/1/d3f13d0bedc0616588aa053863631bc0bc7db1f0" alt="_2014_10_04_11_14_13"></p>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/066b81b5a68c4e1dde2f93c783bbd3c37a2c1876" alt="_2014_10_04_11_15_11"><br>图片来源：<a href="http://html5test.com/" target="_blank" rel="external">http://html5test.com/</a></p>
+<p>图中显示的是 HTML5 测试的原始分数，明显可以看出 iOS 8 相对于 iOS 7 对于支持的特性有着漂亮的提升。然而，要正确地理解这些结果，我们还需要谈谈对这些统计结果有巨大影响的一些变化。总结为以下几点：</p>
+<ul>
+<li>iOS 8 去除了无缝 iFrame </li>
+<li>IndexedDB 被添加到了 iOS 8 Safari 和 「WKWebView」中</li>
+<li>IndexedDB 在 iOS 8 「UIWebView」和主屏幕应用中无法使用</li>
+<li>Objectstore Array Buffer 在 iOS 8 Safari 和 「WKWebView」中无法工作（注意：尽管这项特性能正常使用，但是这项在 HTML5 测试网站上的测试却没有通过。如果这被正确检测，iOS 8 Safari 会拿到 440 分。）</li>
+<li>在 iOS 8 「UIWebView」和主屏幕应用中无法使用Objectstore Array Buffer 。</li>
+<li>WebGL 3D 图像被添加到了 iOS 8 的 Safari、「WKWebView」、「UIWebView」和主屏应用中</li>
+<li>「UIWebView」、「WKWebView」和主屏应用的 User Agent 是相同的。</li>
+</ul>
+<blockquote>
+<p>尽管苹果在保持「WKWebView」、「UIWebView」、Safari 和主屏应用在同一功能水平方面做了大量工作，但是仍然存在的一些差别可能会令 Sencha 开发者非常沮丧。如今开发者们需要更多地注意他们应用的运行环境。例如：「UIWebView」和主屏幕应用不支持 IndexedDB 和 Objectstore ArrayBuffer。因为他们的浏览器 User Agent 是相同的，所以没有简单的方法来根据运行环境来优化你的应用，这就意味着开发者需要分别检测这些特性是非被支持。</p>
+</blockquote>
+<h2 id="Bugs">Bugs</h2><p>我们都知道任何软件的发布都是有 bug 的，iOS 8 也有一些值得一提的 bug。到目前为止，我们发现了三个主要的 bug 将会影响到 HTML5 开发者，因此将影响到 Sencha 用户。也就是说，这些 bug 并不只是特定地影响 Sencha 应用，而将会在接下来的几个月内影响许多开发者的开发成果。如果你想帮忙，请点击每个 bug 下面的 Radar 链接并跳转到 Apple Bug Reporter。在那里，你可以复制我们的 bug 并提交，我们提供越多的数据和测试结果来证明这些<br> bug 的影响，（我们希望）这些 bug 能更快地被注意并修复。</p>
+<h2 id="WKWebView_本地文件加载_Bug">WKWebView 本地文件加载 Bug</h2><p>还记得我们刚刚向你介绍的令人惊叹的新 WebView？那个有着极速 Nitro JS 引擎和其他酷炫新东西的家伙。然而，它使有问题的。。。这个 bug 是一个安全问题，它使得「WKWebView」无法从本地文件系统加载文件。这就意味着「WKWebView」无法访问你内嵌的 index.html。它使得 PhoneGap 和 Cordova 的应用无法工作，因为后者采用离线/本地文件来为应用提供服务。因此现在如果你想要在你的应用中使用「WKWebView」，你必须从远程服务器加载你的文件。举个例子：加载<code>index.html</code>是不行的，但是加载<code>http://www.google.com</code>就没问题。</p>
+<p>Radar Bug Report: <a href="http://www.openradar.me/radar?id=5839348817723392" target="_blank" rel="external">http://www.openradar.me/radar?id=5839348817723392</a></p>
+<h2 id="XHR_本地文件访问">XHR 本地文件访问</h2><p>目前，所有采用新「WKWebView」的代码的程序都存在 XHR 本地文件的问题。这个问题影响到 Safari、主屏幕应用和所有内嵌在「WKWebView」中的应用。如果你正在使用 Cordova 或者 PhoneGap，你将只能使用不存在此 bug 的旧的「UIWebView」。如果你的应用正在使用图库或者相机来获取一张照片，然后通过 AJAX 将其发送到服务器，你在 iOS 8 中就要倒霉了。你会看到当你调用「send」之后程序会挂起，没有任何反应。</p>
+<p>Radar Bug Report: <a href="http://www.openradar.me/radar?id=5834555097350144" target="_blank" rel="external">http://www.openradar.me/radar?id=5834555097350144</a></p>
+<h2 id="主屏应用在锁屏/唤醒之后定时函数失效">主屏应用在锁屏/唤醒之后定时函数失效</h2><p>如果你的应用被以主屏幕应用的方式使用，你会发现自己悲剧了。当然，每个 web 应用都是可以被用户转换成一个主屏幕应用，因此我认为技术上来说这会影响到开发远程 web 应用的每一个人。这个 bug 很容易重现，只需要简单地通过一些按钮或者事件来调用<code>setTimeout</code>(回调函数)，或者<code>requestAnimationFrame</code>（回调函数）。当你第一次打开你的应用，你会发现所有的定时函数都能正常工作。但是如果你锁上你的手机接着解锁回到你的应用，你回发现所有这些定时函数都再也不能调用回调函数。他们在 Native 层就失效了。无法重置，也无法让你的应用起死回生，这种情况下只能关掉它然后重启。这些定时函数对于 Sencha Touch 和 Ext JS 框架以及以后的几乎所有其他 JavaScript 框架/库都至关重要。你绝对需要尽快向苹果反映，让他们知道你想要你的所有 JavaScript 函数一直都有效。</p>
+<p>Radar Bug Report: <a href="http://www.openradar.me/radar?id=5895945212395520" target="_blank" rel="external">http://www.openradar.me/radar?id=5895945212395520</a></p>
+<blockquote>
+<p>好消息好消息，因为目前为止，我们只发现了影响「WKWebView」的问题。如果你是尝试或者正在使用 <a href="http://www.sencha.com/products/space/" target="_blank" rel="external">Sencha Space</a> 的许多人中的一个，这些对你绝对没有影响，因为你的应用是安全的——因为使用了 Space，你的应用在一个托管的 web 运行时中，后者包含了一个安全浏览器。如果你还没有使用过 <a href="http://www.sencha.com/products/space/" target="_blank" rel="external">Sencha Space</a> ，你应该看看<a href="http://www.sencha.com/products/space/get-started/" target="_blank" rel="external">这里</a>。</p>
+</blockquote>
+<h2 id="即将到来的事情">即将到来的事情</h2><p>总的来说，随着 iOS 8 的发布，我们对苹果 iOS 的发展方向感到非常高兴，因为这些性能特高和新特性只会提高为 iOS 8 平台开发的应用的用户体验。然而，我们当然希望苹果快速解决我们上面讨论过的 bug ，因为它们的存在损害了 web 开发者对 iOS 强大威力的认识——无论他们有没有使用 Sencha 框架或者其他流行的替代品。</p>
+<p><img src="http://img1.tbcdn.cn/L1/461/1/c1cacf7d2ce19c18a029e070f7c6f30046716221" alt="_2014_10_04_11_15_54"></p>
+<p>图片来源：<a href="http://www.caniuse.com/" target="_blank" rel="external">caniuse.com</a></p>
+<p>如果我们展望未来，我们可以期待见到一些支持 iOS 8 和 Chrome for Android 的跨平台实现，并且有着非常棒的特性如 CSS Shapes、Srcset Attitude 以及 SVG fragment identifiers。尽管在上面的图片中没有见到，Chrome for Android 已经部分支持了 WebGL 3D Canvas，而且这里的部分支持不仅仅是指那些能够运行 Chrome 但还未支持 WebGL 3D 的关键部分的老设备。</p>
+<h2 id="总结">总结</h2><p>iOS 8 对于 Web 开发者来说确实是一个令人兴奋的发布，因为有着激动人心的新特性和巨大的性能提升，这些都将有助于 HTML5 跨平台开发。</p>
+<p>原文地址：<a href="http://www.sencha.com/blog/apple-shows-love-for-html5-with-ios-8" target="_blank" rel="external">Apple Shows Love for HTML5 with iOS 8</a></p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/翻译/">
+                #翻译
               </a>
             
           </div>
@@ -718,233 +1028,6 @@
 
 
   
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2014/09/16/2014-09-16-event-flow/">
-                js中事件流
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-09-16
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="DOM事件流">DOM事件流</h2><p>“DOM2级事件”规定，事件流包括三个阶段：捕获阶段、目标阶段和冒泡阶段。<br>话不多说，举例子说明事件触发顺序。  </p>
-<h2 id="实例说明">实例说明</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">       <span class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"container"</span> <span class="attribute">id</span>=<span class="value">"container"</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"test"</span>&gt;</span></span><br><span class="line">		</span><br><span class="line">		<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>上述代码文档结构如下图所示：<br><img src="/images/eventflow.PNG" alt="参数为DOM对象时jQuery对象内部结构">    </p>
-<h3 id="添加事件处理程序：">添加事件处理程序：</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">          <span class="keyword">var</span> test = <span class="built_in">document</span>.getElementById(<span class="string">"test"</span>);</span><br><span class="line">          <span class="keyword">var</span> container = <span class="built_in">document</span>.getElementById(<span class="string">"container"</span>);</span><br><span class="line">	</span><br><span class="line">		<span class="comment">//给test添加click事件，设置在“冒泡”阶段调用</span></span><br><span class="line">          test.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"test冒泡"</span>);</span><br><span class="line">          &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//给test添加click事件，设置在“捕获”阶段调用</span></span><br><span class="line">          test.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"test捕获"</span>);</span><br><span class="line">          &#125;, <span class="literal">true</span>);</span><br><span class="line">          </span><br><span class="line">		<span class="comment">//给container添加click事件，设置在“捕获”阶段调用</span></span><br><span class="line">          container.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"container捕获"</span>);</span><br><span class="line">          &#125;, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">////给container添加click事件，设置在“冒泡”阶段调用</span></span><br><span class="line">          container.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"container冒泡"</span>);</span><br><span class="line">          &#125;, <span class="literal">false</span>);</span><br><span class="line">          </span><br><span class="line"></span><br><span class="line">		<span class="comment">//给body添加click事件，设置在"冒泡"阶段调用</span></span><br><span class="line">          <span class="built_in">document</span>.body.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"body"</span>);</span><br><span class="line">          &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//给docum添加click事件，设置在"冒泡"阶段调用</span></span><br><span class="line">          <span class="built_in">document</span>.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">              alert(<span class="string">"document"</span>);</span><br><span class="line">          &#125;, <span class="literal">false</span>);</span><br><span class="line">    <span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>当点击上图中的1时，事件的触发顺序如下图所示：<br><img src="../images/eventflow1.PNG" alt="参数为DOM对象时jQuery对象内部结构">   </p>
-<p>1，2，3指的是设置为在捕获阶段调用的click事件；4和5是目标元素上的click事件，至于先触发捕获还是先触发冒泡，这决定于先绑定的是冒泡还是捕获，4指的是先绑定的那个；6,7,8指的是设置为在冒泡阶段调用的click事件。    </p>
-<p>根据上述js代码，可以得到点击1时的输出顺序：<br>弹出”container捕获”（这是由于document、body上没有捕获阶段的click事件）——》弹出”test冒泡”——》弹出”test捕获”（这是由于在目标元素上捕获定义在了冒泡后面）——》弹出”container冒泡”——》弹出“body”——》弹出“document”。</p>
-<p><strong>ps：</strong>在关注事件流时，我们上图只包含了目标元素test与它的祖先元素们，而与test的子孙元素无关。即当我们点击上图中的2时，目标元素时container，这时候是不用考虑test元素的。 </p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/JS/">
-                #JS
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2014/09/11/2014-09-11-colums/">
-                使高度不定的列等高
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-09-11
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="想要达到的效果">想要达到的效果</h2><p>注意：难点在于这些列高度是可变的，不固定的。<br><img src="../images/equal_height6.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"wrapper"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"box"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">h1</span>&gt;</span>《赤裸裸》<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">p</span>&gt;</span></span><br><span class="line">           郑钧这张专辑主要面对的听众层是从18岁到30岁之间，其中包括高中生、大学生、以及走出校门步入社会时间不久的年轻人，正是这一代人中十分典型的心态。郑钧把他这份真实的感受，大胆质朴地流露在他的音乐中，相信会在年轻人中间产生强烈的共鸣。</span><br><span class="line">       <span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"box"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">h1</span>&gt;</span>郑钧简历<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">p</span>&gt;</span></span><br><span class="line">           1987年就读于杭州电子工业学院工业外贸专业，期间由于专业的影响接触了大量欧美摇滚乐，并开始最初的音乐创作。在校期间自己组建了一支乐队"火药"，并曾于杭州各高校间巡演受到热列欢迎。 </span><br><span class="line">           1992年开始了他的职业歌手生涯, 签约香港红星唱片公司。 </span><br><span class="line">           1994年6月发行首张个人专辑《赤裸裸》，十首歌曲全部由郑钧独自作词作曲并演唱。 专辑正版发行量超过五十万张，而据有据可查的盗版数量至少在一百五十万，是当年个人专辑发行量最高的歌手。其中《回到拉萨》、《赤裸裸》、《极乐世界》、《灰姑娘》、等作品今在国内广为流传。《回到拉萨》一曲曾创下了连续七周冠军、二十二周不下榜的记录，成为九四年中国乐坛的经典曲目。 </span><br><span class="line">           2000年10月 应邀参加TOSHIBA EMI “MUSIC TALKS” 现场表演轰动日本媒体和唱片界，成为全场焦点。 </span><br><span class="line">           2001年春 签约久负盛名的EMI唱片公司，成为百代中国首位内地巨星。 </span><br><span class="line">           2001年12月 加盟EMI后第一张个人专辑《郑钧》正式发行。 </span><br><span class="line">           2003年12月 《我们的生活》——充满阳光 <span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">     </span><br><span class="line">   <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"box"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">h1</span>&gt;</span>主要奖项<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">p</span>&gt;</span>1994年 《赤裸裸》获得了：94年中南十大金曲；94年广州十大金曲等数 十个奖项，他本人亦荣获北京"辉煌94"风云人物奖 </span><br><span class="line">           1996年 《赤裸裸》的ＭＴＶ保加利亚音乐节获音乐电视金奖；上海东方 电视台最佳MTV奖，本曲还曾获得过上海东方电视台的"群星耀东方"十大金曲、上海电台"茂盛杯"金曲奖，和96中国流行乐坛十年回顾"十年成就"奖。 </span><br><span class="line">           2002年6月 专辑《郑钧》荣获首届由中国音像协会主办的“中国唱片金碟奖”两大主力奖项：“最佳流行专辑奖”和“最佳摇滚专辑奖”。 </span><br><span class="line">     	<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
-<h2 id="分步实现过程">分步实现过程</h2><h3 id="浮动形成3列">浮动形成3列</h3><p>在实现过程中，我会给元素添加边框，这样便于理解，完成后会将边框去掉<br>添加内边距和外边距，优化视觉效果<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.wrapper</span><br><span class="line">   &#123;</span><br><span class="line">     width:<span class="number">100</span>%;</span><br><span class="line">     border:<span class="number">1</span>px solid red;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">.box</span><br><span class="line">   &#123;</span><br><span class="line">       width:<span class="number">300</span>px;</span><br><span class="line">       float:left;</span><br><span class="line">       padding:<span class="number">20</span>px;</span><br><span class="line">       margin-left:<span class="number">20</span>px;</span><br><span class="line">       border:<span class="number">1</span>px solid #ccc;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="/images/equal_height1.PNG" alt="参数为DOM对象时jQuery对象内部结构"></p>
-<h3 id="清除浮动使父容器被撑开">清除浮动使父容器被撑开</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">	.wrapper:after</span><br><span class="line">    &#123;</span><br><span class="line">       content:<span class="string">"."</span>;</span><br><span class="line">       display:block;</span><br><span class="line">       clear:both;</span><br><span class="line">       height:<span class="number">0</span>;</span><br><span class="line">       visibility:hidden;</span><br><span class="line">        &#125;  </span><br><span class="line">```  </span><br><span class="line">![参数为DOM对象时jQuery对象内部结构](<span class="regexp">/images/</span>equal_height3.PNG)   </span><br><span class="line">### 关键步骤：使外边距和内边距抵消  </span><br><span class="line">给每个列添加大的底部内边距，将父容器撑大到一个很大的高度，    </span><br><span class="line">```javascript </span><br><span class="line">	.box</span><br><span class="line">    &#123;</span><br><span class="line">        width:<span class="number">300</span>px;</span><br><span class="line">        float:left;</span><br><span class="line">        padding:<span class="number">20</span>px;</span><br><span class="line">        margin-left:<span class="number">20</span>px;</span><br><span class="line">        border:<span class="number">1</span>px solid #ccc;</span><br><span class="line">        padding-bottom:<span class="number">300</span>px;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-<p><img src="images/equal_height2.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>然后再使用数值相近的负外边距，这样使每个列有一部分溢出<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.box</span><br><span class="line">   &#123;</span><br><span class="line">       width:<span class="number">300</span>px;</span><br><span class="line">       float:left;</span><br><span class="line">       padding:<span class="number">20</span>px;</span><br><span class="line">       margin-left:<span class="number">20</span>px;</span><br><span class="line">       border:<span class="number">1</span>px solid #ccc;</span><br><span class="line">       padding-bottom:<span class="number">300</span>px;</span><br><span class="line">       margin-bottom:-<span class="number">280</span>px;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="/images/equal_height4.PNG" alt="参数为DOM对象时jQuery对象内部结构"> </p>
-<h3 id="截断">截断</h3><p>再对父容器设置<code>overflow:auto</code>就将参差不齐的溢出部分截断，使它们高度相同<br>注意上面我设置的内边距为300，外边距为-280，这是为了使截断后，每个列还有20的内边距，视觉效果比较好。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.wrapper</span><br><span class="line">  &#123;</span><br><span class="line">    width:<span class="number">100</span>%;</span><br><span class="line">    border:<span class="number">1</span>px solid red;</span><br><span class="line">    overflow:auto;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="../images/equal_height5.PNG" alt="参数为DOM对象时jQuery对象内部结构"> </p>
-<h3 id="设置颜色去除边框">设置颜色去除边框</h3><p><img src="../images/equal_height6.PNG" alt="参数为DOM对象时jQuery对象内部结构"> </p>
-<h3 id="说明">说明</h3><p>在清除浮动时我使用了伪类，其实<code>overflow:auto</code>也能够清除浮动撑开父元素，但是在这个例子中我使用伪类就是想说明此时<code>overflow:auto</code>的最主要任务是截断。  </p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/CSS/">
-                #CSS
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2014/09/07/2014-09-07-canvas1/">
-                用canvas绘制小图标
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-09-07
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="写在前面">写在前面</h2><p>刚看了canvas，于是用最基本的几个函数绘制了几个图标。这些图标是<code>Raphael.js</code>设计的，<code>Raphael.js</code>用自己的接口绘制了矢量的图标。没事儿就用canvas实现了一遍，今天只绘制了6个，图标如下：    </p>
-<p><img src="../images/canvas1.PNG" alt="参数为DOM对象时jQuery对象内部结构">    </p>
-<h2 id="实现代码：">实现代码：</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line">  &lt;body&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas1"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas2"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas3"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas4"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas5"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas6"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas1"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.moveTo(<span class="number">5.5</span>, <span class="number">15.499</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">21.447</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">15.846</span>);</span><br><span class="line">        context.lineTo(<span class="number">25.5</span>, <span class="number">21.447</span>);</span><br><span class="line">        context.lineTo(<span class="number">25.5</span>, <span class="number">9.552</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">15.152</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">9.552</span>);</span><br><span class="line">        context.lineTo(<span class="number">5.5</span>, <span class="number">15.499</span>);</span><br><span class="line">        context.fill();</span><br><span class="line">        context.closePath();</span><br><span class="line">        <span class="comment">////////////////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas2"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.moveTo(<span class="number">15.834</span>, <span class="number">29.084</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.834</span>, <span class="number">16.166</span>);</span><br><span class="line">        context.lineTo(<span class="number">2.917</span>, <span class="number">16.166</span>);</span><br><span class="line">        context.lineTo(<span class="number">29.083</span>, <span class="number">2.917</span>);</span><br><span class="line">        context.fill();</span><br><span class="line">        context.closePath();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">///////////////////////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas3"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.fillRect(<span class="number">1</span>, <span class="number">15</span>, <span class="number">7</span>, <span class="number">15</span>);</span><br><span class="line">        context.fillRect(<span class="number">11</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">27</span>);</span><br><span class="line">        context.fillRect(<span class="number">21</span>, <span class="number">10</span>, <span class="number">7</span>, <span class="number">20</span>);</span><br><span class="line">        <span class="comment">///////////////////////////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas4"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">30</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">25</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">20</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">15</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">5</span>, <span class="number">25</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.fill();</span><br><span class="line">        <span class="comment">////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas5"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">15</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillRect(<span class="number">14</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">15</span>, <span class="number">15</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.arc(<span class="number">6</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.arc(<span class="number">12</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.arc(<span class="number">18</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.arc(<span class="number">24</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.fillRect(<span class="number">14</span>, <span class="number">16</span>, <span class="number">2</span>, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.arc(<span class="number">12</span>, <span class="number">26</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.arc(<span class="number">12</span>, <span class="number">26</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line">        <span class="comment">////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas6"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">15</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.moveTo(<span class="number">15</span>, <span class="number">6</span>);</span><br><span class="line">        context.lineTo(<span class="number">19</span>, <span class="number">6</span>);</span><br><span class="line">        context.lineTo(<span class="number">19</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">23</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">15</span>, <span class="number">19</span>);</span><br><span class="line">        context.lineTo(<span class="number">7</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">11</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">11</span>, <span class="number">6</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.translate(<span class="number">15</span>, <span class="number">24</span>);</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        <span class="comment">///////////////////////////////////////////////</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/canvas/">
-                #canvas
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
 
           </div>
 
@@ -977,11 +1060,11 @@
       <p class="site-description motion-element"></p>
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">
-            <span class="site-state-item-count">4</span>
+            <span class="site-state-item-count">5</span>
             <span class="site-state-item-name">标签</span>
         </div>
         <div class="site-state-item site-state-pages">
