@@ -30,7 +30,7 @@
 
 
 
-  <title> Hexo </title>
+  <title> 这是个title </title>
 </head>
 
 <body>
@@ -46,7 +46,7 @@
         <span class="logo">
           <i class="icon-logo"></i>
         </span>
-        <span class="site-title">Hexo</span>
+        <span class="site-title">这是个title</span>
     </a>
 </h1>
 
@@ -57,7 +57,7 @@
       <li class="menu-item menu-item-home">
         <a href="/">
           <i class="menu-item-icon icon-home"></i> <br />
-          首页
+          Accueil
         </a>
       </li>
     
@@ -65,7 +65,7 @@
       <li class="menu-item menu-item-archives">
         <a href="/archives">
           <i class="menu-item-icon icon-archives"></i> <br />
-          归档
+          Archives
         </a>
       </li>
     
@@ -73,7 +73,7 @@
       <li class="menu-item menu-item-tags">
         <a href="/tags">
           <i class="menu-item-icon icon-tags"></i> <br />
-          标签
+          Tags
         </a>
       </li>
     
@@ -104,7 +104,7 @@
           
           
             
-              <a class="post-title-link" href="/2014/11/07/2014-09-07-canvas1/">
+              <a class="post-title-link" href="/2014/11/07/2014-11-07-canvas1/">
                 用canvas绘制小图标
               </a>
             
@@ -115,7 +115,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2014-11-07
+            Posté le 2014-11-07
           
         </span>
         
@@ -133,7 +133,7 @@
         
           
             <h2 id="写在前面">写在前面</h2><p>刚看了canvas，于是用最基本的几个函数绘制了几个图标。这些图标是<code>Raphael.js</code>设计的，<code>Raphael.js</code>用自己的接口绘制了矢量的图标。没事儿就用canvas实现了一遍，今天只绘制了6个，图标如下：    </p>
-<p><img src="../images/canvas1.PNG" alt="参数为DOM对象时jQuery对象内部结构">    </p>
+<p><img src="/images/canvas1.PNG" alt="参数为DOM对象时jQuery对象内部结构">    </p>
 <h2 id="实现代码：">实现代码：</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line">  &lt;body&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas1"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas2"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas3"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas4"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas5"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas6"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas1"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.moveTo(<span class="number">5.5</span>, <span class="number">15.499</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">21.447</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">15.846</span>);</span><br><span class="line">        context.lineTo(<span class="number">25.5</span>, <span class="number">21.447</span>);</span><br><span class="line">        context.lineTo(<span class="number">25.5</span>, <span class="number">9.552</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">15.152</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">9.552</span>);</span><br><span class="line">        context.lineTo(<span class="number">5.5</span>, <span class="number">15.499</span>);</span><br><span class="line">        context.fill();</span><br><span class="line">        context.closePath();</span><br><span class="line">        <span class="comment">////////////////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas2"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.moveTo(<span class="number">15.834</span>, <span class="number">29.084</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.834</span>, <span class="number">16.166</span>);</span><br><span class="line">        context.lineTo(<span class="number">2.917</span>, <span class="number">16.166</span>);</span><br><span class="line">        context.lineTo(<span class="number">29.083</span>, <span class="number">2.917</span>);</span><br><span class="line">        context.fill();</span><br><span class="line">        context.closePath();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">///////////////////////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas3"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.fillRect(<span class="number">1</span>, <span class="number">15</span>, <span class="number">7</span>, <span class="number">15</span>);</span><br><span class="line">        context.fillRect(<span class="number">11</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">27</span>);</span><br><span class="line">        context.fillRect(<span class="number">21</span>, <span class="number">10</span>, <span class="number">7</span>, <span class="number">20</span>);</span><br><span class="line">        <span class="comment">///////////////////////////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas4"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">30</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">25</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">20</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">15</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">5</span>, <span class="number">25</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.fill();</span><br><span class="line">        <span class="comment">////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas5"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">15</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillRect(<span class="number">14</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">15</span>, <span class="number">15</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.arc(<span class="number">6</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.arc(<span class="number">12</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.arc(<span class="number">18</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.arc(<span class="number">24</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.fillRect(<span class="number">14</span>, <span class="number">16</span>, <span class="number">2</span>, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.arc(<span class="number">12</span>, <span class="number">26</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.arc(<span class="number">12</span>, <span class="number">26</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line">        <span class="comment">////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas6"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">15</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.moveTo(<span class="number">15</span>, <span class="number">6</span>);</span><br><span class="line">        context.lineTo(<span class="number">19</span>, <span class="number">6</span>);</span><br><span class="line">        context.lineTo(<span class="number">19</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">23</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">15</span>, <span class="number">19</span>);</span><br><span class="line">        context.lineTo(<span class="number">7</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">11</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">11</span>, <span class="number">6</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.translate(<span class="number">15</span>, <span class="number">24</span>);</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        <span class="comment">///////////////////////////////////////////////</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
           
         
@@ -186,7 +186,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2014-10-26
+            Posté le 2014-10-26
           
         </span>
         
@@ -274,7 +274,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2014-10-23
+            Posté le 2014-10-23
           
         </span>
         
@@ -358,7 +358,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2014-10-05
+            Posté le 2014-10-05
           
         </span>
         
@@ -435,7 +435,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2014-10-04
+            Posté le 2014-10-04
           
         </span>
         
@@ -525,7 +525,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2014-10-04
+            Posté le 2014-10-04
           
         </span>
         
@@ -680,7 +680,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2014-09-25
+            Posté le 2014-09-25
           
         </span>
         
@@ -790,7 +790,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2014-09-24
+            Posté le 2014-09-24
           
         </span>
         
@@ -880,7 +880,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2014-09-24
+            Posté le 2014-09-24
           
         </span>
         
@@ -980,7 +980,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2014-09-16
+            Posté le 2014-09-16
           
         </span>
         
@@ -1061,22 +1061,22 @@
 
     <div class="site-overview">
       <div class="site-author motion-element">
-        <img class="site-author-image" src="/images/default_avatar.jpg" alt="John Doe" />
-        <p class="site-author-name">John Doe</p>
+        <img class="site-author-image" src="/images/default_avatar.jpg" alt="Chen Zhang" />
+        <p class="site-author-name">Chen Zhang</p>
       </div>
       <p class="site-description motion-element"></p>
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
           <span class="site-state-item-count">30</span>
-          <span class="site-state-item-name">日志</span>
+          <span class="site-state-item-name">articles</span>
         </div>
         <div class="site-state-item site-state-tags">
             <span class="site-state-item-count">5</span>
-            <span class="site-state-item-name">标签</span>
+            <span class="site-state-item-name">tags</span>
         </div>
         <div class="site-state-item site-state-pages">
             <span class="site-state-item-count">1</span>
-            <span class="site-state-item-name">页面</span>
+            <span class="site-state-item-name">pages</span>
         </div>
       </div>
 
@@ -1109,15 +1109,15 @@
   <span class="with-love">
     <i class="icon-heart"></i>
   </span>
-  <span class="author">John Doe</span>
+  <span class="author">Chen Zhang</span>
 </div>
 
 <div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
-  主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT</a>
+  Thème - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT</a>
 </div>
 
 
