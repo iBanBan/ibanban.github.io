@@ -30,7 +30,7 @@
 
 
 
-  <title> 这是个title </title>
+  <title> 一只辰qie </title>
 </head>
 
 <body>
@@ -46,7 +46,7 @@
         <span class="logo">
           <i class="icon-logo"></i>
         </span>
-        <span class="site-title">这是个title</span>
+        <span class="site-title">一只辰qie</span>
     </a>
 </h1>
 
@@ -640,6 +640,152 @@
           
           
             
+              <a class="post-title-link" href="/2014/04/05/2014-04-05-prototype/">
+                对prototype的一些认识
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-04-05
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">O</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	O.prototype.a=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> O();</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> O();</span><br><span class="line">	o1.a=<span class="number">2</span>;</span><br><span class="line">	alert(o2.a);<span class="comment">//1  </span></span><br><span class="line">```  </span><br><span class="line">`o1.a=<span class="number">1</span>`对`o1`的属性`a`进行重置，对原型中`O.prototype.a`没有任何影响。因此`o2.a`不会变化。根据上述代码可绘制出下图：  </span><br><span class="line">![对prototype的认识](<span class="regexp">/images/</span>prototype.PNG)  </span><br><span class="line">  </span><br><span class="line">## 举例详解  </span><br><span class="line">### 示例一    </span><br><span class="line">```javascript		</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.a=[<span class="number">1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">	o1.a.push(<span class="number">2</span>);</span><br><span class="line">	alert(o2.a);<span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+<p>在上述代码中，<code>a</code>是对象<code>Obj</code>的实例属性，每个实例的<code>a</code>属性都是一次拷贝，互不影响。<br><img src="/images/aboutprototype.PNG" alt="对prototype的认识"></p>
+<h3 id="示例二">示例二</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">Obj.prototype.a=[<span class="number">1</span>];</span><br><span class="line"><span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line"><span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">o1.a.push(<span class="number">2</span>);</span><br><span class="line">alert(o2.a)<span class="comment">//1,2</span></span><br></pre></td></tr></table></figure>
+<p>在上述代码中，<code>a</code>是对象<code>Obj</code>的原型属性，所有实例都共享<code>a</code>属性，<code>o1.a.push(2);</code>对属性a进行了修改，导致其他实例访问该属性时值已变化。绘图如下：<br><img src="/images/aboutprototype1.PNG" alt="对prototype的认识"></p>
+<h3 id="示例三">示例三</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	Obj.prototype.a=[<span class="number">1</span>];</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">	o1.a=[<span class="number">1</span>,<span class="number">2</span>];</span><br><span class="line">	alert(o2.a);<span class="comment">//1 </span></span><br><span class="line">``` </span><br><span class="line">这个实例跟文章开头那个实例的原理是一样的，`o1.a=[<span class="number">1</span>,<span class="number">2</span>];`重写原型属性`a`使`o1`增加了实例属性`a`，对于`ol`来说这个同名的属性会屏蔽原型中的`a`属性，但是并对=改变原型中的`a`。绘图如下： </span><br><span class="line">![对prototype的认识](<span class="regexp">/images/</span>aboutprototype2.PNG)  </span><br><span class="line">### 示例四  </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	Obj.prototype.a=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line">	Obj.prototype=&#123;a:<span class="number">2</span>&#125;;</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">	alert(o1.a);<span class="comment">//1</span></span><br><span class="line">	alert(o2.a);<span class="comment">//2</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/aboutprototype3.PNG" alt="对prototype的认识"><br>重写原型前已存在的实例仍指向旧原型，重写原型后新创建的实例指向新原型。  </p>
+<h3 id="实例五">实例五</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ObjA</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.a=[<span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ObjB</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">ObjB.prototype=<span class="keyword">new</span> ObjA();</span><br><span class="line"><span class="keyword">var</span> oa=<span class="keyword">new</span> ObjA();</span><br><span class="line"><span class="keyword">var</span> ob1=<span class="keyword">new</span> ObjB();</span><br><span class="line"><span class="keyword">var</span> ob2=<span class="keyword">new</span> ObjB();</span><br><span class="line">oa.a.push(<span class="number">2</span>);</span><br><span class="line">alert(ob1.a);<span class="comment">//1</span></span><br><span class="line">ob2.a.push(<span class="number">2</span>);</span><br><span class="line">alert(ob1.a);<span class="comment">//1,2</span></span><br></pre></td></tr></table></figure>
+<p>这个其实将上面讲到的几个点结合起来了。引用类型<code>a</code>是对象<code>ObjA</code>的实例属性，所以<code>ObjA</code>的两个实例<code>oa</code>和<code>ObjB.prototype</code>各自保存了一个拷贝副本，不会相互影响。因此<code>ob1</code>不受<code>oa.a.push(2);</code>的影响。但对于对象<code>ObjB</code>来讲，<code>a</code>属于原型属性，为<code>ob1</code>和<code>ob2</code>公用。绘图如下：<br><img src="/images/aboutprototype4.PNG" alt="对prototype的认识"></p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/JS/">
+                #JS
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/04/05/2014-10-05-prototype/">
+                对prototype的一些认识
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-04-05
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">O</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	O.prototype.a=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> O();</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> O();</span><br><span class="line">	o1.a=<span class="number">2</span>;</span><br><span class="line">	alert(o2.a);<span class="comment">//1  </span></span><br><span class="line">```  </span><br><span class="line">`o1.a=<span class="number">1</span>`对`o1`的属性`a`进行重置，对原型中`O.prototype.a`没有任何影响。因此`o2.a`不会变化。根据上述代码可绘制出下图：  </span><br><span class="line">![对prototype的认识](<span class="regexp">/images/</span>prototype.PNG)  </span><br><span class="line">  </span><br><span class="line">## 举例详解  </span><br><span class="line">### 示例一    </span><br><span class="line">```javascript		</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.a=[<span class="number">1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">	o1.a.push(<span class="number">2</span>);</span><br><span class="line">	alert(o2.a);<span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+<p>在上述代码中，<code>a</code>是对象<code>Obj</code>的实例属性，每个实例的<code>a</code>属性都是一次拷贝，互不影响。<br><img src="/images/aboutprototype.PNG" alt="对prototype的认识"></p>
+<h3 id="示例二">示例二</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">Obj.prototype.a=[<span class="number">1</span>];</span><br><span class="line"><span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line"><span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">o1.a.push(<span class="number">2</span>);</span><br><span class="line">alert(o2.a)<span class="comment">//1,2</span></span><br></pre></td></tr></table></figure>
+<p>在上述代码中，<code>a</code>是对象<code>Obj</code>的原型属性，所有实例都共享<code>a</code>属性，<code>o1.a.push(2);</code>对属性a进行了修改，导致其他实例访问该属性时值已变化。绘图如下：<br><img src="/images/aboutprototype1.PNG" alt="对prototype的认识"></p>
+<h3 id="示例三">示例三</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	Obj.prototype.a=[<span class="number">1</span>];</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">	o1.a=[<span class="number">1</span>,<span class="number">2</span>];</span><br><span class="line">	alert(o2.a);<span class="comment">//1 </span></span><br><span class="line">``` </span><br><span class="line">这个实例跟文章开头那个实例的原理是一样的，`o1.a=[<span class="number">1</span>,<span class="number">2</span>];`重写原型属性`a`使`o1`增加了实例属性`a`，对于`ol`来说这个同名的属性会屏蔽原型中的`a`属性，但是并对=改变原型中的`a`。绘图如下： </span><br><span class="line">![对prototype的认识](<span class="regexp">/images/</span>aboutprototype2.PNG)  </span><br><span class="line">### 示例四  </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	Obj.prototype.a=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line">	Obj.prototype=&#123;a:<span class="number">2</span>&#125;;</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">	alert(o1.a);<span class="comment">//1</span></span><br><span class="line">	alert(o2.a);<span class="comment">//2</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/aboutprototype3.PNG" alt="对prototype的认识"><br>重写原型前已存在的实例仍指向旧原型，重写原型后新创建的实例指向新原型。  </p>
+<h3 id="实例五">实例五</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ObjA</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.a=[<span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ObjB</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">ObjB.prototype=<span class="keyword">new</span> ObjA();</span><br><span class="line"><span class="keyword">var</span> oa=<span class="keyword">new</span> ObjA();</span><br><span class="line"><span class="keyword">var</span> ob1=<span class="keyword">new</span> ObjB();</span><br><span class="line"><span class="keyword">var</span> ob2=<span class="keyword">new</span> ObjB();</span><br><span class="line">oa.a.push(<span class="number">2</span>);</span><br><span class="line">alert(ob1.a);<span class="comment">//1</span></span><br><span class="line">ob2.a.push(<span class="number">2</span>);</span><br><span class="line">alert(ob1.a);<span class="comment">//1,2</span></span><br></pre></td></tr></table></figure>
+<p>这个其实将上面讲到的几个点结合起来了。引用类型<code>a</code>是对象<code>ObjA</code>的实例属性，所以<code>ObjA</code>的两个实例<code>oa</code>和<code>ObjB.prototype</code>各自保存了一个拷贝副本，不会相互影响。因此<code>ob1</code>不受<code>oa.a.push(2);</code>的影响。但对于对象<code>ObjB</code>来讲，<code>a</code>属于原型属性，为<code>ob1</code>和<code>ob2</code>公用。绘图如下：<br><img src="/images/aboutprototype4.PNG" alt="对prototype的认识"></p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2013/10/03/2013-10-03-number-and-string/">
                 js中数值和字符串的一点事儿
               </a>
@@ -841,159 +987,12 @@ alert(<span class="keyword">d</span>);              <span class="comment">//0</s
 
 
   
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2013/09/16/2013-09-16-layout-box/">
-                CSS盒模型（box model）
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-09-16
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="CSS盒模型（box_model）">CSS盒模型（box model）</h2><p>CSS盒子模型就是指对于页面上的每一个元素（无论是块级元素还是行内元素）都被看做一个矩形框，由元素内容、内边距、边框、外边距组成。盒子决定了该元素在页面中的占位。值得一提的是标准盒子模型与混杂盒子模型是有差别的。<br>标准盒子模型的实际占位：<code>width+padding*2+border*2+margin*2</code><br>混杂盒子模型的实际占位：<code>width+margin*2</code><br><img src="../images/cssbox1.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br><img src="../images/cssbox2.PNG" alt="参数为DOM对象时jQuery对象内部结构">  </p>
-<p><strong>如何解决混杂盒子模型带来的不便：</strong><br>我们可以避免混杂模式的触发。通过文档类型声明DOCTYPE，可以选择是触发混杂模式还是标准模式。通过设置文档类型声明，可以告诉浏览器使用哪种文档类型定义DTD，以及选择哪种HTML和网页呈现的方式。当页面以混杂模式呈现时，其行为是不可预知的，所以要尽量避免混杂模式的触发。混杂模式通常是为了模拟老版的浏览器使其仍能够正常运行。    </p>
-<p><strong>注：</strong>在CSS2中背景应用于内容和内边距组成部分；而在CSS2.1中背景已经延伸到了边框（这也是CSS标准规定的）<br><img src="../images/bg1.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>在CSS3中这个是可设的。  </p>
-<h3 id="内边距">内边距</h3><p>内边距的值可以是百分比，是相对与其父元素的宽度width来计算的，不管是垂直内边距或水平内边距都是根据父元素的width计算的。   </p>
-<h3 id="边框">边框</h3><p>需要注意的是，如果你希望有边框就一定要记得设置样式<code>border-style</code>，因为默认是none，即便设置了边框宽度和颜色也不会显示的。    </p>
-<p>若没有设置边框颜色，那么边框颜色默认为元素文本的颜色，若当前元素无文本那么边框颜色就是其父元素的文本颜色。</p>
-<h3 id="外边距">外边距</h3><p>和内边距一样，给外边距设置值为百分比时，是相对于其父元素的宽度width来计算的。<br>对于行内元素来讲，垂直的外边距不会产生效果。  </p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2013/09/11/2013-09-11-ie6-3px-bug/">
-                IE6下文本偏移3px的问题
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-09-11
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="写在前面">写在前面</h2><p>当文本与浮动元素相邻（已知左侧元素左浮动）时，如何<strong>跨浏览器兼容（包括IE6等低版本IE浏览器）</strong>实现以下布局：<br><img src="/images/3px1.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>已知HTML结构如下所示：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">	&lt;body&gt;</span><br><span class="line">	    <span class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"left"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"right"</span>&gt;</span></span><br><span class="line">		    浮动元素后面的非浮动元素的显示问题：后面的元素认为浮动元素已脱离文档流；  其后面非浮动元素中的块级元素的背景和边框会被浮动元素盖住，但块级元素其中的文本不会被浮动元素盖住；其后面非浮动元素中的行级元素的背景、边框和内容都不会被浮动元但在IE6下很奇快，不会盖住块级元素，反而会盖住行级元素；且会产生3px边距。可通过zoom：1消除。若在浮动元素后面加上一个层,则此后的元素都按原来方式排列，不受影响；或者将紧随其后的第一个元素增加设置`”clear:both”`。</span><br><span class="line">		    浮动元素后面的非浮动元素的显示问题：后面的元素认为浮动元素已脱离文档流；  其后面非浮动元素中的块级元素的背景和边框会被浮动元素盖住，但块级元素其中的文本不会被浮动元素盖住；其后面非浮动元素中的行级元素的背景、边框和内容都不会被浮动元但在IE6下很奇快，不会盖住块级元素，反而会盖住行级元素；且会产生3px边距。可通过zoom：1消除。若在浮动元素后面加上一个层,则此后的元素都按原来方式排列，不受影响；或者将紧随其后的第一个元素增加设置`”clear:both”`。</span><br><span class="line">		    浮动元素后面的非浮动元素的显示问题：后面的元素认为浮动元素已脱离文档流；  其后面非浮动元素中的块级元素的背景和边框会被浮动元素盖住，但块级元素其中的文本不会被浮动元素盖住；其后面非浮动元素中的行级元素的背景、边框和内容都不会被浮动元但在IE6下很奇快，不会盖住块级元素，反而会盖住行级元素；且会产生3px边距。可通过zoom：1消除。若在浮动元素后面加上一个层,则此后的元素都按原来方式排列，不受影响；或者将紧随其后的第一个元素增加设置`”clear:both”`。</span><br><span class="line">		<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line">```  </span><br><span class="line">## 实现步骤    </span><br><span class="line">### 初始效果：     </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span><span class="css"></span><br><span class="line">          <span class="class">.left</span></span><br><span class="line">          <span class="rules">&#123;</span><br><span class="line">              <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">100px</span></span></span>;</span><br><span class="line">              <span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">50px</span></span></span>;</span><br><span class="line">              <span class="rule"><span class="attribute">background-color</span>:<span class="value">Olive</span></span>;</span><br><span class="line"></span><br><span class="line">              <span class="rule"><span class="attribute">float</span>:<span class="value">left</span></span>;</span><br><span class="line">        </span><br><span class="line">              <span class="rule">&#125;</span></span></span><br><span class="line">         </span><br><span class="line">          <span class="class">.right</span></span><br><span class="line">          <span class="rules">&#123;</span><br><span class="line">              <span class="rule"><span class="attribute">border</span>:<span class="value"><span class="number">1px</span> black solid</span></span>;</span><br><span class="line">              <span class="rule"><span class="attribute">background-color</span>:<span class="value">Teal</span></span>;</span><br><span class="line">         </span><br><span class="line">              <span class="rule">&#125;</span></span></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>    </span><br><span class="line">```      </span><br><span class="line">当.right宽度不确定时，在主流浏览器和IE6下，其效果不大相同，差距很难看出，如下图：  </span><br><span class="line">![参数为DOM对象时jQuery对象内部结构](/images/3px5.PNG)  </span><br><span class="line">### 情况一：.right元素宽度确定    </span><br><span class="line">**在IE6下给.right设定宽度后相当于使.right拥有layout属性**，而拥有布局的元素会清理浮动，因此设定.right宽度后在其他浏览器下效果不变如上图，但在IE6下有3px边距效果如下图：  </span><br><span class="line">![参数为DOM对象时jQuery对象内部结构](/images/3px3.PNG) </span><br><span class="line">      </span><br><span class="line">可以看到，在IE6下.left有3px的右外边距。  </span><br><span class="line">这时候想达到目标效果，有两种方法：  </span><br><span class="line"></span><br><span class="line">- 方法1，将.right也左浮动起来   </span><br><span class="line">这样会消除IE6的3px问题，也会使其他浏览器形成两列布局，最终代码： </span><br><span class="line">```javascript</span><br><span class="line">		<span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span><span class="css"></span><br><span class="line">	          <span class="class">.left</span></span><br><span class="line">	          <span class="rules">&#123;</span><br><span class="line">	              <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">100px</span></span></span>;</span><br><span class="line">	              <span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">50px</span></span></span>;</span><br><span class="line">	              <span class="rule"><span class="attribute">background-color</span>:<span class="value">Olive</span></span>;</span><br><span class="line">	</span><br><span class="line">	              <span class="rule"><span class="attribute">float</span>:<span class="value">left</span></span>;</span><br><span class="line">	        </span><br><span class="line">	              <span class="rule">&#125;</span></span></span><br><span class="line">	         </span><br><span class="line">	          <span class="class">.right</span></span><br><span class="line">	          <span class="rules">&#123;</span><br><span class="line">	              <span class="rule"><span class="attribute">border</span>:<span class="value"><span class="number">1px</span> black solid</span></span>;</span><br><span class="line">	              <span class="rule"><span class="attribute">background-color</span>:<span class="value">Teal</span></span>;</span><br><span class="line">	</span><br><span class="line">	              <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">500px</span></span></span>;</span><br><span class="line">	              <span class="rule"><span class="attribute">float</span>:<span class="value">left</span></span>;</span><br><span class="line">	         </span><br><span class="line">	              <span class="rule">&#125;</span></span></span><br><span class="line">	    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>方法2：给.right元素添加margin-left<br>对非IE6浏览器来讲，给.right设置<code>margin-left</code>值为.left的宽度；<br>在IE6来讲，给.left设置<code>margin-right</code>为-3px抵消。最终代码：  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=<span class="string">"text/css"</span>&gt;</span><br><span class="line">        .left</span><br><span class="line">        &#123;</span><br><span class="line">            width:<span class="number">100</span>px;</span><br><span class="line">            height:<span class="number">50</span>px;</span><br><span class="line">            background-color:Olive;  </span><br><span class="line"></span><br><span class="line">            float:left;</span><br><span class="line">            *margin-right:-<span class="number">3</span>px;</span><br><span class="line">            &#125;</span><br><span class="line">       </span><br><span class="line">        .right</span><br><span class="line">        &#123;</span><br><span class="line">            border:<span class="number">1</span>px black solid;</span><br><span class="line">            background-color:Teal;</span><br><span class="line">              </span><br><span class="line">             width:<span class="number">500</span>px;</span><br><span class="line">             margin-left:<span class="number">100</span>px;</span><br><span class="line">             *margin-left:<span class="number">0</span>;</span><br><span class="line">            </span><br><span class="line">            &#125;</span><br><span class="line">  &lt;<span class="regexp">/style&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>将.right元素的<code>margin-left</code>设置为.left元素的宽度值。</p>
-<h3 id="-right宽度不确定">.right宽度不确定</h3><p>此时可以设置.right的<code>margin-left</code>为.left的宽度，使.right不再环绕.left。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=<span class="string">"text/css"</span>&gt;</span><br><span class="line">         div</span><br><span class="line">         &#123;</span><br><span class="line">             width:<span class="number">100</span>px;</span><br><span class="line">             height:<span class="number">50</span>px;</span><br><span class="line">             background-color:red;</span><br><span class="line">             float:left;</span><br><span class="line">             &#125;</span><br><span class="line">        </span><br><span class="line">         p</span><br><span class="line">         &#123;</span><br><span class="line">             border:<span class="number">1</span>px black solid;</span><br><span class="line">             background-color:pink;</span><br><span class="line"></span><br><span class="line">             margin-left:<span class="number">100</span>px;</span><br><span class="line">             &#125;</span><br><span class="line">   &lt;<span class="regexp">/style&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>此时非IE6的主流浏览器已达到目标效果；<br>但是在IE6下.right元素产生了3px边距，这次的3px边距效果如下图所示：<br><img src="/images/3px6.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>可以通过清理浮动将这个3px文本偏移解决，即给.right设置<code>height:1%</code>或<code>zoom:1</code>等，这些方法都是启动layout进行间接清除浮动，消除这个类型的3px，其效果为： </p>
-<p><img src="/images/3px7.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>然后即可以通过上述讲的消除.left外部3px达到效果，最终代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=<span class="string">"text/css"</span>&gt;</span><br><span class="line">        .left</span><br><span class="line">        &#123;</span><br><span class="line">            width:<span class="number">100</span>px;</span><br><span class="line">            height:<span class="number">50</span>px;</span><br><span class="line">            background-color:Olive;</span><br><span class="line">            float:left;</span><br><span class="line">            *margin-right:-<span class="number">3</span>px;</span><br><span class="line">            &#125;</span><br><span class="line">       </span><br><span class="line">        .right</span><br><span class="line">        &#123;</span><br><span class="line">            border:<span class="number">1</span>px black solid;</span><br><span class="line">            background-color:Teal;</span><br><span class="line">             </span><br><span class="line">            margin-left:<span class="number">100</span>px;</span><br><span class="line">            *height:<span class="number">1</span>%;</span><br><span class="line">            *margin-left:<span class="number">0</span>;</span><br><span class="line">            </span><br><span class="line">            &#125;</span><br><span class="line">  &lt;<span class="regexp">/style&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="总结">总结</h3><p>其实，总的说来，在IE6当右侧元素未清除浮动时，这个3px在内部；当右侧元素已清除浮动（不管以何种方式<code>zoom:1</code>、<code>height:1%</code>等），这个3px在外部。这两种3px都可以使用.left的<code>margin-right:-3px</code>消除，另外，外部3px浮动可以通过.right的<code>float:left</code>来消除。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/CSS/">
-                #CSS
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
 
           </div>
 
           
             <div class="pagination">
-              <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
+              <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
             </div>
           
         </div>
@@ -1020,11 +1019,11 @@ alert(<span class="keyword">d</span>);              <span class="comment">//0</s
       <p class="site-description motion-element"></p>
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">
-            <span class="site-state-item-count">5</span>
+            <span class="site-state-item-count">6</span>
             <span class="site-state-item-name">标签</span>
         </div>
         <div class="site-state-item site-state-pages">

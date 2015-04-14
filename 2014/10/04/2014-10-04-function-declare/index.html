@@ -20,7 +20,7 @@
 
 	<meta name="keywords" content="JS," />
 
-  <title> 函数的声明 // 这是个title </title>
+  <title> 函数的声明 // 一只辰qie </title>
 </head>
 
 <body>
@@ -34,7 +34,7 @@
         <span class="logo">
           <i class="icon-logo"></i>
         </span>
-        <span class="site-title">这是个title</span>
+        <span class="site-title">一只辰qie</span>
     </a>
 </h1>
 
@@ -116,12 +116,12 @@
         
 
         
-          <h2 id="写在前面">写在前面</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f=<span class="function"><span class="keyword">function</span> <span class="title">myName</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//在这里获取的到myName吗</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//在这里获取的到myName吗</span></span><br></pre></td></tr></table></figure>
+          <h2 id="写在前面">写在前面</h2><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f=<span class="function"><span class="keyword">function</span> <span class="title">myName</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="comment">//在这里获取的到myName吗</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//在这里获取的到myName吗</span></span><br></pre></td></tr></table></figure>
 <p>看到这个问题的时候有些懵了，因此从来没有用这种方式定义过函数。<br>ps：事实上，最好不要用这种方式定义函数。不同浏览器下表现怪异。</p>
 <h2 id="函数的定义方式">函数的定义方式</h2><p>函数的定义方式有三种：  </p>
 <h3 id="函数声明">函数声明</h3><pre><code><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span></span>{}    
 </code></pre><p>以前在写《作用域链和预处理》时，讲过当通过函数声明的方式定义函数时，会对函数体内的代码进行预处理，因此你可以在函数声明之前调用该函数。</p>
-<h3 id="函数表达式">函数表达式</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">var</span> foo = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        alert(<span class="keyword">typeof</span> foo);<span class="comment">//在这里可以获取到foo</span></span><br><span class="line">    &#125;;</span><br><span class="line">    foo();    </span><br><span class="line">``` </span><br><span class="line">当通过函数表达式定义函数时，只是对于`<span class="keyword">var</span> foo`进行预处理，而不处理`<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;&#125;`内部代码。只有在执行阶段才处理`<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;&#125;`内部代码，因此以上定义必须在调用`foo`之前。  </span><br><span class="line">###  带有函数名称的函数表达式  </span><br><span class="line">```javascript   </span><br><span class="line">	<span class="keyword">var</span> foo=<span class="function"><span class="keyword">function</span> <span class="title">myName</span><span class="params">()</span></span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;;   </span><br><span class="line">```	 </span><br><span class="line">**规范要求：**只能在`myName`函数体内部获取到`myName`，在函数体外部`myName`是无效的。但是在IE下则不同（IE对ECMAScript的实现总是不按规矩来）  </span><br><span class="line">####实例一：函数名是否渗透到外部作用域中 </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="keyword">var</span> foo=<span class="function"><span class="keyword">function</span> <span class="title">myName</span><span class="params">()</span></span>&#123;</span><br><span class="line">		alert(<span class="keyword">typeof</span> myName);<span class="comment">//function</span></span><br><span class="line">	&#125;; </span><br><span class="line">	alert(<span class="keyword">typeof</span> myName);<span class="comment">//IE下返回function，其他浏览器返回undefined</span></span><br></pre></td></tr></table></figure>
+<h3 id="函数表达式">函数表达式</h3><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="reserved">var</span> foo = <span class="reserved">function</span> () &#123;</span><br><span class="line">alert(<span class="keyword">typeof</span> foo);<span class="regexp">//</span>在这里可以获取到foo</span><br><span class="line">&#125;;</span><br><span class="line">foo();</span><br><span class="line">`<span class="javascript"></span>``<span class="javascript"> </span><br><span class="line">当通过函数表达式定义函数时，只是对于</span>`<span class="reserved">var</span> foo`<span class="javascript">进行预处理，而不处理</span>`<span class="reserved">function</span>()&#123;&#125;`<span class="javascript">内部代码。只有在执行阶段才处理</span>`<span class="reserved">function</span>()&#123;&#125;`<span class="javascript">内部代码，因此以上定义必须在调用</span>`foo`<span class="javascript">之前。  </span><br><span class="line">###  带有函数名称的函数表达式</span><br><span class="line"></span><br><span class="line"></span>``<span class="javascript"></span>`	</span><br><span class="line"><span class="reserved">var</span> foo=<span class="reserved">function</span> myName()&#123;</span><br><span class="line"></span><br><span class="line">&#125;;   </span><br><span class="line">`<span class="javascript"></span>``<span class="javascript">	 </span><br><span class="line">**规范要求：**只能在</span>`myName`<span class="javascript">函数体内部获取到</span>`myName`<span class="javascript">，在函数体外部</span>`myName`<span class="javascript">是无效的。但是在IE下则不同（IE对ECMAScript的实现总是不按规矩来）  </span><br><span class="line">####实例一：函数名是否渗透到外部作用域中 </span><br><span class="line"></span>``<span class="javascript"></span>`javascript  </span><br><span class="line">	<span class="reserved">var</span> foo=<span class="reserved">function</span> myName()&#123;</span><br><span class="line">		alert(<span class="keyword">typeof</span> myName);<span class="regexp">//</span><span class="reserved">function</span></span><br><span class="line">	&#125;; </span><br><span class="line">	alert(<span class="keyword">typeof</span> myName);<span class="regexp">//</span>IE下返回<span class="reserved">function</span>，其他浏览器返回<span class="literal">undefined</span></span><br></pre></td></tr></table></figure>
 <p>关于对上述代码的处理，我是这么理解的：  </p>
 <ul>
 <li><p>在IE下，预处理阶段对<code>function myName(){}</code>进行处理(<strong>当做函数声明来处理</strong>),将<code>myName</code>添加到作用域链中，因此在外部是可以访问<code>myName</code>的；在执行时将<code>myName</code>赋值给<code>foo</code>。通过以下代码可以证实：  </p>
@@ -158,7 +158,7 @@
           <div class="post-nav">
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2014/10/05/2014-10-05-prototype/">对prototype的一些认识</a>
+                <a href="/2014/10/23/2014-10-23-object2/">js对象相关之二（继承）</a>
               
             </div>
 
@@ -220,11 +220,11 @@
       <p class="site-description motion-element"></p>
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">
-            <span class="site-state-item-count">5</span>
+            <span class="site-state-item-count">6</span>
             <span class="site-state-item-name">标签</span>
         </div>
         <div class="site-state-item site-state-pages">

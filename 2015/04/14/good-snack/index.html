@@ -18,9 +18,9 @@
 
 
 
-	<meta name="keywords" content="JS," />
+	<meta name="keywords" content="吃," />
 
-  <title> 对prototype的一些认识 // 这是个title </title>
+  <title> 那些好吃到飞起来的零食 // 一只辰qie </title>
 </head>
 
 <body>
@@ -34,7 +34,7 @@
         <span class="logo">
           <i class="icon-logo"></i>
         </span>
-        <span class="site-title">这是个title</span>
+        <span class="site-title">一只辰qie</span>
     </a>
 </h1>
 
@@ -91,7 +91,7 @@
           
           
             
-              对prototype的一些认识
+              那些好吃到飞起来的零食
             
           
         </h1>
@@ -100,7 +100,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2014-10-05
+            发表于 2015-04-14
           
         </span>
         
@@ -116,14 +116,14 @@
         
 
         
-          <h2 id="写在前面">写在前面</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">O</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	O.prototype.a=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> O();</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> O();</span><br><span class="line">	o1.a=<span class="number">2</span>;</span><br><span class="line">	alert(o2.a);<span class="comment">//1  </span></span><br><span class="line">```  </span><br><span class="line">`o1.a=<span class="number">1</span>`对`o1`的属性`a`进行重置，对原型中`O.prototype.a`没有任何影响。因此`o2.a`不会变化。根据上述代码可绘制出下图：  </span><br><span class="line">![对prototype的认识](<span class="regexp">/images/</span>prototype.PNG)  </span><br><span class="line">  </span><br><span class="line">## 举例详解  </span><br><span class="line">### 示例一    </span><br><span class="line">```javascript		</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.a=[<span class="number">1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">	o1.a.push(<span class="number">2</span>);</span><br><span class="line">	alert(o2.a);<span class="comment">//1</span></span><br></pre></td></tr></table></figure>
-<p>在上述代码中，<code>a</code>是对象<code>Obj</code>的实例属性，每个实例的<code>a</code>属性都是一次拷贝，互不影响。<br><img src="/images/aboutprototype.PNG" alt="对prototype的认识"></p>
-<h3 id="示例二">示例二</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">Obj.prototype.a=[<span class="number">1</span>];</span><br><span class="line"><span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line"><span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">o1.a.push(<span class="number">2</span>);</span><br><span class="line">alert(o2.a)<span class="comment">//1,2</span></span><br></pre></td></tr></table></figure>
-<p>在上述代码中，<code>a</code>是对象<code>Obj</code>的原型属性，所有实例都共享<code>a</code>属性，<code>o1.a.push(2);</code>对属性a进行了修改，导致其他实例访问该属性时值已变化。绘图如下：<br><img src="/images/aboutprototype1.PNG" alt="对prototype的认识"></p>
-<h3 id="示例三">示例三</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	Obj.prototype.a=[<span class="number">1</span>];</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">	o1.a=[<span class="number">1</span>,<span class="number">2</span>];</span><br><span class="line">	alert(o2.a);<span class="comment">//1 </span></span><br><span class="line">``` </span><br><span class="line">这个实例跟文章开头那个实例的原理是一样的，`o1.a=[<span class="number">1</span>,<span class="number">2</span>];`重写原型属性`a`使`o1`增加了实例属性`a`，对于`ol`来说这个同名的属性会屏蔽原型中的`a`属性，但是并对=改变原型中的`a`。绘图如下： </span><br><span class="line">![对prototype的认识](<span class="regexp">/images/</span>aboutprototype2.PNG)  </span><br><span class="line">### 示例四  </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Obj</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	Obj.prototype.a=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">var</span> o1=<span class="keyword">new</span> Obj();</span><br><span class="line">	Obj.prototype=&#123;a:<span class="number">2</span>&#125;;</span><br><span class="line">	<span class="keyword">var</span> o2=<span class="keyword">new</span> Obj();</span><br><span class="line">	alert(o1.a);<span class="comment">//1</span></span><br><span class="line">	alert(o2.a);<span class="comment">//2</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/aboutprototype3.PNG" alt="对prototype的认识"><br>重写原型前已存在的实例仍指向旧原型，重写原型后新创建的实例指向新原型。  </p>
-<h3 id="实例五">实例五</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ObjA</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.a=[<span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ObjB</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">ObjB.prototype=<span class="keyword">new</span> ObjA();</span><br><span class="line"><span class="keyword">var</span> oa=<span class="keyword">new</span> ObjA();</span><br><span class="line"><span class="keyword">var</span> ob1=<span class="keyword">new</span> ObjB();</span><br><span class="line"><span class="keyword">var</span> ob2=<span class="keyword">new</span> ObjB();</span><br><span class="line">oa.a.push(<span class="number">2</span>);</span><br><span class="line">alert(ob1.a);<span class="comment">//1</span></span><br><span class="line">ob2.a.push(<span class="number">2</span>);</span><br><span class="line">alert(ob1.a);<span class="comment">//1,2</span></span><br></pre></td></tr></table></figure>
-<p>这个其实将上面讲到的几个点结合起来了。引用类型<code>a</code>是对象<code>ObjA</code>的实例属性，所以<code>ObjA</code>的两个实例<code>oa</code>和<code>ObjB.prototype</code>各自保存了一个拷贝副本，不会相互影响。因此<code>ob1</code>不受<code>oa.a.push(2);</code>的影响。但对于对象<code>ObjB</code>来讲，<code>a</code>属于原型属性，为<code>ob1</code>和<code>ob2</code>公用。绘图如下：<br><img src="/images/aboutprototype4.PNG" alt="对prototype的认识"></p>
+          <h2 id="钜记手信——纽结糖">钜记手信——纽结糖</h2><p>真的好吃到流泪，请不要把它和普通牛轧糖进行比较，不是一个味蕾级别的！分给不少小伙伴儿吃过，收获各种好评。<br>钜记在大陆没有分店，在澳门有很多连锁。还有实在等不及想吃，可以去万能淘宝找代购。<br>安利一个宝贝地址<a href="http://item.taobao.com/item.htm?spm=a1z09.2.9.19.BMy77a&amp;id=9157248127&amp;_u=emd9ns1cb66" target="_blank" rel="external">http://item.taobao.com/item.htm?spm=a1z09.2.9.19.BMy77a&amp;id=9157248127&amp;_u=emd9ns1cb66</a></p>
+<h2 id="nabati_richeese芝士奶酪味威化饼干">nabati richeese芝士奶酪味威化饼干</h2><p>被口感惊艳到，还有浓浓芝士味。通常买一盒，会连续吃到停不下来！<br>深圳广东那边超市有卖，另外，还是可以去万能淘宝。不过淘宝上山寨的很多，大多包装都特别相似。<br>安利一个宝贝地址<a href="http://item.taobao.com/item.htm?spm=a1z09.2.9.20.EilK2b&amp;id=38349843330&amp;_u=emd9ns1ced7" target="_blank" rel="external">http://item.taobao.com/item.htm?spm=a1z09.2.9.20.EilK2b&amp;id=38349843330&amp;_u=emd9ns1ced7</a>  </p>
+<h2 id="好利源脆皮鲜乳球——夹心软糖奶糖">好利源脆皮鲜乳球——夹心软糖奶糖</h2><p>这个有各种水果口味，西瓜、苹果等等。。。其貌不扬，无意中吃到的，大街小巷零食店追寻过。<br>这个很好买到的，一般街边零食店都会有卖。  </p>
+<h2 id="好想你野酸枣">好想你野酸枣</h2><p>“好想你”是河南的枣业品牌，算是个大品牌了。个人认为他们家的枣比很多什么新疆大枣好吃的多，个头不大，但是肉多且不干，很有味道。<br>可以去专卖店购买。  </p>
+<h2 id="钜记手信——棋子饼">钜记手信——棋子饼</h2><p>自从吃过这个杏仁饼，其他杏仁饼都变成了将就！<br>还是钜记，大陆没有实体店，不推荐在淘宝上买，淘宝上的不能保证保质期，有可能收到后会因为受潮等原因影响口感。<br>还是放个淘宝地址吧<a href="http://item.taobao.com/item.htm?spm=a1z10.3-c.w4002-3431147152.72.Zn1tlo&amp;id=3152143455" target="_blank" rel="external">http://item.taobao.com/item.htm?spm=a1z10.3-c.w4002-3431147152.72.Zn1tlo&amp;id=3152143455</a><br>上个地址我并没有买过，只是帮助大家锁定具体哪一款。   </p>
+<h2 id="钜记手信——_雪花杏仁片">钜记手信—— 雪花杏仁片</h2><p>重在口感，好好享受牙齿穿透千层杏仁片的快感吧，好吃到停不下来。  </p>
+<h2 id="品品牛板筋">品品牛板筋</h2><p>上学时候就爱吃，当时好像￥1.5一包，用料是牛板筋，不是豆筋哦<br>这个零食店一般也都有卖，杭州的‘一品一味’就有。  </p>
+<p>待续。。。</p>
 
         
       </div>
@@ -134,8 +134,8 @@
         
           <div class="post-tags">
             
-              <a href="/tags/JS/">
-                #JS
+              <a href="/tags/吃/">
+                #吃
               </a>
             
           </div>
@@ -145,13 +145,11 @@
           <div class="post-nav">
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2014/10/23/2014-10-23-object2/">js对象相关之二（继承）</a>
-              
             </div>
 
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2014/10/04/2014-10-04-function-declare/">函数的声明</a>
+                <a href="/2014/11/07/2014-11-07-canvas1/">用canvas绘制小图标</a>
               
             </div>
           </div>
@@ -207,11 +205,11 @@
       <p class="site-description motion-element"></p>
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">
-            <span class="site-state-item-count">5</span>
+            <span class="site-state-item-count">6</span>
             <span class="site-state-item-name">标签</span>
         </div>
         <div class="site-state-item site-state-pages">
@@ -237,7 +235,7 @@
         <div class="post-toc">
           
           
-            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#示例二"><span class="nav-number">1.1.</span> <span class="nav-text">示例二</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例三"><span class="nav-number">1.2.</span> <span class="nav-text">示例三</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例五"><span class="nav-number">1.3.</span> <span class="nav-text">实例五</span></a></li></ol></li></ol></div>
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#钜记手信——纽结糖"><span class="nav-number">1.</span> <span class="nav-text">钜记手信——纽结糖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nabati_richeese芝士奶酪味威化饼干"><span class="nav-number">2.</span> <span class="nav-text">nabati richeese芝士奶酪味威化饼干</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#好利源脆皮鲜乳球——夹心软糖奶糖"><span class="nav-number">3.</span> <span class="nav-text">好利源脆皮鲜乳球——夹心软糖奶糖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#好想你野酸枣"><span class="nav-number">4.</span> <span class="nav-text">好想你野酸枣</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#钜记手信——棋子饼"><span class="nav-number">5.</span> <span class="nav-text">钜记手信——棋子饼</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#钜记手信——_雪花杏仁片"><span class="nav-number">6.</span> <span class="nav-text">钜记手信—— 雪花杏仁片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#品品牛板筋"><span class="nav-number">7.</span> <span class="nav-text">品品牛板筋</span></a></li></ol></div>
           
         </div>
         <div class="post-toc-indicator-bottom post-toc-indicator"></div>

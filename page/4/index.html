@@ -1,0 +1,658 @@
+<!doctype html>
+<html class="theme-next use-motion">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.3.0"/>
+
+
+
+
+
+    <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+    <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.3.0" />
+
+
+
+
+  <title> 一只辰qie </title>
+</head>
+
+<body>
+  <div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+    <a href="/" class="brand">
+        <span class="logo">
+          <i class="icon-logo"></i>
+        </span>
+        <span class="site-title">一只辰qie</span>
+    </a>
+</h1>
+
+
+  <ul id="menu" class="menu">
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/06/01/2013-08-30-ajax2/">
+                AJAX之头部信息
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-06-01
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="头部信息">头部信息</h2><p>HTTP的头部信息包括主要请求头部信息和响应头部信息。在IE下可以使用HttpWatch看到每次请求的详细信息，包括请求方式、http响应的状态、耗时以及头部信息。如下图所示：   </p>
+<p><img src="/images/httpwatch.PNG" alt="参数为DOM对象时jQuery对象内部结构">    </p>
+<p>在Chorme下使用调试工具中的NetWork页可以查看这些信息，如下图所示：    </p>
+<p><img src="/images/chromenetwork.PNG" alt="参数为DOM对象时jQuery对象内部结构"> </p>
+<ul>
+<li>设置请求头部信息（由浏览器发送给服务器）<br>  <code>setRequestHeader(para1,para2)</code>其中para1是头部信息字段，可以是自定义的；para2是要设置的值。  </li>
+<li>获取响应头部信息（服务器发回给浏览器）<br>  <code>getResponseHeader(para)</code>其中para是头部信息字段。<br>  <code>getAllResponseHeaders()</code>获取所有头部信息，返回长字符串（多行文本）    </li>
+</ul>
+<h3 id="请求头部信息（由浏览器发送给服务器）：">请求头部信息（由浏览器发送给服务器）：</h3><ul>
+<li>Accept：浏览器能够处理的文本类型，例如<code>application/xml,text/xml,*/*</code>  </li>
+<li>Accept-Charset:浏览器能够显示的字符集  </li>
+<li>Accept-Encoding：浏览器能够处理的压缩编码，例如<code>gzip,deflate</code>,  </li>
+<li>Accept-Language：浏览器当前设置的语言，例如<code>zh-cn</code>  </li>
+<li>Host：发出请求的页面所在域  </li>
+<li>Cookie：当前页面设置的任何Cookie  </li>
+<li>Referer：发出请求的页面的URI  </li>
+<li>User-Agent:浏览器的用户代理字符串  </li>
+</ul>
+<h3 id="通用头部信息（请求和响应头部都可能包含）：">通用头部信息（请求和响应头部都可能包含）：</h3><ul>
+<li>Cache-Control：缓存机制    </li>
+<li>Connect：是否持久连接。值Close、Keep-Alive  </li>
+<li>Date：消息发送的时间  </li>
+</ul>
+<h3 id="响应头部信息（由服务器发回给浏览器）">响应头部信息（由服务器发回给浏览器）</h3><ul>
+<li>Server：服务器表明自己的版本等信息  </li>
+</ul>
+<h3 id="实体头部信息（与响应实体相关的信息）">实体头部信息（与响应实体相关的信息）</h3><ul>
+<li>Content-Length：服务器告诉浏览器响应的实体的长度  </li>
+<li>Content-Type：服务器告诉浏览器响应的实体对象的类型   </li>
+<li>Etag:文件的标志值，当服务器上文件修改时，这个值也会改变。浏览器再次请求该文件时，会将Etag值发给服务器，服务器将这个值跟当前的Etag值对比，若未发生变化，则读取缓存304.  </li>
+<li>Last-Modified：服务器认为文件最后修改时间  </li>
+<li>Expires：服务器认为实体对象的过期时间  </li>
+</ul>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/05/28/2013-08-28-vertical-and-center/">
+                css居中
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-05-28
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="居中">居中</h2><h3 id="水平居中_：">水平居中  ：</h3><ul>
+<li><p>行内元素的水平居中：图片、文本等水平居中：<br>给其父元素设置<code>text-align:center;</code>    </p>
+<pre><code class="css">      CSS:    
+      .father{
+           border:1px solid blue;
+           width:200px;height:100x;
+           text-align:center;}
+      HTML:
+      &lt;div class="father"&gt;
+          &lt;span style=""&gt;居中文本&lt;/span&gt;
+      &lt;/div&gt;  
+
+  &lt;div style="border:1px solid blue;width:200px;height:100x;text-align:center;"&gt;  
+&lt;span style=""&gt;居中文本&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+</li>
+<li><p>确定宽度的块级元素的水平居中：<br>设置该块级元素<code>margin-left:auto;margin-right:auto;</code>    </p>
+<pre><code class="css">    CSS:  
+    .father{
+            width:200px;
+            height:100px;
+            border:1px solid green;
+        }
+    .cur{
+            width:100px;
+            height:100px;
+            margin:0 auto;
+        }
+    HTML:
+    &lt;div class="father"&gt;
+        &lt;div class="cur"&gt;块级水平居中    
+        &lt;/div&gt;
+    &lt;/div&gt;    
+
+&lt;div class="father" style="width:200px;border:1px solid green;"&gt;
+    &lt;div class="cur" style="width:100px;margin:0 auto;"&gt;块级水平居中    
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+</li>
+<li><p>不确定宽度的块级元素的水平居中：      </p>
+<ul>
+<li><p>方法一：将该块级元素设置<code>display:inline-block;</code>，再对其父元素设置<code>text-align:center;</code>  </p>
+<pre><code>CSS:  
+.father{
+        width:<span class="number">200</span>px;
+        border:<span class="number">1</span>px solid green;
+        <span class="type">text</span>-align:center;
+    }
+.cur{
+        display:inline;
+    }
+HTML:
+&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"father"</span>&gt;
+    &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"cur"</span>&gt;块级水平居中    
+    &lt;/<span class="keyword">div</span>&gt;
+&lt;/<span class="keyword">div</span>&gt;        
+</code></pre>  <div class="father" style="width:200px;border:1px solid green;text-align:center;"><br>      <div class="cur" style="display:inline;">块级水平居中<br>      </div><br>  </div>    </li>
+<li>方法二：借助table布局。<br>将需要居中的元素写在table里，然后对table设置<code>margin-left:auto;margin-right:auto;</code>。    </li>
+<li><p>方法三：设置<code>position、left</code>正负抵消，达到居中水平效果。  </p>
+<pre><code>CSS<span class="value">:      
+/*father设置relative是为了helpdiv移动时以father为参照*/
+.father{width:<span class="number">200px</span>;</span><span class="attribute">height</span><span class="value">:<span class="number">200px</span>;</span><span class="attribute">border</span><span class="value">:<span class="number">1px</span> solid blue;</span><span class="attribute">position</span><span class="value">:relative;</span>}
+<span class="comment">/*helpdiv相对于fahter向右移动father宽度的50%；*/</span>
+<span class="class">.helpdiv</span>{<span class="attribute">position</span><span class="value">:absolute;</span><span class="attribute">left</span><span class="value">:<span class="number">50%</span>;</span><span class="attribute">border</span><span class="value">:<span class="number">1px</span> solid red;</span>}
+<span class="comment">/*cur相对于cur自身，向左侧移动helpdiv的50%；因此最好不要设置helpdiv的宽度*/</span>
+<span class="class">.cur</span>{<span class="attribute">position</span><span class="value">:relative;</span><span class="attribute">left</span><span class="value">:-<span class="number">50%</span>;</span>}
+<span class="tag">HTML</span><span class="value">:
+&lt;div class=<span class="string">"father"</span>&gt;
+    &lt;div class=<span class="string">"helpdiv"</span>&gt;
+           &lt;div class=<span class="string">"cur"</span>&gt;<span class="number">123456</span>&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;   </span>
+</code></pre><p>  <div class="father" style="width:200px;height:200px;border:1px solid blue;position:relative;"></div></p>
+<pre><code>    &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"helpdiv"</span> style=<span class="string">"position:absolute;left:50%;border:1px solid red;"</span>&gt;
+           &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"cur"</span> style=<span class="string">"position:relative;left:-50%;"</span>&gt;<span class="number">123456</span>&lt;/<span class="keyword">div</span>&gt;
+    &lt;/<span class="keyword">div</span>&gt;
+&lt;/<span class="keyword">div</span>&gt;
+</code></pre><h3 id="竖直居中：">竖直居中：</h3></li>
+</ul>
+</li>
+<li><p>父元素高度不确定的文本、图片、块级元素的竖直居中：<br>给父元素设置相同的上下内边距(<strong>父高度确定时如此设置将不能实现竖直居中</strong>)      </p>
+<pre><code>&lt;<span class="keyword">div</span> style=<span class="string">"border:1px solid blue;width:200px;padding:10px 20px;"</span>&gt;
+    &lt;<span class="keyword">div</span> style=<span class="string">"height:50px;background-color:red;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;
+&lt;/<span class="keyword">div</span>&gt;  
+</code></pre>  <div style="border:1px solid blue;width:200px;padding:10px 20px;"><br>  <div style="height:50px;background-color:red;"></div></div>  
+</li>
+<li><p>父元素高度确定的单行文本的竖直居中：<br>给父元素设置<code>line-height</code>值与<code>height</code>值相同      </p>
+<pre><code><span class="tag">&lt;<span class="title">div</span> <span class="attribute">style</span>=<span class="value">"border:1px solid blue;width:200px;height:100px;line-height:100px;"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"background-color:red;"</span>&gt;</span>单行文本<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>  
+</code></pre>  <div style="border:1px solid blue;width:200px;height:100px;line-height:100px;"><br>  <span style="background-color:red;">单行文本</span></div>  </li>
+<li><p>父高度确定的多行文本、图片、块级元素的竖直居中：  </p>
+<ul>
+<li>借助于table布局，将内容包含在td（th）中，在对td（th）设置<code>vertical-align:middle;</code>，这是由于<code>vertical-align</code>只对td、th才生效。  </li>
+<li><p>hack：在IE8+以及非IE浏览器下，可以对父设置<code>display:table-cell</code>将其<code>vertical-align</code>激活，从而通过设置<code>vertical-align:middle</code>使子元素竖直居中。但在IE6、7下无效，在IE6、7下设置<code>postion、top</code>进行浮动抵消实现竖直居中。  </p>
+<pre><code>CSS<span class="value">:
+.wrap{background-color:Black;</span> 
+      <span class="attribute">width</span><span class="value">:<span class="number">500px</span>;</span>
+      <span class="attribute">color</span><span class="value">:<span class="hexcolor">#fff</span>;</span>
+      <span class="attribute">height</span><span class="value">:<span class="number">100px</span>;</span>
+      <span class="attribute">display</span><span class="value">:table-cell;</span>
+      <span class="attribute">vertical-align</span><span class="value">:middle;</span>
+      *<span class="attribute">position</span><span class="value">:relative;</span>
+      }
+ <span class="class">.verticalWrap</span>
+ {
+     <span class="attribute">border</span><span class="value">:<span class="number">1px</span> solid red;</span>
+     *<span class="attribute">position</span><span class="value">:absolute;</span>
+     *<span class="attribute">top</span><span class="value">:<span class="number">50%</span>;</span>
+     }
+  <span class="class">.vertical</span>
+
+  {
+      *<span class="attribute">position</span><span class="value">:relative;</span>
+      *<span class="attribute">top</span><span class="value">:-<span class="number">50%</span>;</span>              
+      }  
+<span class="tag">HTML</span><span class="value">:  
+&lt;div class=<span class="string">"father"</span>&gt;
+    &lt;div class=<span class="string">"helpdiv"</span>&gt;
+           &lt;div class=<span class="string">"cur"</span>&gt;<span class="number">123</span>&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</span>
+</code></pre></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+
+          </div>
+
+          
+            <div class="pagination">
+              <a class="extend prev" rel="prev" href="/page/3/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+            </div>
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="/images/default_avatar.jpg" alt="Chen Zhang" />
+        <p class="site-author-name">Chen Zhang</p>
+      </div>
+      <p class="site-description motion-element"></p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </div>
+        <div class="site-state-item site-state-tags">
+            <span class="site-state-item-count">6</span>
+            <span class="site-state-item-name">标签</span>
+        </div>
+        <div class="site-state-item site-state-pages">
+            <span class="site-state-item-count">1</span>
+            <span class="site-state-item-name">页面</span>
+        </div>
+      </div>
+
+      
+
+      <div class="social-info motion-element">
+        
+      </div>
+
+      
+      
+
+    </div>
+
+    
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Chen Zhang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT</a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".fancybox").fancybox();
+    });
+  </script>
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" id="motion.page.home">
+    $(document).ready(function () {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200, sequenceQueue: false } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    });
+  </script>
+
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+
+  
+</body>
+</html>
