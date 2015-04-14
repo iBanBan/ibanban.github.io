@@ -104,76 +104,6 @@
           
           
             
-              <a class="post-title-link" href="/2015/04/14/2013-09-16-layout-box/">
-                未命名
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2015-04-14
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <hr>
-<p>layout: post<br>title: “CSS盒模型（box model）”<br>date: 2013-09-16 22:44<br>comments: true<br>categories: CSS<br>tags:  </p>
-<h2 id="-_‘CSS’">- ‘CSS’</h2><h2 id="CSS盒模型（box_model）">CSS盒模型（box model）</h2><p>CSS盒子模型就是指对于页面上的每一个元素（无论是块级元素还是行内元素）都被看做一个矩形框，由元素内容、内边距、边框、外边距组成。盒子决定了该元素在页面中的占位。值得一提的是标准盒子模型与混杂盒子模型是有差别的。<br>标准盒子模型的实际占位：<code>width+padding*2+border*2+margin*2</code><br>混杂盒子模型的实际占位：<code>width+margin*2</code><br><img src="../images/cssbox1.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br><img src="../images/cssbox2.PNG" alt="参数为DOM对象时jQuery对象内部结构">  </p>
-<p><strong>如何解决混杂盒子模型带来的不便：</strong><br>我们可以避免混杂模式的触发。通过文档类型声明DOCTYPE，可以选择是触发混杂模式还是标准模式。通过设置文档类型声明，可以告诉浏览器使用哪种文档类型定义DTD，以及选择哪种HTML和网页呈现的方式。当页面以混杂模式呈现时，其行为是不可预知的，所以要尽量避免混杂模式的触发。混杂模式通常是为了模拟老版的浏览器使其仍能够正常运行。    </p>
-<p><strong>注：</strong>在CSS2中背景应用于内容和内边距组成部分；而在CSS2.1中背景已经延伸到了边框（这也是CSS标准规定的）<br><img src="../images/bg1.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>在CSS3中这个是可设的。  </p>
-<h3 id="内边距">内边距</h3><p>内边距的值可以是百分比，是相对与其父元素的宽度width来计算的，不管是垂直内边距或水平内边距都是根据父元素的width计算的。   </p>
-<h3 id="边框">边框</h3><p>需要注意的是，如果你希望有边框就一定要记得设置样式<code>border-style</code>，因为默认是none，即便设置了边框宽度和颜色也不会显示的。    </p>
-<p>若没有设置边框颜色，那么边框颜色默认为元素文本的颜色，若当前元素无文本那么边框颜色就是其父元素的文本颜色。</p>
-<h3 id="外边距">外边距</h3><p>和内边距一样，给外边距设置值为百分比时，是相对于其父元素的宽度width来计算的。<br>对于行内元素来讲，垂直的外边距不会产生效果。  </p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
               <a class="post-title-link" href="/2015/04/13/2013-05-30-ajax1/">
                 未命名
               </a>
@@ -979,6 +909,77 @@ request.send(paras);
             
               <a href="/tags/CSS/">
                 #CSS
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/09/07/2014-09-07-canvas1/">
+                用canvas绘制小图标
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-09-07
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><p>刚看了canvas，于是用最基本的几个函数绘制了几个图标。这些图标是<code>Raphael.js</code>设计的，<code>Raphael.js</code>用自己的接口绘制了矢量的图标。没事儿就用canvas实现了一遍，今天只绘制了6个，图标如下：    </p>
+<p><img src="../images/canvas1.PNG" alt="参数为DOM对象时jQuery对象内部结构">    </p>
+<h2 id="实现代码：">实现代码：</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line">  &lt;body&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas1"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas2"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas3"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas4"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas5"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas6"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas1"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.moveTo(<span class="number">5.5</span>, <span class="number">15.499</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">21.447</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">15.846</span>);</span><br><span class="line">        context.lineTo(<span class="number">25.5</span>, <span class="number">21.447</span>);</span><br><span class="line">        context.lineTo(<span class="number">25.5</span>, <span class="number">9.552</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">15.152</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">9.552</span>);</span><br><span class="line">        context.lineTo(<span class="number">5.5</span>, <span class="number">15.499</span>);</span><br><span class="line">        context.fill();</span><br><span class="line">        context.closePath();</span><br><span class="line">        <span class="comment">////////////////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas2"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.moveTo(<span class="number">15.834</span>, <span class="number">29.084</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.834</span>, <span class="number">16.166</span>);</span><br><span class="line">        context.lineTo(<span class="number">2.917</span>, <span class="number">16.166</span>);</span><br><span class="line">        context.lineTo(<span class="number">29.083</span>, <span class="number">2.917</span>);</span><br><span class="line">        context.fill();</span><br><span class="line">        context.closePath();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">///////////////////////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas3"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.fillRect(<span class="number">1</span>, <span class="number">15</span>, <span class="number">7</span>, <span class="number">15</span>);</span><br><span class="line">        context.fillRect(<span class="number">11</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">27</span>);</span><br><span class="line">        context.fillRect(<span class="number">21</span>, <span class="number">10</span>, <span class="number">7</span>, <span class="number">20</span>);</span><br><span class="line">        <span class="comment">///////////////////////////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas4"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">30</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">25</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">20</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">15</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">5</span>, <span class="number">25</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.fill();</span><br><span class="line">        <span class="comment">////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas5"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">15</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillRect(<span class="number">14</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">15</span>, <span class="number">15</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.arc(<span class="number">6</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.arc(<span class="number">12</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.arc(<span class="number">18</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.arc(<span class="number">24</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.fillRect(<span class="number">14</span>, <span class="number">16</span>, <span class="number">2</span>, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.arc(<span class="number">12</span>, <span class="number">26</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.arc(<span class="number">12</span>, <span class="number">26</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line">        <span class="comment">////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas6"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">15</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.moveTo(<span class="number">15</span>, <span class="number">6</span>);</span><br><span class="line">        context.lineTo(<span class="number">19</span>, <span class="number">6</span>);</span><br><span class="line">        context.lineTo(<span class="number">19</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">23</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">15</span>, <span class="number">19</span>);</span><br><span class="line">        context.lineTo(<span class="number">7</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">11</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">11</span>, <span class="number">6</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.translate(<span class="number">15</span>, <span class="number">24</span>);</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        <span class="comment">///////////////////////////////////////////////</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/canvas/">
+                #canvas
               </a>
             
           </div>
