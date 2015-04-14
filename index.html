@@ -104,8 +104,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/03/20/hello-world/">
-                Hello World
+              <a class="post-title-link" href="/2014/11/07/2014-09-07-canvas1/">
+                用canvas绘制小图标
               </a>
             
           
@@ -115,7 +115,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2015-03-20
+            发表于 2014-11-07
           
         </span>
         
@@ -132,16 +132,9 @@
 
         
           
-            <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
+            <h2 id="写在前面">写在前面</h2><p>刚看了canvas，于是用最基本的几个函数绘制了几个图标。这些图标是<code>Raphael.js</code>设计的，<code>Raphael.js</code>用自己的接口绘制了矢量的图标。没事儿就用canvas实现了一遍，今天只绘制了6个，图标如下：    </p>
+<p><img src="../images/canvas1.PNG" alt="参数为DOM对象时jQuery对象内部结构">    </p>
+<h2 id="实现代码：">实现代码：</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line">  &lt;body&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas1"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas2"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas3"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas4"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas5"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas6"</span> <span class="attribute">width</span>=<span class="value">"30"</span> <span class="attribute">height</span>=<span class="value">"30"</span> <span class="attribute">style</span>=<span class="value">"border:1px solid #ccc;"</span>&gt;</span><span class="tag">&lt;/<span class="title">canvas</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas1"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.moveTo(<span class="number">5.5</span>, <span class="number">15.499</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">21.447</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">15.846</span>);</span><br><span class="line">        context.lineTo(<span class="number">25.5</span>, <span class="number">21.447</span>);</span><br><span class="line">        context.lineTo(<span class="number">25.5</span>, <span class="number">9.552</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">15.152</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.8</span>, <span class="number">9.552</span>);</span><br><span class="line">        context.lineTo(<span class="number">5.5</span>, <span class="number">15.499</span>);</span><br><span class="line">        context.fill();</span><br><span class="line">        context.closePath();</span><br><span class="line">        <span class="comment">////////////////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas2"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.moveTo(<span class="number">15.834</span>, <span class="number">29.084</span>);</span><br><span class="line">        context.lineTo(<span class="number">15.834</span>, <span class="number">16.166</span>);</span><br><span class="line">        context.lineTo(<span class="number">2.917</span>, <span class="number">16.166</span>);</span><br><span class="line">        context.lineTo(<span class="number">29.083</span>, <span class="number">2.917</span>);</span><br><span class="line">        context.fill();</span><br><span class="line">        context.closePath();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">///////////////////////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas3"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.fillRect(<span class="number">1</span>, <span class="number">15</span>, <span class="number">7</span>, <span class="number">15</span>);</span><br><span class="line">        context.fillRect(<span class="number">11</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">27</span>);</span><br><span class="line">        context.fillRect(<span class="number">21</span>, <span class="number">10</span>, <span class="number">7</span>, <span class="number">20</span>);</span><br><span class="line">        <span class="comment">///////////////////////////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas4"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">30</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">25</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">20</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">30</span>, <span class="number">15</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI / <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">5</span>, <span class="number">25</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line">        context.fill();</span><br><span class="line">        <span class="comment">////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas5"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">15</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillRect(<span class="number">14</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">15</span>, <span class="number">15</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.arc(<span class="number">6</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.arc(<span class="number">12</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.arc(<span class="number">18</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.arc(<span class="number">24</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">true</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.fillRect(<span class="number">14</span>, <span class="number">16</span>, <span class="number">2</span>, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.fillStyle = <span class="string">"#000"</span>;</span><br><span class="line">        context.arc(<span class="number">12</span>, <span class="number">26</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.arc(<span class="number">12</span>, <span class="number">26</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line">        <span class="comment">////////////////////////////////////////////////////</span></span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas6"</span>);</span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.arc(<span class="number">15</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.fillStyle = <span class="string">"#fff"</span>;</span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.moveTo(<span class="number">15</span>, <span class="number">6</span>);</span><br><span class="line">        context.lineTo(<span class="number">19</span>, <span class="number">6</span>);</span><br><span class="line">        context.lineTo(<span class="number">19</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">23</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">15</span>, <span class="number">19</span>);</span><br><span class="line">        context.lineTo(<span class="number">7</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">11</span>, <span class="number">13</span>);</span><br><span class="line">        context.lineTo(<span class="number">11</span>, <span class="number">6</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        context.beginPath();</span><br><span class="line">        context.translate(<span class="number">15</span>, <span class="number">24</span>);</span><br><span class="line">        context.arc(<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span><br><span class="line">        context.closePath();</span><br><span class="line">        context.fill();</span><br><span class="line"></span><br><span class="line">        <span class="comment">///////////////////////////////////////////////</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
           
         
       </div>
@@ -149,6 +142,102 @@
 
     
       <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/canvas/">
+                #canvas
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/10/26/2014-09-26-arguments/">
+                函数之arguments
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-10-26
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="写在前面">写在前面</h2><p>你觉得<code>arguments</code>很简单吗？那想想这几个问题：  </p>
+<ul>
+<li>arguments是不是数组？  </li>
+<li>arguments与命名参数如何相互影响的？  </li>
+<li>命名参数是必须的吗？  </li>
+<li>不定义命名参数可以传参吗能获取参数吗？  </li>
+<li>命名参数个数与实参个数一定要一致吗？  </li>
+<li>怎么知道定义了几个命名参数？  </li>
+<li>怎么知道执行时实际传递了几个参数？    </li>
+<li><code>arguments</code>的长度是由形参还是实参决定的？    </li>
+</ul>
+<p>按照惯例，结合例子分析清楚以上每一个点。  </p>
+<h2 id="示例及要点分析">示例及要点分析</h2><h3 id="示例一:arguments的真身">示例一:arguments的真身</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span><span class="params">(para1,para2)</span></span>&#123;</span><br><span class="line">	alert(<span class="keyword">typeof</span> <span class="built_in">arguments</span>);<span class="comment">//object</span></span><br><span class="line">	alert(<span class="built_in">arguments</span> <span class="keyword">instanceof</span> <span class="built_in">Array</span>);<span class="comment">//false</span></span><br><span class="line">&#125;)(<span class="string">"a"</span>,<span class="string">"b"</span>);</span><br></pre></td></tr></table></figure>
+<p>从上述可以看出<code>arguments</code>不是数组，<strong>它是一个对象</strong>，准确的说它是一个<strong>类数组对象！</strong>。这里穿插讲一下类数组对象：   </p>
+<h4 id="类数组对象：">类数组对象：</h4><p>从字面意思来讲，就是一个对象它拥有的一些特性或行为跟数组很像。比如类数组对象拥有length属性、可以像遍历数组一样地来遍历类数组对象；<br>类数组对象归根结底是一个<strong>对象</strong>，它是Object的一个实例，而不是Array的实例；<br>由上可知，类数组对象不能调用大多数组的方法（join、slice、concat等）；  </p>
+<h4 id="示例一解析：">示例一解析：</h4><p>可以将在上述例子中<code>arguments</code>的真身理解为下面这个类数组对象：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="number">0</span>:<span class="string">"a"</span>,<span class="number">1</span>:<span class="string">"b"</span>,length:<span class="number">2</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当使用<code>arguments[0]</code>获取第一个实参时，其实<code>0</code>是作为对象的属性名存在的，而不应理解为数组中的索引值。这时候也许有人会问，能不能用<code>arguments.0</code>来获取属性<code>0</code>的值，答案是不能（会报错）。这是因为<strong>对于对象属性来说，当属性名是合法标识符（即字面、数组、下划线组成且首字符不能是数字）时，这两种获取属性值的方式都是可用的；而当属性名不是合法标识符时，只能通过<code>[]</code>来获取属性。</strong>  </p>
+<p><strong>总结：</strong>其实归根结底牢记<code>arguments</code>是一个对象，它的特殊性在于一定拥有一个<code>length</code>属性，而且其他属性名都是数字。</p>
+<hr>
+<h3 id="实例二：形参与实参">实例二：形参与实参</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       alert(<span class="built_in">arguments</span>[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    test1(<span class="number">1</span>);    </span><br><span class="line">  </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test2</span><span class="params">(para1,para2)</span> </span>&#123;</span><br><span class="line">       alert(<span class="built_in">arguments</span>[<span class="number">1</span>]);</span><br><span class="line">       alert(para2);</span><br><span class="line">	   alert(<span class="built_in">arguments</span>.length);</span><br><span class="line">   	&#125;</span><br><span class="line">    test2(<span class="number">1</span>); <span class="comment">//undefined、undefined、1</span></span><br><span class="line">	test2(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);<span class="comment">//2,2,3</span></span><br><span class="line"></span><br><span class="line">	alert(test1.length);<span class="comment">//0</span></span><br><span class="line">	alert(test2.length);<span class="comment">//2</span></span><br><span class="line">```      </span><br><span class="line">#### 示例分析：  </span><br><span class="line">从以上代码可以说明几点：    </span><br><span class="line"></span><br><span class="line">- 在js中函数的形参是可有可无的，形参只是提供便利，不是必须的。若没有定义形参,则在函数内部通过`<span class="built_in">arguments</span>`访问实参；    </span><br><span class="line">- 形参是作为函数的局部变量存在的；  </span><br><span class="line">- 可以通过`functionName.length`获取函数定义形参的个数；  </span><br><span class="line">- 可以通过`<span class="built_in">arguments</span>.length`获取函数传入实参的个数；  </span><br><span class="line">- 若传入实参个数少于形参个数，则多余的形参自动设为`<span class="literal">undefined</span>`；  </span><br><span class="line"></span><br><span class="line">### 实例三    </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">(para1,para2)</span></span>&#123;</span><br><span class="line">		para1=<span class="string">"c"</span>;</span><br><span class="line">		alert(<span class="built_in">arguments</span>[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">arguments</span>[<span class="number">1</span>]=<span class="string">"d"</span>;  </span><br><span class="line">		alert(<span class="built_in">arguments</span>.length);<span class="comment">//执行Ⅰ</span></span><br><span class="line">		alert(para2);</span><br><span class="line">	&#125;</span><br><span class="line">	f(<span class="string">"a"</span>,<span class="string">"b"</span>);<span class="comment">//"c",2，"d"</span></span><br><span class="line">	f(<span class="string">"a"</span>);<span class="comment">//"c",1，undefined</span></span><br><span class="line">```  </span><br><span class="line">#### 实例分析：  </span><br><span class="line">从上述代码可以看出几点：  </span><br><span class="line">  </span><br><span class="line">- 参数和`<span class="built_in">arguments</span>`对象中对应的属性值是同步的，相互影响；  </span><br><span class="line">- 虽然值同步，但是参数和`<span class="built_in">arguments</span>`中属性是内存独立的；    </span><br><span class="line">- `<span class="built_in">arguments</span>`的长度`length`是由传入的实参个数确定的，而不是由形参个数确定的；这也是为什么`f(<span class="string">"a"</span>)`只传入一个参数时，即使`<span class="built_in">arguments</span>[<span class="number">1</span>]=<span class="string">"d"</span>`而`<span class="built_in">arguments</span>`的长度仍然只是<span class="number">1</span>且para2仍然为`<span class="literal">undefined</span>`。    </span><br><span class="line"></span><br><span class="line">#### 要点：着重讲一下`<span class="built_in">arguments</span>`的长度`length`是由传入的实参个数确定的，而不是由形参个数确定的。还是画图吧  </span><br><span class="line">![参数为DOM对象时jQuery对象内部结构](<span class="regexp">/images/</span><span class="built_in">arguments</span>.PNG) </span><br><span class="line"></span><br><span class="line">讲到这开头的那些疑问就全部解开了。下面写一个遇到的笔试题，跟`<span class="built_in">arguments</span>`有一点关系，不过重点还是在`<span class="keyword">this</span>`和作用域，决定找个时间好好写写`<span class="keyword">this</span>`，也请期待吧~  </span><br><span class="line">### 实例四</span><br><span class="line"></span><br><span class="line">```javascript</span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">bar: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.baz; &#125;,</span><br><span class="line">baz: <span class="number">1</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">		alert(<span class="keyword">typeof</span> <span class="built_in">arguments</span>[<span class="number">0</span>]());</span><br><span class="line">&#125;)(foo.bar);</span><br></pre></td></tr></table></figure>
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/JS/">
+                #JS
+              </a>
+            
+          </div>
         
 
         
@@ -658,94 +747,6 @@
           
           
             
-              <a class="post-title-link" href="/2014/09/26/2014-09-26-arguments/">
-                函数之arguments
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-09-26
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="写在前面">写在前面</h2><p>你觉得<code>arguments</code>很简单吗？那想想这几个问题：  </p>
-<ul>
-<li>arguments是不是数组？  </li>
-<li>arguments与命名参数如何相互影响的？  </li>
-<li>命名参数是必须的吗？  </li>
-<li>不定义命名参数可以传参吗能获取参数吗？  </li>
-<li>命名参数个数与实参个数一定要一致吗？  </li>
-<li>怎么知道定义了几个命名参数？  </li>
-<li>怎么知道执行时实际传递了几个参数？    </li>
-<li><code>arguments</code>的长度是由形参还是实参决定的？    </li>
-</ul>
-<p>按照惯例，结合例子分析清楚以上每一个点。  </p>
-<h2 id="示例及要点分析">示例及要点分析</h2><h3 id="示例一:arguments的真身">示例一:arguments的真身</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span><span class="params">(para1,para2)</span></span>&#123;</span><br><span class="line">	alert(<span class="keyword">typeof</span> <span class="built_in">arguments</span>);<span class="comment">//object</span></span><br><span class="line">	alert(<span class="built_in">arguments</span> <span class="keyword">instanceof</span> <span class="built_in">Array</span>);<span class="comment">//false</span></span><br><span class="line">&#125;)(<span class="string">"a"</span>,<span class="string">"b"</span>);</span><br></pre></td></tr></table></figure>
-<p>从上述可以看出<code>arguments</code>不是数组，<strong>它是一个对象</strong>，准确的说它是一个<strong>类数组对象！</strong>。这里穿插讲一下类数组对象：   </p>
-<h4 id="类数组对象：">类数组对象：</h4><p>从字面意思来讲，就是一个对象它拥有的一些特性或行为跟数组很像。比如类数组对象拥有length属性、可以像遍历数组一样地来遍历类数组对象；<br>类数组对象归根结底是一个<strong>对象</strong>，它是Object的一个实例，而不是Array的实例；<br>由上可知，类数组对象不能调用大多数组的方法（join、slice、concat等）；  </p>
-<h4 id="示例一解析：">示例一解析：</h4><p>可以将在上述例子中<code>arguments</code>的真身理解为下面这个类数组对象：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="number">0</span>:<span class="string">"a"</span>,<span class="number">1</span>:<span class="string">"b"</span>,length:<span class="number">2</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p>当使用<code>arguments[0]</code>获取第一个实参时，其实<code>0</code>是作为对象的属性名存在的，而不应理解为数组中的索引值。这时候也许有人会问，能不能用<code>arguments.0</code>来获取属性<code>0</code>的值，答案是不能（会报错）。这是因为<strong>对于对象属性来说，当属性名是合法标识符（即字面、数组、下划线组成且首字符不能是数字）时，这两种获取属性值的方式都是可用的；而当属性名不是合法标识符时，只能通过<code>[]</code>来获取属性。</strong>  </p>
-<p><strong>总结：</strong>其实归根结底牢记<code>arguments</code>是一个对象，它的特殊性在于一定拥有一个<code>length</code>属性，而且其他属性名都是数字。</p>
-<hr>
-<h3 id="实例二：形参与实参">实例二：形参与实参</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       alert(<span class="built_in">arguments</span>[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    test1(<span class="number">1</span>);    </span><br><span class="line">  </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test2</span><span class="params">(para1,para2)</span> </span>&#123;</span><br><span class="line">       alert(<span class="built_in">arguments</span>[<span class="number">1</span>]);</span><br><span class="line">       alert(para2);</span><br><span class="line">	   alert(<span class="built_in">arguments</span>.length);</span><br><span class="line">   	&#125;</span><br><span class="line">    test2(<span class="number">1</span>); <span class="comment">//undefined、undefined、1</span></span><br><span class="line">	test2(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);<span class="comment">//2,2,3</span></span><br><span class="line"></span><br><span class="line">	alert(test1.length);<span class="comment">//0</span></span><br><span class="line">	alert(test2.length);<span class="comment">//2</span></span><br><span class="line">```      </span><br><span class="line">#### 示例分析：  </span><br><span class="line">从以上代码可以说明几点：    </span><br><span class="line"></span><br><span class="line">- 在js中函数的形参是可有可无的，形参只是提供便利，不是必须的。若没有定义形参,则在函数内部通过`<span class="built_in">arguments</span>`访问实参；    </span><br><span class="line">- 形参是作为函数的局部变量存在的；  </span><br><span class="line">- 可以通过`functionName.length`获取函数定义形参的个数；  </span><br><span class="line">- 可以通过`<span class="built_in">arguments</span>.length`获取函数传入实参的个数；  </span><br><span class="line">- 若传入实参个数少于形参个数，则多余的形参自动设为`<span class="literal">undefined</span>`；  </span><br><span class="line"></span><br><span class="line">### 实例三    </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">(para1,para2)</span></span>&#123;</span><br><span class="line">		para1=<span class="string">"c"</span>;</span><br><span class="line">		alert(<span class="built_in">arguments</span>[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">arguments</span>[<span class="number">1</span>]=<span class="string">"d"</span>;  </span><br><span class="line">		alert(<span class="built_in">arguments</span>.length);<span class="comment">//执行Ⅰ</span></span><br><span class="line">		alert(para2);</span><br><span class="line">	&#125;</span><br><span class="line">	f(<span class="string">"a"</span>,<span class="string">"b"</span>);<span class="comment">//"c",2，"d"</span></span><br><span class="line">	f(<span class="string">"a"</span>);<span class="comment">//"c",1，undefined</span></span><br><span class="line">```  </span><br><span class="line">#### 实例分析：  </span><br><span class="line">从上述代码可以看出几点：  </span><br><span class="line">  </span><br><span class="line">- 参数和`<span class="built_in">arguments</span>`对象中对应的属性值是同步的，相互影响；  </span><br><span class="line">- 虽然值同步，但是参数和`<span class="built_in">arguments</span>`中属性是内存独立的；    </span><br><span class="line">- `<span class="built_in">arguments</span>`的长度`length`是由传入的实参个数确定的，而不是由形参个数确定的；这也是为什么`f(<span class="string">"a"</span>)`只传入一个参数时，即使`<span class="built_in">arguments</span>[<span class="number">1</span>]=<span class="string">"d"</span>`而`<span class="built_in">arguments</span>`的长度仍然只是<span class="number">1</span>且para2仍然为`<span class="literal">undefined</span>`。    </span><br><span class="line"></span><br><span class="line">#### 要点：着重讲一下`<span class="built_in">arguments</span>`的长度`length`是由传入的实参个数确定的，而不是由形参个数确定的。还是画图吧  </span><br><span class="line">![参数为DOM对象时jQuery对象内部结构](<span class="regexp">/images/</span><span class="built_in">arguments</span>.PNG) </span><br><span class="line"></span><br><span class="line">讲到这开头的那些疑问就全部解开了。下面写一个遇到的笔试题，跟`<span class="built_in">arguments</span>`有一点关系，不过重点还是在`<span class="keyword">this</span>`和作用域，决定找个时间好好写写`<span class="keyword">this</span>`，也请期待吧~  </span><br><span class="line">### 实例四</span><br><span class="line"></span><br><span class="line">```javascript</span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">bar: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.baz; &#125;,</span><br><span class="line">baz: <span class="number">1</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">		alert(<span class="keyword">typeof</span> <span class="built_in">arguments</span>[<span class="number">0</span>]());</span><br><span class="line">&#125;)(foo.bar);</span><br></pre></td></tr></table></figure>
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/JS/">
-                #JS
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
               <a class="post-title-link" href="/2014/09/25/2014-09-25-eval-scope-chain/">
                 初探eval
               </a>
@@ -1040,7 +1041,7 @@
 
           
             <div class="pagination">
-              <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+              <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
             </div>
           
         </div>
@@ -1067,7 +1068,7 @@
       <p class="site-description motion-element"></p>
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">
