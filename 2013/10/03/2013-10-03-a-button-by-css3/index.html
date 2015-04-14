@@ -18,17 +18,7 @@
 
 
 
-
-    <meta name="keywords" content="Hexo,next" />
-
-
-
-
-
-    <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.3.0" />
-
-
-
+	<meta name="keywords" content="CSS," />
 
   <title> 用CSS3实现一个按钮 // Hexo </title>
 </head>
@@ -126,7 +116,7 @@
         
 
         
-          <h2 id="写在前面">写在前面</h2><p><img src="/images/btnstep4.PNG" alt="css3实现一个小按钮"><br>看到知乎上的一个小按钮，类似上图。<br>当然，你可以使用背景图片，那样能够跨多浏览器，但是适应性不好；如果想应对宽和高不固定的情况，可能需要使用“滑动门”。<br>今天想使用CSS3多个属性结合实现一下。  </p>
+          <h2 id="写在前面">写在前面</h2><p><img src="../images/btnstep4.PNG" alt="css3实现一个小按钮"><br>看到知乎上的一个小按钮，类似上图。<br>当然，你可以使用背景图片，那样能够跨多浏览器，但是适应性不好；如果想应对宽和高不固定的情况，可能需要使用“滑动门”。<br>今天想使用CSS3多个属性结合实现一下。  </p>
 <h2 id="实现">实现</h2><h3 id="分析">分析</h3><p>上图按钮有这么几个特点：  </p>
 <ul>
 <li>圆角  </li>
@@ -134,11 +124,11 @@
 <li>有渐变营造出凸起的立体效果    </li>
 </ul>
 <h3 id="分步实现">分步实现</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.invite&#123;</span><br><span class="line">	min-width:<span class="number">75</span>px;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&lt;button <span class="keyword">class</span>=<span class="string">"invite"</span>&gt;邀请回答&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/btnstep1.png" alt="css3实现一个小按钮"></p>
+<p><img src="../images/btnstep1.png" alt="css3实现一个小按钮"></p>
 <h4 id="step1:圆角">step1:圆角</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.invite&#123;</span><br><span class="line">	min-width:<span class="number">75</span>px;</span><br><span class="line">	height:<span class="number">25</span>px;</span><br><span class="line">       <span class="comment">/*圆角*/</span></span><br><span class="line">       border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">       border-radius:<span class="number">4</span>px;</span><br><span class="line">       -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">       -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">       -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/images/btnstep2.png" alt="css3实现一个小按钮">  </p>
-<h4 id="step2:高光">step2:高光</h4><p>给<code>button</code>添加盒内阴影，颜色设置比边框稍浅<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">	.invite&#123;</span><br><span class="line">            min-width:<span class="number">75</span>px;</span><br><span class="line">            height:<span class="number">25</span>px;</span><br><span class="line">            <span class="comment">/*圆角*/</span></span><br><span class="line">            border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">            border-radius:<span class="number">4</span>px;</span><br><span class="line">            -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">            <span class="comment">/*高光*/</span></span><br><span class="line">            box-shadow:inset <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> #<span class="number">349</span>ED6;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">```  	</span><br><span class="line">![css3实现一个小按钮](<span class="regexp">/images/</span>btnstep3.png)   </span><br><span class="line">  </span><br><span class="line">#### step3：纵向渐变  </span><br><span class="line">纵向渐变，渐变开始的颜色最好比高光设置颜色深且比边框颜色浅。    </span><br><span class="line">```javascript</span><br><span class="line">	.invite&#123;</span><br><span class="line">            min-width:<span class="number">75</span>px;</span><br><span class="line">            height:<span class="number">25</span>px;</span><br><span class="line">            <span class="comment">/*圆角*/</span></span><br><span class="line">            border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">            border-radius:<span class="number">4</span>px;</span><br><span class="line">            -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">            <span class="comment">/*高光*/</span></span><br><span class="line">            box-shadow:inset <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> #<span class="number">349</span>ED6;</span><br><span class="line">            <span class="comment">/*纵向渐变造成凸出效果*/</span>  </span><br><span class="line">            background:#<span class="number">01539</span>A;</span><br><span class="line">            background-image:-webkit-gradient(linear,<span class="number">0</span>% <span class="number">0</span>%,<span class="number">0</span>% <span class="number">100</span>%,from(#<span class="number">0084</span>CC),to(#<span class="number">01539</span>A));</span><br><span class="line">            color:White;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="/images/btnstep4.png" alt="css3实现一个小按钮"><br>上述代码设置<code>background:#01539A;</code>是为了使按钮在不支持渐变的浏览器下仍有背景。</p>
+<p><img src="../images/btnstep2.png" alt="css3实现一个小按钮">  </p>
+<h4 id="step2:高光">step2:高光</h4><p>给<code>button</code>添加盒内阴影，颜色设置比边框稍浅<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">	.invite&#123;</span><br><span class="line">            min-width:<span class="number">75</span>px;</span><br><span class="line">            height:<span class="number">25</span>px;</span><br><span class="line">            <span class="comment">/*圆角*/</span></span><br><span class="line">            border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">            border-radius:<span class="number">4</span>px;</span><br><span class="line">            -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">            <span class="comment">/*高光*/</span></span><br><span class="line">            box-shadow:inset <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> #<span class="number">349</span>ED6;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">```  	</span><br><span class="line">![css3实现一个小按钮](../images/btnstep3.png)   </span><br><span class="line">  </span><br><span class="line">#### step3：纵向渐变  </span><br><span class="line">纵向渐变，渐变开始的颜色最好比高光设置颜色深且比边框颜色浅。    </span><br><span class="line">```javascript</span><br><span class="line">	.invite&#123;</span><br><span class="line">            min-width:<span class="number">75</span>px;</span><br><span class="line">            height:<span class="number">25</span>px;</span><br><span class="line">            <span class="comment">/*圆角*/</span></span><br><span class="line">            border:<span class="number">1</span>px solid #<span class="number">0063</span>B8;</span><br><span class="line">            border-radius:<span class="number">4</span>px;</span><br><span class="line">            -webkit-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -moz-border-radius:<span class="number">4</span>px;</span><br><span class="line">            -o-border-radius:<span class="number">4</span>px;</span><br><span class="line">            <span class="comment">/*高光*/</span></span><br><span class="line">            box-shadow:inset <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> #<span class="number">349</span>ED6;</span><br><span class="line">            <span class="comment">/*纵向渐变造成凸出效果*/</span>  </span><br><span class="line">            background:#<span class="number">01539</span>A;</span><br><span class="line">            background-image:-webkit-gradient(linear,<span class="number">0</span>% <span class="number">0</span>%,<span class="number">0</span>% <span class="number">100</span>%,from(#<span class="number">0084</span>CC),to(#<span class="number">01539</span>A));</span><br><span class="line">            color:White;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="../images/btnstep4.png" alt="css3实现一个小按钮"><br>上述代码设置<code>background:#01539A;</code>是为了使按钮在不支持渐变的浏览器下仍有背景。</p>
 
         
       </div>
@@ -147,18 +137,26 @@
     
       <div class="post-footer">
         
+          <div class="post-tags">
+            
+              <a href="/tags/CSS/">
+                #CSS
+              </a>
+            
+          </div>
+        
 
         
           <div class="post-nav">
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2013/10/04/2014-10-04-function-declare/">函数的声明</a>
+                <a href="/2013/10/03/2013-10-03-number-and-string/">js中数值和字符串的一点事儿</a>
               
             </div>
 
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2013/10/03/2013-10-03-number-and-string/">js中数值和字符串的一点事儿</a>
+                <a href="/2013/09/11/2013-09-11-ie6-3px-bug/">IE6下文本偏移3px的问题</a>
               
             </div>
           </div>
@@ -214,11 +212,11 @@
       <p class="site-description motion-element"></p>
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">
-            <span class="site-state-item-count">0</span>
+            <span class="site-state-item-count">4</span>
             <span class="site-state-item-name">标签</span>
         </div>
         <div class="site-state-item site-state-pages">

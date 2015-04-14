@@ -1,0 +1,803 @@
+<!doctype html>
+<html class="theme-next use-motion">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.3.0"/>
+
+
+
+
+	<meta name="keywords" content="JS," />
+
+  <title> js中预编译与作用域链 // Hexo </title>
+</head>
+
+<body>
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+    <a href="/" class="brand">
+        <span class="logo">
+          <i class="icon-logo"></i>
+        </span>
+        <span class="site-title">Hexo</span>
+    </a>
+</h1>
+
+
+  <ul id="menu" class="menu">
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+  
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              js中预编译与作用域链
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-09-01
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <h2 id="写在前面">写在前面</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> val=<span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span></span>&#123;</span><br><span class="line">	alert(val);<span class="comment">//undefined</span></span><br><span class="line">	<span class="keyword">var</span> val=<span class="number">10</span>;</span><br><span class="line">	alert(val);<span class="comment">//10</span></span><br><span class="line">&#125;</span><br><span class="line">alert(val)<span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+<p>原以为自己对于js的词法作用域理解的还不错，直到遇到一大波类似于上述的奇奇怪怪的现象后，我就有些凌乱了，成果如下：  </p>
+<h2 id="作用域">作用域</h2><h3 id="变量作用域">变量作用域</h3><p>变量作用域scope可以理解为能够访问到这个变量的所有区域，例如可以在全局范围内访问到全局变量，那么全局变量的scope就是全局作用域。  </p>
+<h3 id="函数作用域">函数作用域</h3><p>对于函数来讲，任何在函数内部定义的变量、函数的参数、在函数内定义的其他函数都是<strong>局部变量</strong>。只有在函数的内部才能访问到这些局部变量。<br><strong>函数作用域</strong>：函数的内部变量其scope是这个函数体以及这个函数体内嵌套的任意函数体内部。<br><strong>声明提前：</strong>由函数作用域知内部变量在函数体内任何位置都是可访问的，这就导致有可能变量在声明前就是可访问的。在js中函数内声明的所有变量其声明过程都被<strong>提前</strong>到函数体的顶部，而赋值过程仍在代码中原位置。这时由JS引擎的“预编译”导致的。<br><strong>内部变量的优先级：</strong>同名的内部变量的优先级要高于全局变量，这也可由作用域链可知。  </p>
+<h3 id="js的词法作用域链">js的词法作用域链</h3><p>当函数在<strong>定义</strong>时，就保存了一个<strong>作用域链</strong>。作用域链确保了可访问的变量和函数，以及访问顺序。作用域链式在代码<strong>定义时</strong>就已确定的，而不是等到执行时才确定。    </p>
+<h3 id="变量解析">变量解析</h3><p>沿着作用域链前端的第一个对象开始查找，一旦找到就返回。    </p>
+<h2 id="预编译">预编译</h2><h3 id="对预编译的理解">对预编译的理解</h3><p>js在执行前会对代码进行<strong>预编译</strong>，关于预编译需要注意几点：     </p>
+<ul>
+<li><strong>预编译</strong>工作范围：对var变量声明、以及<code>function(){}</code>函数体内的代码进行处理，并不进行赋值操作。赋值操作发生在执行阶段。举例说明三种情况：    <ul>
+<li><code>var val=1;</code>预编译只做了声明的工作即<code>var val;</code>  </li>
+<li><code>function f(){/函数体代码段}</code>遇到这样的函数定义，会对函数体内代码段进行预编译  </li>
+<li><code>var f=function(){//函数体代码段}</code>这种情况严格意义上讲不属于函数定义，称为对变量f进行声明和初始化比较合适，因此预编译只进行变量f的声明即<code>var f;</code>，对匿名函数体内代码段不进行预编译。  </li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>js的代码是<strong>顺序分块</strong>进行<strong>预编译-执行</strong> 的过程的。顺序是指按照代码定义顺序从上到下进行，分块是针对有多个<code>&lt;script type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</code>块时，按顺序将第一个<code>&lt;script&gt;&lt;/script&gt;</code>块内代码预编译然后执行，再对下一个<code>&lt;script&gt;&lt;/script&gt;</code>重复该<strong>预编译-执行</strong>的过程。    </p>
+</li>
+<li><p>由上条可知，当有多个代码块时，后面出现的<code>&lt;script&gt;&lt;/script&gt;</code>代码块能够访问前面出现的<code>&lt;script&gt;&lt;/script&gt;</code>代码块内的全局变量，反过来则不行。    </p>
+</li>
+<li><p>对函数内部代码进行预编译时，会忽略逻辑判断。例如<code>if(false){var val=1;}</code>仍然会进行<code>var val;</code>预编译。</p>
+</li>
+</ul>
+<h3 id="对预编译、执行、作用域链之间关系的理解">对预编译、执行、作用域链之间关系的理解</h3><p>其实对《Javascript权威指南》和《javascript高级程序设计》里面关于这些的讲解总觉得特别抽象，看完也觉得不知道内部实现机制。自己的理解不知道是否完全正确，但是总能解释下面奇怪的例子们~<br><strong>板板的理解：</strong>在定义函数时就为其保存了一个作用域链，预编译完成后对该作用域链进行修改，在代码的执行过程中也会对其进行修改。看示例一：  </p>
+<h4 id="示例一：">示例一：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> i = <span class="number">1</span>;</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">(o)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">var</span> x = <span class="number">4</span>;</span><br><span class="line">       alert(i);</span><br><span class="line">       <span class="keyword">if</span> (<span class="keyword">typeof</span> o == <span class="string">"object"</span>) &#123;</span><br><span class="line">           <span class="keyword">var</span> i = <span class="number">2</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="function"><span class="keyword">function</span> <span class="title">b</span><span class="params">(r)</span> </span>&#123;</span><br><span class="line">               y = <span class="number">5</span>;</span><br><span class="line">           alert(i);</span><br><span class="line">       &#125;;</span><br><span class="line">       b(<span class="number">40</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   a(<span class="number">10</span>);<span class="comment">//undefined、undefined</span></span><br><span class="line">a(&#123;&#125;);<span class="comment">//undefined、2</span></span><br></pre></td></tr></table></figure>
+<p>上述代码在预编译完成后期作用域链如下图所示：<br><img src="/images/scope_chain1.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>由上图可以看出，在预编译完成后，代码执行前，各变量已经是可访问的，只是未赋值。<br>在代码执行过程中，会动态改变作用域链，例如，我们可以画出调用<code>a(10)</code>代码执行到第一个<code>alert(i)</code>时的作用域链：<br>  <img src="/images/scope_chain2.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>由上图可知：<br>b()的作用域链为：b()的变量对象-》a()的变量对我-》window全局变量对象<br>a()的作用域链为：a()的变量对象-》window全局变量对象<br>window的作用域链为：window全局变量对象<br><strong>在变量解析过程中，</strong>只能<strong>从下到上</strong>在其作用域链上进行搜索。  </p>
+<p><code>a(10);</code>调用过程：遇到第一个<code>alert(i)</code>，在a()变量对象中搜索i，搜索到了，其值为undefined，由于未满足if条件，故没能进行赋值操作，i值不变；遇到第二个<code>alert(i)</code>时，在b()变量对象中未搜索i，就沿着作用域链向上搜索到a()变量对象，搜索到i，此时其值为undefined。<br><code>a({})</code>调用过程：遇到第一个<code>alert(i)</code>，在a()变量对象中搜索到i即刻停止搜索，其值为undefined，进行if判断满足，对i进行赋值2；调用b，进行到第二个<code>alert(i)</code>时，在b()变量对象中未搜多到i，沿着作用域链向上搜索到a()变量对象，找到i，其值为2.  </p>
+<h4 id="示例二：来说明在预编译时对函数的两种定义的区别对待">示例二：来说明在预编译时对函数的两种定义的区别对待</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">	test1(); <span class="comment">//undefined</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">		alert(<span class="keyword">typeof</span> test2);</span><br><span class="line">    &#125;</span><br><span class="line">    test1();<span class="comment">//undefined</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> test2 = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        alert(<span class="number">3</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  	test1(); <span class="comment">//3    </span></span><br><span class="line">``` </span><br><span class="line">从上面代码可看出，函数test2是以变量赋值的方法进行定义的，这样预编译时仅进行`<span class="keyword">var</span> test2;`而不管其代码段，test2的值为<span class="literal">undefined</span>。这样在第一次和第二次test1()时可以访问test2，但其值为<span class="literal">undefined</span>，这时候执行test2会报错。而按照test1()方式定义的函数在其所在环境内任何地方都是可以执行的。    </span><br><span class="line"></span><br><span class="line">#### 示例三：  </span><br><span class="line">```javascript</span><br><span class="line">	<span class="keyword">var</span> val=<span class="number">1</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">		alert(val)</span><br><span class="line">		val=<span class="number">10</span>;</span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">val</span><span class="params">()</span></span>&#123;</span><br><span class="line">		&#125;</span><br><span class="line">		alert(val);</span><br><span class="line">		alert(<span class="keyword">typeof</span> val);</span><br><span class="line">	&#125;  </span><br><span class="line">	test();<span class="comment">//一次弹出undefined、10、number/function</span></span><br><span class="line">	alert(val);<span class="comment">//1</span></span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">#### 示例四：重复声明变量不会影响原来的值  </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="keyword">var</span> i=<span class="number">1</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> i = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">var</span> i;</span><br><span class="line">		alert(i);</span><br><span class="line">    &#125;</span><br><span class="line">    test1();  <span class="comment">//10</span></span><br><span class="line">	alert(i);<span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+<p>由上述代码可以发现，重复声明不会影响变量原来的值。个人理解原因如下：在预编译过程中，进行了两次<code>var i;</code>，就可以说为test1()的变量对象添加了两次i属性，由于同名属性会进行覆盖，因此最终test1()的变量对象只有一个i属性(我认为两个i指向同一个内存块)。那再进行执行的时候，<code>var i=10;</code>为test1()的变量对象的i属性赋值为10，<code>var i;</code>没有赋值，因此最终test1()变量对象的i属性值就为10.作用域链如下图：<br><img src="/images/scope_chain3.PNG" alt="参数为DOM对象时jQuery对象内部结构"></p>
+<h4 id="示例四：证实预编译-执行过程是按&lt;script&gt;&lt;/script&gt;块进行的">示例四：证实<strong>预编译-执行</strong>过程是按<code>&lt;script&gt;&lt;/script&gt;</code>块进行的</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">	test()<span class="comment">//出错  </span></span><br><span class="line">	<span class="keyword">var</span> i=<span class="number">1</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">()</span></span>&#123;</span><br><span class="line">		i=<span class="number">2</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	f();</span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span>  </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	alert(i)<span class="comment">//2</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>由以上代码可知，在第一个<code>&lt;sctipt&gt;</code>块调用第二个代码块中函数会出错，这是由于第二个<code>&lt;script&gt;</code>还未进行预编译，是不可访问到的。第二个代码块可以访问到第一个代码块的全局变量，是因为此时第一个代码块已经预编译切执行结束了.</p>
+<h4 id="示例五:预编译时会忽略逻辑判断">示例五:预编译时会忽略逻辑判断</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">var</span> foo=<span class="number">1</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(!foo)&#123;</span><br><span class="line">			<span class="keyword">var</span> foo=<span class="number">2</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		alert(foo);</span><br><span class="line">	&#125;  </span><br><span class="line">	test()<span class="comment">//2  </span></span><br><span class="line">``` </span><br><span class="line">在预编译结束后,上述代码中test()的变量对象的foo属性为<span class="literal">undefined</span>，因此，执行时<span class="keyword">if</span>(!foo)判断为真。这样就好像在执行时foo的声明提前了。</span><br><span class="line">     </span><br><span class="line">#### 实例六   </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">(val)</span></span>&#123;</span><br><span class="line">		<span class="keyword">var</span> val=<span class="number">10</span>;</span><br><span class="line">		alert(<span class="built_in">arguments</span>[<span class="number">0</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">	f(<span class="number">1</span>)<span class="comment">//10</span></span><br></pre></td></tr></table></figure>
+<p>由实例四可知参数val和内部重复定义的val在预编译时指向同一块内存，进行两次赋值后其值为10；还要注意函数的arguments值永远和对应命名参数的值保持一致，任何一方改变都会体现在另一方，但是要知道它们内存空间是独立的。  </p>
+
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/JS/">
+                #JS
+              </a>
+            
+          </div>
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2014/09/07/2014-09-07-canvas1/">用canvas绘制小图标</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2014/08/30/2014-08-31-object2/">js对象相关之二（继承）</a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+    <div class="comments" id="comments">
+      
+    </div>
+  
+
+          </div>
+
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview">
+          站点概览
+        </li>
+      </ul>
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="/images/default_avatar.jpg" alt="John Doe" />
+        <p class="site-author-name">John Doe</p>
+      </div>
+      <p class="site-description motion-element"></p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </div>
+        <div class="site-state-item site-state-tags">
+            <span class="site-state-item-count">4</span>
+            <span class="site-state-item-name">标签</span>
+        </div>
+        <div class="site-state-item site-state-pages">
+            <span class="site-state-item-count">1</span>
+            <span class="site-state-item-name">页面</span>
+        </div>
+      </div>
+
+      
+
+      <div class="social-info motion-element">
+        
+      </div>
+
+      
+      
+
+    </div>
+
+    
+      <div class="post-toc-wrap sidebar-panel-active">
+        <div class="post-toc-indicator-top post-toc-indicator"></div>
+        <div class="post-toc">
+          
+          
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作用域"><span class="nav-number">2.</span> <span class="nav-text">作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量作用域"><span class="nav-number">2.1.</span> <span class="nav-text">变量作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数作用域"><span class="nav-number">2.2.</span> <span class="nav-text">函数作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js的词法作用域链"><span class="nav-number">2.3.</span> <span class="nav-text">js的词法作用域链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量解析"><span class="nav-number">2.4.</span> <span class="nav-text">变量解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预编译"><span class="nav-number">3.</span> <span class="nav-text">预编译</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对预编译的理解"><span class="nav-number">3.1.</span> <span class="nav-text">对预编译的理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对预编译、执行、作用域链之间关系的理解"><span class="nav-number">3.2.</span> <span class="nav-text">对预编译、执行、作用域链之间关系的理解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#示例一："><span class="nav-number">3.2.1.</span> <span class="nav-text">示例一：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#示例二：来说明在预编译时对函数的两种定义的区别对待"><span class="nav-number">3.2.2.</span> <span class="nav-text">示例二：来说明在预编译时对函数的两种定义的区别对待</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#示例四：证实预编译-执行过程是按<script></script>块进行的"><span class="nav-number">3.2.3.</span> <span class="nav-text">示例四：证实预编译-执行过程是按<script></script>块进行的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#示例五:预编译时会忽略逻辑判断"><span class="nav-number">3.2.4.</span> <span class="nav-text">示例五:预编译时会忽略逻辑判断</span></a></li></ol></li></ol></li></ol></div>
+          
+        </div>
+        <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+      </div>
+    
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">John Doe</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT</a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".fancybox").fancybox();
+    });
+  </script>
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      if ($('.post-toc-content').html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+    });
+  </script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+  
+</body>
+</html>

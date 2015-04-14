@@ -104,7 +104,210 @@
           
           
             
-              <a class="post-title-link" href="/2013/07/05/2013-09-05-html5-file/">
+              <a class="post-title-link" href="/2013/09/06/2013-09-06-html-drag/">
+                HTML5之拖拽
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-09-06
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="直接上例子">直接上例子</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">   <span class="xml"><span class="tag">&lt;<span class="title">title</span>&gt;</span>Untitled Page<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">       <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">           <span class="keyword">var</span> image = <span class="built_in">document</span>.createElement(<span class="string">"img"</span>);</span><br><span class="line">           image.src = <span class="string">"images/audit_pub.png"</span>;</span><br><span class="line">		<span class="comment">//被拖拽的元素</span></span><br><span class="line">           <span class="keyword">var</span> source = <span class="built_in">document</span>.getElementById(<span class="string">"dragme"</span>);</span><br><span class="line">		<span class="comment">//目标元素，即被拖拽的元素可能经过的元素或将被拖拽的的元素放到该元素中</span></span><br><span class="line">           <span class="keyword">var</span> dest = <span class="built_in">document</span>.getElementById(<span class="string">"house"</span>);</span><br><span class="line">           <span class="keyword">var</span> talk = <span class="built_in">document</span>.getElementById(<span class="string">"talk"</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//被拖拽元素开始拖拽的操作</span></span><br><span class="line">           source.addEventListener(<span class="string">"dragstart"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               <span class="keyword">var</span> dt = ev.dataTransfer;</span><br><span class="line">			<span class="comment">//修改拖拽时的图标（测试时只有FF支持）</span></span><br><span class="line">               dt.setDragImage(image, -<span class="number">10</span>, -<span class="number">10</span>);</span><br><span class="line">			<span class="comment">//设置元素被拖拽时允许的视觉效果</span></span><br><span class="line">               dt.effectAllowed = <span class="string">"all"</span>;</span><br><span class="line">			<span class="comment">//存放元素被拖拽时要存放的数据</span></span><br><span class="line">               dt.setData(<span class="string">"text/plain"</span>, <span class="string">"珍爱生命，远离熊孩子！"</span>);</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//被拖拽元素拖拽结束的操作</span></span><br><span class="line">           source.addEventListener(<span class="string">"dragend"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               ev.preventDefault();</span><br><span class="line">               talk.innerHTML = <span class="string">""</span>;</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">//目标元素dest感受到有元素开始进入它的区域</span></span><br><span class="line">           dest.addEventListener(<span class="string">"dragenter"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               talk.innerHTML = <span class="string">"砸开你家玻璃，溜进你家。"</span>;</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//目标元素dest感受到有元素在它范围内移动</span></span><br><span class="line">           dest.addEventListener(<span class="string">"dragover"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               <span class="keyword">this</span>.textContent = <span class="string">"熊孩子在我家里走来走去！"</span>;</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//目标元素dest感受到有元素离开它的范围</span></span><br><span class="line">           dest.addEventListener(<span class="string">"dragleave"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               talk.innerHTML = <span class="string">"玩够了，回家找妈妈去了！"</span>;</span><br><span class="line">               <span class="keyword">this</span>.textContent = <span class="string">"尼玛，熊孩子终于走了！"</span>;</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line">		<span class="comment">//目标元素dest感受到有元素被扔进它的范围</span></span><br><span class="line">           dest.addEventListener(<span class="string">"drop"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(ev)</span> </span>&#123;</span><br><span class="line">               <span class="keyword">var</span> dt = ev.dataTransfer;</span><br><span class="line">               <span class="keyword">var</span> text = dt.getData(<span class="string">"text/plain"</span>);</span><br><span class="line">               dest.textContent = text;</span><br><span class="line">               ev.preventDefault();</span><br><span class="line">               ev.stopPropagation();</span><br><span class="line">           &#125;, <span class="literal">false</span>);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="built_in">document</span>.ondragover = <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> </span>&#123; e.preventDefault(); &#125;</span><br><span class="line">       <span class="built_in">document</span>.ondrop = <span class="function"><span class="keyword">function</span> <span class="params">(e)</span> </span>&#123; e.preventDefault(); &#125;</span><br><span class="line">   </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span> <span class="attribute">onload</span>=<span class="value">"init()"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">h1</span>&gt;</span>拖拽示例之熊孩子<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"dragme"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"images/xhz.gif"</span> <span class="attribute">alt</span>=<span class="value">"熊孩子王尼玛"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="title">span</span>&gt;</span>熊孩子说：<span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">id</span>=<span class="value">"talk"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"house"</span> <span class="attribute">style</span>=<span class="value">"width:200px;height:200px;border:1px solid #ccc;"</span>&gt;</span>     </span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="解释说明">解释说明</h2><p>对于上面代码，可以自己感受下，注意一定是高端浏览器~  </p>
+<h3 id="与拖拽相关的事件的归属问题">与拖拽相关的事件的归属问题</h3><p>与拖拽相关的事件可分为两类：    </p>
+<ul>
+<li><code>dragstart、drag、dragend</code>这三个事件是针对被拖拽元素的  </li>
+<li><code>dragenter、dragover、dragleave、drop</code>这三个事件时针对目标元素的  </li>
+</ul>
+<h3 id="阻止默认行为很关键">阻止默认行为很关键</h3><ul>
+<li>在目标行为的<code>drop</code>事件处理程序中，阻止默认行为，（因为默认不接受被拖放的元素）  </li>
+<li>对整个页面的<code>dragover、drop</code>事件，也要阻止默认行为，否则拖放处理不能够实现。  </li>
+</ul>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/HTML5/">
+                #HTML5
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/09/06/2013-09-16-layout-postion/">
+                CSS布局之定位
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-09-06
+          
+        </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="CSS中定位方案">CSS中定位方案</h2><p>有三种：标准流、浮动、绝对定位</p>
+<h2 id="display">display</h2><p>块框（block box）、行内框（inline box）、行框（line box）<br>HTML中一切元素都会形成一个”框”(box)，块级元素即块框，行内元素即行内框。由一行形成的水平框即行框，行框可能包含多个行内框。行框的高度总是足以容纳它包含的所有的行内框，他们之间的关系如下图所示：<br><img src="../images/linebox.PNG" alt="参数为DOM对象时jQuery对象内部结构"></p>
+<h3 id="块级元素、行内元素的区别">块级元素、行内元素的区别</h3><p>常见的<strong>块级元素：</strong><code>&lt;h1&gt;~&lt;h6&gt;、&lt;p&gt;、&lt;ol&gt;、&lt;ul&gt;、&lt;dl&gt;、&lt;dt&gt;、&lt;li&gt;、&lt;table&gt;、&lt;form&gt;、&lt;caption&gt;、&lt;div&gt;</code><br>常见的<strong>行内元素：</strong><code>&lt;span&gt;、&lt;img&gt;、&lt;input&gt;、&lt;em&gt;、&lt;srong&gt;</code>等</p>
+<ul>
+<li>块级元素：<br>  独占一行，默认情况下，宽度会占满父元素，多个块级框从上到下排列；垂直距离根据垂直外边距计算；<br>  可以设置<code>width、height</code>   </li>
+<li>行内元素：<br>  不独占一行，多个块级框在一行中水平布置，可以通过内边距、外边距调整行内框之间距离；<br>  设置<code>width、height</code>无效；<br>  其<code>padding、margin</code>属性只在水平方向 有效，在垂直方向无效。</li>
+</ul>
+<h2 id="position">position</h2><ul>
+<li>static：<br>元素仍然存在与标准流中。元素框正常生成。  </li>
+<li>relative：<br>元素框在标准流中的占位保留；<br>元素的display属性不变；<br>元素的top、bottom、left、right、z-index属性被激活；<br>元素的top、bottom、left、right都是相对于自身在标准量中的占位而言；      </li>
+<li>absolute：<br>元素框脱离标准文本流，不再占位；<br>元素的display属性被改变为<code>inline-block</code>，而不管之前该元素是块级元素还是行内元素<br>元素的top、bottom、left、right、z-index属性被激活；<br>元素的top、bottom、left、right都是相对于其设置了<code>postion:relative</code>或<code>position:absolute</code>的最近祖先元素而言；</li>
+<li>fixed：<br>其表现与absolute相似，可以说是absolute的一种，区别就在于fixed的top、bottom、left、right定位是相对于视窗而言。<br>元素框脱离标准文本流，不再占位；<br>元素的display属性被改变为<code>inline-block</code>，而不管之前该元素是块级元素还是行内元素<br>元素的top、bottom、left、right、z-index属性被激活；    </li>
+</ul>
+<p><strong>特别注意：</strong> <strong>top的优先级高于bottom，left的优先级高于right</strong>；当设置矛盾时会优先top和left的设置，这个在<code>relative、absolute、fixed</code>下都是适用的，如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.relative&#123;top:<span class="number">10</span>px;</span><br><span class="line">		  bottom:<span class="number">10</span>px;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>z-index优先级：</strong>    </p>
+<ul>
+<li>不显示设置<code>z-index</code>时，<code>relative、absolute、fixed</code>优先级一样，后定义的元素出现在上层     </li>
+<li>显示设置<code>z-index</code>时，该属性值大的在上层。<h2 id="display与position的关系">display与position的关系</h2>上面说过，<code>position:absolute\fixed</code>会将元素的display改变为<code>inline-block</code>，这时候如果显示设置<code>display</code>为其他值会失效。  </li>
+</ul>
+<p>同样，<code>float</code>也会将元素的display改变为<code>inline-block</code>，这时候如果显示设置<code>display</code>为其他值也会失效。  </p>
+<h2 id="BFC和hasLayout和containing_block">BFC和hasLayout和containing block</h2><p>大多时候一个元素的<strong>尺寸</strong>和<strong>位置</strong>不是由自己决定的（例如：未设置宽、高尺寸的块级元素、绝对定位的元素等），而是要参考它的某个祖先容器。那详细的问题就来了：什么时候一个元素能够当家做主决定自己的尺寸和位置呢？当自己不能决定时要参考那个祖先元素呢？   </p>
+<p>首先引入IE的布局概念，hasLayout（拥有布局）的元素能够负责自身的以及子元素的尺寸和位置设置。当一个元素没有布局不能决定自身尺寸和位置时，由离它最近的hasLayout（拥有布局）的元素来决定。举例说明吧：  </p>
+<pre><code class="javascript">&lt;style type="text/css"&gt;
+      .father
+      {
+          border:1px solid #ccc;
+          float:left;
+      }
+
+&lt;/style&gt;    
+&lt;body&gt;
+    &lt;div class="test"&gt;
+            局概念
+    &lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+<p>我们看到上面代码中的元素.test没有设置宽、高，它的尺寸由父body（在IE中body是默认hasLayout的元素之一）来决定，所以可以看到.father的宽度是与父等宽的，而不管其中元素是否撑满。    </p>
+<p>然后给.father设置<code>float:left</code>，你会发现此时.father的宽度根据其内容进行调整，而不再是与其父元素等宽。这是由于<code>float：left</code>使.father拥有布局(hasLayout)。  </p>
+<p>在上面那个例子已经谈到了hasLayout和containing block：  </p>
+<h3 id="haslayout：一个元素如果hasLayout那么能够决定自己的尺寸和位置，对于没有布局的元素，可以通过一些CSS设置使其hasLayout：">haslayout：一个元素如果hasLayout那么能够决定自己的尺寸和位置，对于没有布局的元素，可以通过一些CSS设置使其hasLayout：</h3><ul>
+<li>设置width  </li>
+<li>设置height</li>
+<li>使其浮动float</li>
+<li>设置display为inline-block  </li>
+<li>设置overflow为hidden、auto、scroll</li>
+<li>设置zoom(仅IE)  </li>
+</ul>
+<h3 id="containing_block(包含块)">containing block(包含块)</h3><p>上面说到，当一个元素E无法决定自己的尺寸和定位，需要依靠其某一祖先元素来决定，这里提到的<code>某一个祖先元素</code>就是E的containing block(包含块)：  </p>
+<ul>
+<li>初始包含块：即浏览器窗口  </li>
+<li>对于设置<code>position:fixed</code>的元素E，其位置需要依靠浏览器窗口决定个，因此E的包含块就是初始包含块  </li>
+<li>对于设置<code>position:absolute</code>的元素E，其包含块就是’离E最近的设置了<code>position:relative\absolute</code>的祖先元素’   </li>
+</ul>
+<h3 id="BFC">BFC</h3><p>我觉得BFC在主流浏览器中的角色类似于hasLayout在IE中的功能。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/CSS/">
+                #CSS
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/09/05/2013-09-05-html5-file/">
                 HTML5之文件
               </a>
             
@@ -115,7 +318,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-07-05
+            发表于 2013-09-05
           
         </span>
         
@@ -159,73 +362,13 @@
     
       <div class="post-footer">
         
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
+          <div class="post-tags">
             
-              <a class="post-title-link" href="/2013/07/01/2013-09-05-html5-form/">
-                HTML5之表单验证
+              <a href="/tags/HTML5/">
+                #HTML5
               </a>
             
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-07-01
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="表单的自动验证">表单的自动验证</h2><h3 id="表单元素默认验证">表单元素默认验证</h3><p>HTML5新增了很多表单元素都具有默认验证的功能，<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">	&lt;form action=<span class="string">""</span> id=<span class="string">"my_html5_form"</span> style=<span class="string">"width:300px; border:1px solid #ccc"</span>&gt;</span><br><span class="line">	<span class="xml"><span class="tag">&lt;<span class="title">fieldset</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"email"</span>&gt;</span>电子邮箱email：<span class="tag">&lt;/<span class="title">label</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">"email"</span> <span class="attribute">type</span>=<span class="value">"email"</span>/&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"url"</span>&gt;</span>个人网站url：<span class="tag">&lt;/<span class="title">label</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">"url"</span> <span class="attribute">type</span>=<span class="value">"url"</span> /&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"num"</span>&gt;</span>年龄number：<span class="tag">&lt;/<span class="title">label</span>&gt;</span><span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">"num"</span> <span class="attribute">type</span>=<span class="value">"number"</span> <span class="attribute">min</span>=<span class="value">"18"</span> <span class="attribute">max</span>=<span class="value">"30"</span> <span class="attribute">value</span>=<span class="value">"20"</span> <span class="attribute">step</span>=<span class="value">"2"</span>/&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span>/&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;/<span class="title">fieldset</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">form</span>&gt;</span>  </span><br><span class="line">```  </span><br><span class="line">在以上代码中使用了html5新增`<span class="tag">&lt;<span class="title">input</span>&gt;</span>`类型中的三个：email、number、url。在表单提交时候，会自动对其输入合法性进行判断，不同浏览器给出提示样式不同。     </span><br><span class="line">   </span><br><span class="line">最好使用Opera（目前Opera对HTML5的支持是最好的），请随意感受下html5默认的输入合法性验证.  </span><br><span class="line"></span><br><span class="line">### 使用表单元素属性进行验证  </span><br><span class="line">HTML5新增了很多表单元素的属性，有form、formmethod、formaction、placeholder、autofocus、list、pattern、required、min、max、step等。这里主要说一下用于表单验证的pattern、required、min、max、step属性。  </span><br><span class="line">  </span><br><span class="line">- pattern属性，对所有类型的`<span class="tag">&lt;<span class="title">input</span>&gt;</span>`元素使用该属性，其值为正则表达式，表单提交时进行验证是否符合设置的正则表达式    </span><br><span class="line">- required属性，对所有类型的`<span class="tag">&lt;<span class="title">input</span>&gt;</span>`元素使用该属性，在提交表单时若设置该属性的`<span class="tag">&lt;<span class="title">input</span>&gt;</span>`元素为空则提示，不允许提交  </span><br><span class="line">- min、max属性适用于`number、range`数值类型以及`date pickers`日期类型的`<span class="tag">&lt;<span class="title">input</span>&gt;</span>`元素，限制输入的最大、最小值，也是在表单提交时进行验证  </span><br><span class="line">- step指定了数值增加的幅度，对于`<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"number"</span> <span class="attribute">min</span>=<span class="value">"0"</span> <span class="attribute">max</span>=<span class="value">"20"</span> <span class="attribute">step</span>=<span class="value">"2"</span>/&gt;</span>`若输入奇数，则表单提交时提示输入不合法。  </span><br><span class="line">  </span><br><span class="line">```javascript  </span><br><span class="line">		<span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">""</span> <span class="attribute">style</span>=<span class="value">"width:400px; border:1px solid #ccc;padding-left:10px;"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;<span class="title">label</span>&gt;</span>required属性：<span class="tag">&lt;/<span class="title">label</span>&gt;</span></span><br><span class="line">		    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">required</span> <span class="attribute">placeholder</span>=<span class="value">"强制不能为空"</span> <span class="attribute">size</span>=<span class="value">"20"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">p</span>&gt;</span>    </span><br><span class="line">		</span><br><span class="line">		<span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;<span class="title">label</span>&gt;</span>pattern属性：<span class="tag">&lt;/<span class="title">label</span>&gt;</span></span><br><span class="line">		    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"email"</span> <span class="attribute">pattern</span>=<span class="value">"\d"</span>/&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"ps"</span>&gt;</span><span class="tag">&lt;<span class="title">sapn</span> <span class="attribute">style</span>=<span class="value">"font-size:13px;color:red;"</span>&gt;</span>（若input类型为email，则要先进行email合法判断，再进行pattern设置的判断）<span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">p</span>&gt;</span>   </span><br><span class="line">		<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">form</span>&gt;</span>  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">""</span> <span class="attribute">style</span>=<span class="value">"width:400px; border:1px solid #ccc;padding-left:10px;"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;<span class="title">label</span>&gt;</span>required属性：<span class="tag">&lt;/<span class="title">label</span>&gt;</span></span><br><span class="line">		    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">required</span> <span class="attribute">placeholder</span>=<span class="value">"强制不能为空"</span> <span class="attribute">size</span>=<span class="value">"20"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">p</span>&gt;</span>    </span><br><span class="line">		</span><br><span class="line">		<span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;<span class="title">label</span>&gt;</span>pattern属性：<span class="tag">&lt;/<span class="title">label</span>&gt;</span></span><br><span class="line">		    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"email"</span> <span class="attribute">pattern</span>=<span class="value">"\d"</span>/&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"ps"</span>&gt;</span><span class="tag">&lt;<span class="title">sapn</span> <span class="attribute">style</span>=<span class="value">"font-size:13px;color:red;"</span>&gt;</span>（若input类型为email，则要先进行email合法判断，再进行pattern设置的判断）<span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">p</span>&gt;</span>   </span><br><span class="line">		<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">form</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
-<h3 id="显示验证（checkValidity()和validity属性）">显示验证（checkValidity()和validity属性）</h3><p>html5中 ，form元素和input元素都有一个<code>checkValidity</code>方法和<code>validity</code>属性。  </p>
-<ul>
-<li>checkValidity()显示对整个form或者单个表单元素进行合法性判断 ，返回值为true或false，示例：  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">		var email = document.getElementById("email");</span><br><span class="line">		alert(email.checkValidity());  </span><br><span class="line">```  </span><br><span class="line">- validity属性，其值是一个ValidityState对象类型，可通过`node.validity.valid`进行判断合法性，其数据结构如下： </span><br><span class="line"> </span><br><span class="line">	![参数为DOM对象时jQuery对象内部结构](/images/validity.PNG)  </span><br><span class="line">  </span><br><span class="line">### 取消表单验证  </span><br><span class="line">关于取消表单验证，html5新增了一些属性：    </span><br><span class="line"></span><br><span class="line">- form元素的novalidity属性，设置为`true`后提交时对整个表单都不再进行验证  </span><br><span class="line">- 单个input元素的formnovalidity属性，设置为`true`后提交表单时对单个元素取消验证  </span><br><span class="line">- submit元素的formnovalidity属性，设置为`true`后提交表单后取消对整个表单的验证  </span><br><span class="line"></span><br><span class="line">### 自定义提示信息  </span><br><span class="line">当表单的输入不合法时，浏览器有默认的提示信息，可以通过input元素的`setCustomValidity()`进行自定义提示信息。示例：  </span><br><span class="line">```javascript   </span><br><span class="line">	&lt;script type="text/javascript"&gt;</span><br><span class="line">		 function check() &#123;</span><br><span class="line">            var required_text = document.getElementById("test");</span><br><span class="line">            if (!(required_text.checkValidity())) &#123;</span><br><span class="line">                required_text.setCustomValidity("大爷，填上吧！");</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">	&lt;/script&gt;</span><br><span class="line">	&lt;form&gt;</span><br><span class="line">		&lt;form onsubmit=""&gt;</span><br><span class="line">		&lt;input type="text" id="test" required /&gt;</span><br><span class="line">        &lt;input type="button" onclick="check();"value="修改提示信息"/&gt;</span><br><span class="line">        &lt;input type="submit" /&gt;</span><br><span class="line">	&lt;/form&gt;</span><br><span class="line">	&lt;/form&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>请找个高端浏览器(Opera、Chrome较高版本)随意感受一下</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
+          </div>
         
 
         
@@ -251,101 +394,7 @@
           
           
             
-              <a class="post-title-link" href="/2013/06/21/2014-09-01-scope-chain/">
-                js中预编译与作用域链
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-06-21
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="写在前面">写在前面</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> val=<span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span></span>&#123;</span><br><span class="line">	alert(val);<span class="comment">//undefined</span></span><br><span class="line">	<span class="keyword">var</span> val=<span class="number">10</span>;</span><br><span class="line">	alert(val);<span class="comment">//10</span></span><br><span class="line">&#125;</span><br><span class="line">alert(val)<span class="comment">//1</span></span><br></pre></td></tr></table></figure>
-<p>原以为自己对于js的词法作用域理解的还不错，直到遇到一大波类似于上述的奇奇怪怪的现象后，我就有些凌乱了，成果如下：  </p>
-<h2 id="作用域">作用域</h2><h3 id="变量作用域">变量作用域</h3><p>变量作用域scope可以理解为能够访问到这个变量的所有区域，例如可以在全局范围内访问到全局变量，那么全局变量的scope就是全局作用域。  </p>
-<h3 id="函数作用域">函数作用域</h3><p>对于函数来讲，任何在函数内部定义的变量、函数的参数、在函数内定义的其他函数都是<strong>局部变量</strong>。只有在函数的内部才能访问到这些局部变量。<br><strong>函数作用域</strong>：函数的内部变量其scope是这个函数体以及这个函数体内嵌套的任意函数体内部。<br><strong>声明提前：</strong>由函数作用域知内部变量在函数体内任何位置都是可访问的，这就导致有可能变量在声明前就是可访问的。在js中函数内声明的所有变量其声明过程都被<strong>提前</strong>到函数体的顶部，而赋值过程仍在代码中原位置。这时由JS引擎的“预编译”导致的。<br><strong>内部变量的优先级：</strong>同名的内部变量的优先级要高于全局变量，这也可由作用域链可知。  </p>
-<h3 id="js的词法作用域链">js的词法作用域链</h3><p>当函数在<strong>定义</strong>时，就保存了一个<strong>作用域链</strong>。作用域链确保了可访问的变量和函数，以及访问顺序。作用域链式在代码<strong>定义时</strong>就已确定的，而不是等到执行时才确定。    </p>
-<h3 id="变量解析">变量解析</h3><p>沿着作用域链前端的第一个对象开始查找，一旦找到就返回。    </p>
-<h2 id="预编译">预编译</h2><h3 id="对预编译的理解">对预编译的理解</h3><p>js在执行前会对代码进行<strong>预编译</strong>，关于预编译需要注意几点：     </p>
-<ul>
-<li><strong>预编译</strong>工作范围：对var变量声明、以及<code>function(){}</code>函数体内的代码进行处理，并不进行赋值操作。赋值操作发生在执行阶段。举例说明三种情况：    <ul>
-<li><code>var val=1;</code>预编译只做了声明的工作即<code>var val;</code>  </li>
-<li><code>function f(){/函数体代码段}</code>遇到这样的函数定义，会对函数体内代码段进行预编译  </li>
-<li><code>var f=function(){//函数体代码段}</code>这种情况严格意义上讲不属于函数定义，称为对变量f进行声明和初始化比较合适，因此预编译只进行变量f的声明即<code>var f;</code>，对匿名函数体内代码段不进行预编译。  </li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>js的代码是<strong>顺序分块</strong>进行<strong>预编译-执行</strong> 的过程的。顺序是指按照代码定义顺序从上到下进行，分块是针对有多个<code>&lt;script type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</code>块时，按顺序将第一个<code>&lt;script&gt;&lt;/script&gt;</code>块内代码预编译然后执行，再对下一个<code>&lt;script&gt;&lt;/script&gt;</code>重复该<strong>预编译-执行</strong>的过程。    </p>
-</li>
-<li><p>由上条可知，当有多个代码块时，后面出现的<code>&lt;script&gt;&lt;/script&gt;</code>代码块能够访问前面出现的<code>&lt;script&gt;&lt;/script&gt;</code>代码块内的全局变量，反过来则不行。    </p>
-</li>
-<li><p>对函数内部代码进行预编译时，会忽略逻辑判断。例如<code>if(false){var val=1;}</code>仍然会进行<code>var val;</code>预编译。</p>
-</li>
-</ul>
-<h3 id="对预编译、执行、作用域链之间关系的理解">对预编译、执行、作用域链之间关系的理解</h3><p>其实对《Javascript权威指南》和《javascript高级程序设计》里面关于这些的讲解总觉得特别抽象，看完也觉得不知道内部实现机制。自己的理解不知道是否完全正确，但是总能解释下面奇怪的例子们~<br><strong>板板的理解：</strong>在定义函数时就为其保存了一个作用域链，预编译完成后对该作用域链进行修改，在代码的执行过程中也会对其进行修改。看示例一：  </p>
-<h4 id="示例一：">示例一：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> i = <span class="number">1</span>;</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">(o)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">var</span> x = <span class="number">4</span>;</span><br><span class="line">       alert(i);</span><br><span class="line">       <span class="keyword">if</span> (<span class="keyword">typeof</span> o == <span class="string">"object"</span>) &#123;</span><br><span class="line">           <span class="keyword">var</span> i = <span class="number">2</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="function"><span class="keyword">function</span> <span class="title">b</span><span class="params">(r)</span> </span>&#123;</span><br><span class="line">               y = <span class="number">5</span>;</span><br><span class="line">           alert(i);</span><br><span class="line">       &#125;;</span><br><span class="line">       b(<span class="number">40</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   a(<span class="number">10</span>);<span class="comment">//undefined、undefined</span></span><br><span class="line">a(&#123;&#125;);<span class="comment">//undefined、2</span></span><br></pre></td></tr></table></figure>
-<p>上述代码在预编译完成后期作用域链如下图所示：<br><img src="/images/scope_chain1.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>由上图可以看出，在预编译完成后，代码执行前，各变量已经是可访问的，只是未赋值。<br>在代码执行过程中，会动态改变作用域链，例如，我们可以画出调用<code>a(10)</code>代码执行到第一个<code>alert(i)</code>时的作用域链：<br>  <img src="/images/scope_chain2.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>由上图可知：<br>b()的作用域链为：b()的变量对象-》a()的变量对我-》window全局变量对象<br>a()的作用域链为：a()的变量对象-》window全局变量对象<br>window的作用域链为：window全局变量对象<br><strong>在变量解析过程中，</strong>只能<strong>从下到上</strong>在其作用域链上进行搜索。  </p>
-<p><code>a(10);</code>调用过程：遇到第一个<code>alert(i)</code>，在a()变量对象中搜索i，搜索到了，其值为undefined，由于未满足if条件，故没能进行赋值操作，i值不变；遇到第二个<code>alert(i)</code>时，在b()变量对象中未搜索i，就沿着作用域链向上搜索到a()变量对象，搜索到i，此时其值为undefined。<br><code>a({})</code>调用过程：遇到第一个<code>alert(i)</code>，在a()变量对象中搜索到i即刻停止搜索，其值为undefined，进行if判断满足，对i进行赋值2；调用b，进行到第二个<code>alert(i)</code>时，在b()变量对象中未搜多到i，沿着作用域链向上搜索到a()变量对象，找到i，其值为2.  </p>
-<h4 id="示例二：来说明在预编译时对函数的两种定义的区别对待">示例二：来说明在预编译时对函数的两种定义的区别对待</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">	test1(); <span class="comment">//undefined</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">		alert(<span class="keyword">typeof</span> test2);</span><br><span class="line">    &#125;</span><br><span class="line">    test1();<span class="comment">//undefined</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> test2 = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        alert(<span class="number">3</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  	test1(); <span class="comment">//3    </span></span><br><span class="line">``` </span><br><span class="line">从上面代码可看出，函数test2是以变量赋值的方法进行定义的，这样预编译时仅进行`<span class="keyword">var</span> test2;`而不管其代码段，test2的值为<span class="literal">undefined</span>。这样在第一次和第二次test1()时可以访问test2，但其值为<span class="literal">undefined</span>，这时候执行test2会报错。而按照test1()方式定义的函数在其所在环境内任何地方都是可以执行的。    </span><br><span class="line"></span><br><span class="line">#### 示例三：  </span><br><span class="line">```javascript</span><br><span class="line">	<span class="keyword">var</span> val=<span class="number">1</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">		alert(val)</span><br><span class="line">		val=<span class="number">10</span>;</span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">val</span><span class="params">()</span></span>&#123;</span><br><span class="line">		&#125;</span><br><span class="line">		alert(val);</span><br><span class="line">		alert(<span class="keyword">typeof</span> val);</span><br><span class="line">	&#125;  </span><br><span class="line">	test();<span class="comment">//一次弹出undefined、10、number/function</span></span><br><span class="line">	alert(val);<span class="comment">//1</span></span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">#### 示例四：重复声明变量不会影响原来的值  </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="keyword">var</span> i=<span class="number">1</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> i = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">var</span> i;</span><br><span class="line">		alert(i);</span><br><span class="line">    &#125;</span><br><span class="line">    test1();  <span class="comment">//10</span></span><br><span class="line">	alert(i);<span class="comment">//1</span></span><br></pre></td></tr></table></figure>
-<p>由上述代码可以发现，重复声明不会影响变量原来的值。个人理解原因如下：在预编译过程中，进行了两次<code>var i;</code>，就可以说为test1()的变量对象添加了两次i属性，由于同名属性会进行覆盖，因此最终test1()的变量对象只有一个i属性(我认为两个i指向同一个内存块)。那再进行执行的时候，<code>var i=10;</code>为test1()的变量对象的i属性赋值为10，<code>var i;</code>没有赋值，因此最终test1()变量对象的i属性值就为10.作用域链如下图：<br><img src="/images/scope_chain3.PNG" alt="参数为DOM对象时jQuery对象内部结构"></p>
-<h4 id="示例四：证实预编译-执行过程是按&lt;script&gt;&lt;/script&gt;块进行的">示例四：证实<strong>预编译-执行</strong>过程是按<code>&lt;script&gt;&lt;/script&gt;</code>块进行的</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">	test()<span class="comment">//出错  </span></span><br><span class="line">	<span class="keyword">var</span> i=<span class="number">1</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">()</span></span>&#123;</span><br><span class="line">		i=<span class="number">2</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	f();</span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span>  </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	alert(i)<span class="comment">//2</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>由以上代码可知，在第一个<code>&lt;sctipt&gt;</code>块调用第二个代码块中函数会出错，这是由于第二个<code>&lt;script&gt;</code>还未进行预编译，是不可访问到的。第二个代码块可以访问到第一个代码块的全局变量，是因为此时第一个代码块已经预编译切执行结束了.</p>
-<h4 id="示例五:预编译时会忽略逻辑判断">示例五:预编译时会忽略逻辑判断</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">var</span> foo=<span class="number">1</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(!foo)&#123;</span><br><span class="line">			<span class="keyword">var</span> foo=<span class="number">2</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		alert(foo);</span><br><span class="line">	&#125;  </span><br><span class="line">	test()<span class="comment">//2  </span></span><br><span class="line">``` </span><br><span class="line">在预编译结束后,上述代码中test()的变量对象的foo属性为<span class="literal">undefined</span>，因此，执行时<span class="keyword">if</span>(!foo)判断为真。这样就好像在执行时foo的声明提前了。</span><br><span class="line">     </span><br><span class="line">#### 实例六   </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">(val)</span></span>&#123;</span><br><span class="line">		<span class="keyword">var</span> val=<span class="number">10</span>;</span><br><span class="line">		alert(<span class="built_in">arguments</span>[<span class="number">0</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">	f(<span class="number">1</span>)<span class="comment">//10</span></span><br></pre></td></tr></table></figure>
-<p>由实例四可知参数val和内部重复定义的val在预编译时指向同一块内存，进行两次赋值后其值为10；还要注意函数的arguments值永远和对应命名参数的值保持一致，任何一方改变都会体现在另一方，但是要知道它们内存空间是独立的。  </p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2013/06/13/2013-09-01-browser-kernel/">
+              <a class="post-title-link" href="/2013/09/01/2013-09-01-browser-kernel/">
                 浏览器内核简介
               </a>
             
@@ -356,7 +405,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-06-13
+            发表于 2013-09-01
           
         </span>
         
@@ -413,8 +462,8 @@
           
           
             
-              <a class="post-title-link" href="/2013/06/02/2014-08-31-object2/">
-                js对象相关之二（继承）
+              <a class="post-title-link" href="/2013/08/18/2013-09-16-ie6-hide/">
+                IE6下的躲猫猫
               </a>
             
           
@@ -424,7 +473,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-06-02
+            发表于 2013-08-18
           
         </span>
         
@@ -441,14 +490,12 @@
 
         
           
-            <h2 id="继承（原型链）">继承（原型链）</h2><p>  在js中继承主要是靠原型链实现的。<br>在js中，创建一个函数（包括构造函数），就为该函数赋一个prototype原型属性，该属性指向原型对象。该原型属性默认获得 一个constructor属性，指回构造函数，原型属性还继承了Object的属性和方法（toString，valueOf等）。通过该构造函数创建的所有实例都有一个[[prototype]]属性，指向原型对象。这样原型中所有的属性和方法就为所有实例共享。  </p>
-<h3 id="原型链继承">原型链继承</h3><p>从以上所说的构造函数、原型对象、实例之间的关系就很好理解原型链继承。原型链继承实质就是使一个对象B的原型对象为另一个对象A的实例。这样对象B的实例指向B的原型对象，B的原型对象又指向A的原型对象，形成了原型链，而B的实例也继承了原型链上的所有属性和方法。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">//基类	</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Person</span><span class="params">(name,interests)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name=name;</span><br><span class="line">		<span class="keyword">this</span>.interests=interests;</span><br><span class="line">	&#125;</span><br><span class="line">	Person.prototype.say=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;alert(<span class="string">"hello"</span>);&#125;;</span><br><span class="line">	<span class="comment">//子类	</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Student</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	Student.prototype=<span class="keyword">new</span> Person(<span class="string">"zc"</span>,[<span class="string">"reading"</span>,<span class="string">"dancing"</span>]);  </span><br><span class="line">	<span class="keyword">var</span> student=<span class="keyword">new</span> Student();  </span><br><span class="line">``` </span><br><span class="line">**原型链的缺点：**  </span><br><span class="line">  </span><br><span class="line">- 通过子类从基类中继承来的所有属性（不管是实例属性还是原型属性）都变成了子类的原型属性。当含有引用类型的属性时，子类创造的所有实例对该属性进行共享，那么一个实例中该属性的变化会直接体现在其他属性中。  </span><br><span class="line">- 创建子类实例是不能向构造函数中传参。  </span><br><span class="line"></span><br><span class="line">### 借助构造函数继承  </span><br><span class="line">就是在子类的构造函数内部调用基类的构造函数  </span><br><span class="line">```javascript  </span><br><span class="line">	<span class="comment">//基类	</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Person</span><span class="params">(name,interests)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name=name;</span><br><span class="line">		<span class="keyword">this</span>.interests=interests;</span><br><span class="line">		<span class="keyword">this</span>.say=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;alert(<span class="string">"hello"</span>);&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//子类  </span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Student</span><span class="params">(name,interests)</span></span>&#123;</span><br><span class="line">		Person.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> student1=<span class="keyword">new</span> Student(<span class="string">"zc"</span>,[<span class="string">"reading"</span>,<span class="string">"dancing"</span>]);  </span><br><span class="line">``` </span><br><span class="line">**借助构造函数的缺点：**  </span><br><span class="line">  </span><br><span class="line">- 所有的属性和方法必须定义在基类的构造函数中，才能被子类继承，无法达到方法的公用。  </span><br><span class="line"></span><br><span class="line">### 组合继承  </span><br><span class="line">即是将原型链继承和借助构造函数继承结合起来。原型链实现原型属性的继承，借助构造函数实现实例属性的继承。这也是最常用的一种继承方式。</span><br><span class="line"></span><br><span class="line">举个例子说明如何通过原型链和借助构造函数实现继承的，并绘制出了完整的原型链：  </span><br><span class="line">```javascript	  </span><br><span class="line">	<span class="comment">//基类  </span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Person</span><span class="params">(name,age,interests)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name=name;</span><br><span class="line">		<span class="keyword">this</span>.age=age;</span><br><span class="line">		<span class="keyword">this</span>.interests=interests;</span><br><span class="line">	&#125; </span><br><span class="line">	Person.prototype.species=<span class="string">"人"</span>;</span><br><span class="line">	Person.prototype.sayName=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">		alert(<span class="keyword">this</span>.name);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//派生类  </span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Student</span><span class="params">(name,age,interests,grade)</span></span>&#123;</span><br><span class="line">		Person.call(<span class="keyword">this</span>,name,age,interests);</span><br><span class="line">		<span class="keyword">this</span>.grade=grade;</span><br><span class="line">	&#125;</span><br><span class="line">	Student.prototype=<span class="keyword">new</span> Person();</span><br><span class="line">	Student.prototype.constructor=Student;  </span><br><span class="line">	Student.prototype.sayGrade=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">		alert(<span class="keyword">this</span>.grade);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//创建Student实例  </span></span><br><span class="line">	<span class="keyword">var</span> student1=<span class="keyword">new</span> Student(<span class="string">"张三"</span>,<span class="number">24</span>,[<span class="string">"打球"</span>],<span class="string">"研二"</span>);  </span><br><span class="line">	student1.interests.push(<span class="string">"跳舞"</span>);</span><br><span class="line">	<span class="keyword">var</span> student2=<span class="keyword">new</span> Student(<span class="string">"李四"</span>,<span class="number">23</span>,[<span class="string">"呵呵"</span>,<span class="string">"哈哈"</span>],<span class="string">"博一"</span>);</span><br></pre></td></tr></table></figure></p>
-<p>以上代码的完整原型链为：<br><img src="/images/prototype6.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>由上图可以看出：<br><strong>student1的原型链为(沿红线方向)：</strong><code>student1-&gt;Student.prototype-&gt;Person.prototype-&gt;Object.prototype</code><br>当读取对象student1的属性时，沿着原型链一直找，直到找到返回。    </p>
-<p><strong>对象student1的所有属性和方法：</strong>    </p>
-<ul>
-<li>实例属性：grade、name、age、interests  </li>
-<li>引用属性：sayGrade、sayName、constructor、species</li>
-</ul>
+            <h2 id="现象">现象</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">   <span class="xml"><span class="tag">&lt;<span class="title">title</span>&gt;</span>Untitled Page<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span><span class="css"></span><br><span class="line">       <span class="class">.container</span></span><br><span class="line">       <span class="rules">&#123;</span><br><span class="line">           <span class="rule"><span class="attribute">background-color</span>:<span class="value"><span class="hexcolor">#ccc</span></span></span>;</span><br><span class="line">           <span class="rule">&#125;</span></span></span><br><span class="line">         <span class="class">.left</span></span><br><span class="line">         <span class="rules">&#123;</span><br><span class="line">             <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">100px</span></span></span>;</span><br><span class="line">             <span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">50px</span></span></span>;</span><br><span class="line">             <span class="rule"><span class="attribute">background-color</span>:<span class="value">Olive</span></span>;</span><br><span class="line">             <span class="rule"><span class="attribute">float</span>:<span class="value">left</span></span>;</span><br><span class="line">             <span class="rule">&#125;</span></span></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">         <span class="class">.clear</span></span><br><span class="line">         <span class="rules">&#123;</span><br><span class="line">             <span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">40px</span></span></span>;</span><br><span class="line">             <span class="rule"><span class="attribute">clear</span>:<span class="value">both</span></span>;</span><br><span class="line">             <span class="rule"><span class="attribute">background-color</span>:<span class="value">Red</span></span>;</span><br><span class="line">             <span class="rule">&#125;</span></span></span><br><span class="line">   </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"left"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">        浮动元素后面的非浮动元素的显示问题：后面的元素认为浮动元素已脱离文档流；  其后面非浮动元素中的块级元素的背景和边框会被浮动元素盖住，</span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">        但块级元素其中的文本不会被浮动元素盖住；其后面非浮动元素中的行级元素的背景、边框和内容都不会被浮动元但在IE6下很奇快，不会盖住块级元</span><br><span class="line">   <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"clear"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/hide1.PNG" alt="参数为DOM对象时jQuery对象内部结构">   </p>
+<h2 id="解决方法：">解决方法：</h2><ol>
+<li>给容器元素设置尺寸：<code>.container {_height:1%;}</code> 或<code>*html .container{height:1%;}</code> </li>
+<li>去除容器元素背景色/背景图  </li>
+</ol>
 
           
         
@@ -458,87 +505,13 @@
     
       <div class="post-footer">
         
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
+          <div class="post-tags">
             
-              <a class="post-title-link" href="/2013/06/02/2014-08-31-object1/">
-                js对象之一（原型及原型链）
+              <a href="/tags/CSS/">
+                #CSS
               </a>
             
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-06-02
-          
-        </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h2 id="写在前面">写在前面</h2><p>下决心整理对象相关，是因为看到下面这个现象：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alert(<span class="built_in">Object</span> <span class="keyword">instanceof</span> <span class="built_in">Function</span>);<span class="comment">//true  </span></span><br><span class="line">alert(<span class="built_in">Function</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span>);<span class="comment">//true</span></span><br></pre></td></tr></table></figure></p>
-<p>虽然知道结果都是<code>true</code>,但是解释原因时觉得一句”一切对象都继承自<code>Oject</code>“显得太过苍白。</p>
-<h2 id="原型及原型链">原型及原型链</h2><p><strong>构造函数就是函数！</strong>任何函数通过new操作符调用，那它就是构造函数；任何函数，不通过new来调用，那就和普通的函数没有任何区别。    </p>
-<p>任何时候，只要！创建一个函数，就为该函数创建一个属性prototype，指向一个原型对象，<strong>原型对象实质上是对象</strong>，因此是原型对象是Object的实例。而任何函数都是Function的实例。  </p>
-<p><strong>构造函数、原型、实例之间的关系图如下所示：</strong><br><img src="/images/prototype1.PNG" alt="参数为DOM对象时jQuery对象内部结构"> </p>
-<p><strong>Function、Array、Object</strong>这些构造函数其实质都是 <strong>函数！</strong>那就可以理解为它们是Function的实例;<br><strong>Function.prototype、Array.prototype</strong>这些原型对象归根结底都是对象，因此它们都是Object的实例。<br>由此可以得出下图：  </p>
-<p> <img src="/images/prototype2.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>由上图可以看出（原型链是跟着[[prototype]]走的）：    </p>
-<ul>
-<li>Function的原型链为：    Function———》Function.prototype ————》Object.prototype    </li>
-<li>Object的原型链为：  Object——》Function.prototype ——》Object.prototype  </li>
-<li>F的原型链为：F ——》Function.prototype ——》Object.prototype    </li>
-<li>f1的原型链为：f1 ——》F.prototype ——》Object.prototype</li>
-</ul>
-<p>由上可以看出，<strong>任何对象的原型链其根节点都是Object.prototype，这也是为什么说js中任何对象都是继承自Object</strong>。  </p>
-<p><strong>操作符instanceof的含义：</strong><br><code>O instanceof F</code> O是对象，F是函数。若O为F的一个实例则返回true，反之返回false。其工作原理为：若在O的原型链中能找到F则返回true。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">F</span><span class="params">()</span></span>&#123;</span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">var</span> f1=<span class="keyword">new</span> F();    </span><br><span class="line">alert(F <span class="keyword">instanceof</span> <span class="built_in">Function</span>)<span class="comment">//true  </span></span><br><span class="line">alert(f1 <span class="keyword">instanceof</span> <span class="built_in">Function</span>)<span class="comment">//false  </span></span><br><span class="line">alert(f1 <span class="keyword">instanceof</span> F)<span class="comment">//true</span></span><br><span class="line">alert(<span class="built_in">Function</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span>)<span class="comment">//true  </span></span><br><span class="line">alert(<span class="built_in">Object</span> <span class="keyword">instanceof</span> <span class="built_in">Function</span>)<span class="comment">//true    </span></span><br><span class="line">alert(<span class="built_in">Object</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span>)<span class="comment">//true  </span></span><br><span class="line">alert(<span class="built_in">Function</span> <span class="keyword">instanceof</span> <span class="built_in">Function</span>)<span class="comment">//true</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>方法isPrototypeOf()的含义：</strong><br><code>O1.isPrototypeOf(O2)</code>其中O1、O2都是对象。表面含义是若O1是O2的原型对象则返回true。实际上，若对象O2的[[prototype]]属性指向O1则返回true。工作原理为：若能在O2的原型链上找到O1则返回true。因此：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">F</span><span class="params">()</span></span>&#123;</span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">var</span> f1=<span class="keyword">new</span> F();    </span><br><span class="line">alert(<span class="built_in">Object</span>.prototype.isPrototypeOf(<span class="built_in">Function</span>));<span class="comment">//true;</span></span><br><span class="line">alert(<span class="built_in">Function</span>.prototype.isPrototypeOf(<span class="built_in">Function</span>));<span class="comment">//true</span></span><br><span class="line">alert(<span class="built_in">Object</span>.prototype.isPrototypeOf(<span class="built_in">Object</span>));<span class="comment">//true </span></span><br><span class="line">alert(<span class="built_in">Function</span>.prototype.isPrototypeOf(<span class="built_in">Object</span>));<span class="comment">//true </span></span><br><span class="line">alert(<span class="built_in">Object</span>.prototype.isPrototypeOf(f1));<span class="comment">//true</span></span><br><span class="line">alert(F.prototype.isPrototypeOf(f1))<span class="comment">//true;</span></span><br></pre></td></tr></table></figure></p>
-<p>最后，附上mollypages.org的一张图，与上图本质上是一样的：<br> <img src="/images/prototype3.PNG" alt="参数为DOM对象时jQuery对象内部结构">   </p>
-<h2 id="对象中属性的读取">对象中属性的读取</h2><p>当读取对象的一个属性时，实际是进行了一次<strong>搜索</strong>。搜索先从实例本身开始，若找到则停止搜索返回其值；若未找到，则继续搜索其[[prototype]]指向的原型对象，若找到返回，未找到返回undefined。<br>这也就是为什么不管是先创建实例还是先修改原型，原型的修改都会立即体现在所有实例上。    </p>
-<p>可以通过对象实例<strong>访问</strong>原型中的值；<br>当原型中的属性值为引用类型时，可以通过实例进行 <strong>修改</strong>，但这个修改会体现在所有实例上；<br>但是不能通过实例对原型中的值进行 <strong>重写</strong>。当实例中的属性名与原型中属性名相同时，实例中的属性名会 <strong>屏蔽</strong>原型中的该属性，因为 <strong>搜索</strong>提前结束了,也就是说这只会阻止访问原型中的那个值，但不会改变原型中的值。可通过 <strong>delete</strong>操作符删除实例属性，是原型属性重新可访问。看以下示例：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">F</span><span class="params">()</span></span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line">	F.prototype.arr=[<span class="number">1</span>];</span><br><span class="line">	<span class="keyword">var</span> f1=<span class="keyword">new</span> F();</span><br><span class="line">	<span class="keyword">var</span> f2=<span class="keyword">new</span> F();</span><br><span class="line">	<span class="comment">/********修改*********/</span></span><br><span class="line">	f1.arr.push(<span class="number">2</span>);</span><br><span class="line">	alert(f2.arr)<span class="comment">//[1,2]  </span></span><br><span class="line">  	<span class="comment">/*********重写************/</span></span><br><span class="line">	f1.arr=[<span class="number">2</span>];</span><br><span class="line">	alert(f2.arr)<span class="comment">//[1]  </span></span><br><span class="line">```  </span><br><span class="line">**hasOwnProperty()**  </span><br><span class="line">这是对象的一个方法，是从<span class="built_in">Object</span>继承而来的。`O.hasOwnProperty(attr)`判断属性attr是否为对象O的实例属性，是返回<span class="literal">true</span>。实质就是体现是在实例中搜索到的属性attr还是在原型中搜索到的属性attr。  </span><br><span class="line">  </span><br><span class="line">**<span class="keyword">in</span>操作符**    </span><br><span class="line"></span><br><span class="line">- 单独使用时`attr <span class="keyword">in</span> object1`，若能在对象object1中找到属性attr，则返回ture，而不管该属性是否可枚举，是在实例中还是原型中；  </span><br><span class="line">- 使用`<span class="keyword">for</span>-<span class="keyword">in</span>`返回能通过对象访问到的、可枚举的属性，而不管该属性在实例中还是原型中。按照规定，在实例中定义的属性都是可枚举的，包括那些屏蔽了原型中不可枚举的实例属性。但是在IE8及IE8-存在一个bug，即屏蔽了原型中不可枚举的实例属性不会在<span class="keyword">for</span>-<span class="keyword">in</span>中出现。</span><br><span class="line">  </span><br><span class="line">## 重写原型  </span><br><span class="line">**重写原型的后果：**  </span><br><span class="line"><span class="number">1.</span>切断了构造函数与最初原型的关系，构造函数的prototype属性原始指向最初原型，现在被重写指向新原型；  </span><br><span class="line">```javascript	  </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">F</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    F.prototype = &#123; </span><br><span class="line">		constructor:F;</span><br><span class="line">		arr: [<span class="number">1</span>] &#125;;</span><br></pre></td></tr></table></figure></p>
-<p>如下图所示：<br><img src="/images/prototype4.PNG" alt="参数为DOM对象时jQuery对象内部结构"><br>2.切断了重写原型前创建的所有实例与新原型的联系，之前的实例仍然指向初始原型。这是由于每次新建实例时，赋给该实例一个[[prototype]]属性，指向当时的原型。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">F</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">var</span> f1 = <span class="keyword">new</span> F();</span><br><span class="line">   F.prototype = &#123; arr: [<span class="number">1</span>] &#125;;</span><br><span class="line">   <span class="keyword">var</span> f2 = <span class="keyword">new</span> F();</span><br><span class="line">   alert(f2.arr);<span class="comment">//1</span></span><br><span class="line">   alert(f1.arr);  <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure></p>
-<p>如下图所示：<br><img src="/images/prototype5.PNG" alt="参数为DOM对象时jQuery对象内部结构">    </p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
+          </div>
         
 
         
@@ -1033,11 +1006,11 @@ HTML:
       <p class="site-description motion-element"></p>
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">
-            <span class="site-state-item-count">0</span>
+            <span class="site-state-item-count">4</span>
             <span class="site-state-item-name">标签</span>
         </div>
         <div class="site-state-item site-state-pages">
